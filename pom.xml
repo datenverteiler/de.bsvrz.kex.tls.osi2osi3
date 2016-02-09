@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>ISO-8859-1</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <kernsoftware.version>3.6.5</kernsoftware.version>
-        <distributionspaket.status>BETA</distributionspaket.status>
+        <distributionspaket.status>FREI</distributionspaket.status>
 <!--
         <distributionspaket.standDatum>${maven.build.timestamp}</distributionspaket.standDatum>
 -->
@@ -312,7 +312,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
@@ -320,6 +319,7 @@
                 <configuration>
                     <threshold>High</threshold>
                     <includeTests>true</includeTests>
+                    <failOnError>false</failOnError>
                 </configuration>
                 <executions>
                     <execution>
@@ -329,7 +329,6 @@
                     </execution>
                 </executions>
             </plugin>
--->
             <plugin>
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-maven-plugin</artifactId>

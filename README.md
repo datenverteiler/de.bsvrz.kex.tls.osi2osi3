@@ -1,5 +1,5 @@
 de.bsvrz.kex.tls.osi2osi3 [![Build Status](https://travis-ci.org/datenverteiler/de.bsvrz.kex.tls.osi2osi3.svg?branch=develop)](https://travis-ci.org/datenverteiler/de.bsvrz.kex.tls.osi2osi3)
-=================
+=========================
 
 
 Bauen und Veröffentlichen
