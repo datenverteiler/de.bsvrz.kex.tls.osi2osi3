@@ -1,5 +1,14 @@
 -exportcontents: \
-    de.bsvrz.kex.tls.osi2osi3
+    de.bsvrz.kex.tls.osi2osi3 \
+    de.bsvrz.kex.tls.osi2osi3.longtelegram \
+    de.bsvrz.kex.tls.osi2osi3.osi2 \
+    de.bsvrz.kex.tls.osi2osi3.osi2.api \
+    de.bsvrz.kex.tls.osi2osi3.osi2.tc57listen \
+    de.bsvrz.kex.tls.osi2osi3.osi2.tc57primary \
+    de.bsvrz.kex.tls.osi2osi3.osi2.wancom \
+    de.bsvrz.kex.tls.osi2osi3.osi3 \
+    de.bsvrz.kex.tls.osi2osi3.properties \
+    de.bsvrz.kex.tls.osi2osi3.redirection
 -sources: true
 
 Bundle-Name: de.bsvrz.kex.tls.osi2osi3
