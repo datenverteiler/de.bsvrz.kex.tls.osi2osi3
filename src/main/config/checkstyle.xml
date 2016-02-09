@@ -6,12 +6,10 @@
     <property name="severity" value="warning"/>
 
     <!-- Headers -->
-<!--
     <module name="Header">
         <property name="headerFile" value="${checkstyle.header.file}"/>
         <property name="fileExtensions" value="java"/>
     </module>
--->
 
     <!-- Size Violations -->
     <module name="FileLength"/>
