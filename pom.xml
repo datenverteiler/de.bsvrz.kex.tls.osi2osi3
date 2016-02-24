@@ -188,15 +188,6 @@
                         <id>design-javadoc</id>
                         <goals>
                             <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>design-javadoc</classifier>
-                            <show>private</show>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-design-javadoc</id>
-                        <goals>
                             <goal>test-jar</goal>
                         </goals>
                         <configuration>
