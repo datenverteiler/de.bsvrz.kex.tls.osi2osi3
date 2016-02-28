@@ -219,7 +219,6 @@
                 </dependencies>
                 <configuration>
                     <finalName>SWE_${project.artifactId}_${distributionspaket.status}_V${project.version}_D${distributionspaket.standDatum}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
 <!--
                     <descriptorRefs>
                         <descriptorRef>distributionspaket</descriptorRef>
