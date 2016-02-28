@@ -188,15 +188,6 @@
                         <id>design-javadoc</id>
                         <goals>
                             <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <classifier>design-javadoc</classifier>
-                            <show>private</show>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-design-javadoc</id>
-                        <goals>
                             <goal>test-jar</goal>
                         </goals>
                         <configuration>
@@ -222,13 +213,12 @@
                 <dependencies>
                     <dependency>
                         <groupId>com.github.datenverteiler</groupId>
-                        <artifactId>systemelement-assembly</artifactId>
+                        <artifactId>datenverteiler-assembly</artifactId>
                         <version>1.0.0-SNAPSHOT</version>
                     </dependency>
                 </dependencies>
                 <configuration>
                     <finalName>SWE_${project.artifactId}_${distributionspaket.status}_V${project.version}_D${distributionspaket.standDatum}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
 <!--
                     <descriptorRefs>
                         <descriptorRef>distributionspaket</descriptorRef>
