@@ -17,9 +17,6 @@
         <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
         <kernsoftware.version>3.6.5</kernsoftware.version>
         <distributionspaket.status>FREI</distributionspaket.status>
-<!--
-        <distributionspaket.standDatum>${maven.build.timestamp}</distributionspaket.standDatum>
--->
         <distributionspaket.standDatum>2015-05-21</distributionspaket.standDatum>
         <distributionspaket.lizenz>GPLv2.0</distributionspaket.lizenz>
     </properties>
@@ -56,6 +53,42 @@
         <system>Travis-CI</system>
         <url>https://travis-ci.org/datenverteiler/${project.artifactId}/</url>
     </ciManagement>
+
+    <profiles>
+        <profile>
+            <id>bintray</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>bintray-datenverteiler-maven</id>
+                    <name>bintray</name>
+                    <url>http://dl.bintray.com/datenverteiler/maven</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>bintray-datenverteiler-maven</id>
+                    <name>bintray-plugins</name>
+                    <url>http://dl.bintray.com/datenverteiler/maven</url>
+                </pluginRepository>
+            </pluginRepositories>
+            <distributionManagement>
+                <repository>
+                    <id>bintray-datenverteiler-maven</id>
+                    <name>datenverteiler-maven</name>
+                    <url>https://api.bintray.com/maven/datenverteiler/maven/${project.artifactId}/;publish=1</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -126,12 +159,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>test-jar</id>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>runtime-jar</id>
                         <goals>
                             <goal>jar</goal>
@@ -164,7 +191,6 @@
                     <execution>
                         <goals>
                             <goal>jar</goal>
-                            <goal>test-jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -181,18 +207,15 @@
                         <id>api-javadoc</id>
                         <goals>
                             <goal>jar</goal>
-                            <goal>test-jar</goal>
                         </goals>
                     </execution>
                     <execution>
                         <id>design-javadoc</id>
                         <goals>
                             <goal>jar</goal>
-                            <goal>test-jar</goal>
                         </goals>
                         <configuration>
                             <classifier>design-javadoc</classifier>
-                            <testClassifier>test-design-javadoc</testClassifier>
                             <show>private</show>
                         </configuration>
                     </execution>
@@ -214,16 +237,11 @@
                     <dependency>
                         <groupId>com.github.datenverteiler</groupId>
                         <artifactId>datenverteiler-assembly</artifactId>
-                        <version>1.0.0-SNAPSHOT</version>
+                        <version>1.0.0</version>
                     </dependency>
                 </dependencies>
                 <configuration>
                     <finalName>SWE_${project.artifactId}_${distributionspaket.status}_V${project.version}_D${distributionspaket.standDatum}</finalName>
-<!--
-                    <descriptorRefs>
-                        <descriptorRef>distributionspaket</descriptorRef>
-                    </descriptorRefs>
--->
                     <descriptors>
                         <descriptor>src/assembly/distributionspaket-ohne-tests.xml</descriptor>
                     </descriptors>
