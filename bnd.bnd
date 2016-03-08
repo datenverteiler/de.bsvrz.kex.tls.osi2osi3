@@ -1,4 +1,6 @@
+-buildpath: lib/RXTXcomm.jar;version=file
 -exportcontents: de.bsvrz.kex.tls.osi2osi3.*
 -sources: true
 
 Bundle-Name: de.bsvrz.kex.tls.osi2osi3
+Import-Package: gnu.io;resolution:=optional,*
