@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi3;
@@ -49,7 +55,7 @@ import java.util.Properties;
  * Dient zur Initialisierung der OSI-2-Protokolle und der OSI-3 Routing-Tabellen.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 9602 $ kern
+ * @version $Revision$ kern
  */
 public class TlsNetworkInitializer {
 
@@ -72,25 +78,25 @@ public class TlsNetworkInitializer {
 			final SystemObjectType typeKri = _config.getType("typ.kri");
 			final SystemObjectType typeAntKri = _config.getType("typ.antKri");
 
-			AttributeGroup devicePropertiesAtg = _config.getAttributeGroup("atg.ger‰t");
+			AttributeGroup devicePropertiesAtg = _config.getAttributeGroup("atg.ger√§t");
 			AttributeGroup portPropertiesAtg = _config.getAttributeGroup("atg.anschlussPunkt");
 			AttributeGroup remotePortPropertiesAtg = _config.getAttributeGroup("atg.anschlussPunktKommunikationsPartner");
 
-			// Knotennummer des lokalen Ger‰ts bestimmen und setzen
+			// Knotennummer des lokalen Ger√§ts bestimmen und setzen
 			Data localDeviceProperties = localDevice.getConfigurationData(devicePropertiesAtg);
 			int localDeviceAddress = localDeviceProperties.getScaledValue("KnotenNummer").intValue();
 			networkLayer.setLocalDeviceAddress(localDeviceAddress);
 
-			//Schleife ¸ber alle Ger‰te
-			//   Schleife ¸ber alle AnschlussPunkte des lokalen Ger‰ts
-			//      Schleife ¸ber alle AnschlussPunktKommunikationsPartner
-			//         Bei lokalen Verbindungen OSI2-Protokoll initialisieren und dem networkLayer ¸bergeben
-			//         Nicht-lokale Verbindungen an networkLayer zwecks Routing ¸bergeben,
-			List allDevices = _config.getType("typ.ger‰t").getElements();
+			//Schleife √ºber alle Ger√§te
+			//   Schleife √ºber alle AnschlussPunkte des lokalen Ger√§ts
+			//      Schleife √ºber alle AnschlussPunktKommunikationsPartner
+			//         Bei lokalen Verbindungen OSI2-Protokoll initialisieren und dem networkLayer √ºbergeben
+			//         Nicht-lokale Verbindungen an networkLayer zwecks Routing √ºbergeben,
+			List allDevices = _config.getType("typ.ger√§t").getElements();
 
-			// folgende Zeile fragt die Ger‰teeigenschaften von allen Ger‰ten mit einer einzigen
+			// folgende Zeile fragt die Ger√§teeigenschaften von allen Ger√§ten mit einer einzigen
 			// Konfigurationsanfrage ab. Die Ergebnisse werden zwischengespeichert.
-			// Dito f¸r alle
+			// Dito f√ºr alle
 			_config.getConfigurationData(allDevices, devicePropertiesAtg);
 
 			List allPorts = _config.getType("typ.anschlussPunkt").getElements();
@@ -101,24 +107,24 @@ public class TlsNetworkInitializer {
 
 			for(Iterator deviceIterator = allDevices.iterator(); deviceIterator.hasNext(); ) {
 				ConfigurationObject device = (ConfigurationObject)deviceIterator.next();
-				// Knotennummer des entfernten Ger‰ts bestimmen
+				// Knotennummer des entfernten Ger√§ts bestimmen
 				Data deviceProperties = device.getConfigurationData(devicePropertiesAtg);
 				_debug.config("Device: " + device.getNameOrPidOrId());
 				if(deviceProperties == null) {
-					_debug.error("Am Objekt " + device.getNameOrPidOrId() + " fehlt der Datensatz der atg.ger‰t mit der Knotennummer");
-					throw new IllegalStateException("Am Objekt " + device.getNameOrPidOrId() + " fehlt der Datensatz der atg.ger‰t mit der Knotennummer");
+					_debug.error("Am Objekt " + device.getNameOrPidOrId() + " fehlt der Datensatz der atg.ger√§t mit der Knotennummer");
+					throw new IllegalStateException("Am Objekt " + device.getNameOrPidOrId() + " fehlt der Datensatz der atg.ger√§t mit der Knotennummer");
 				}
 				int deviceAddress = deviceProperties.getScaledValue("KnotenNummer").intValue();
-				ObjectSet devicePortSet = device.getObjectSet("AnschlussPunkteGer‰t");
+				ObjectSet devicePortSet = device.getObjectSet("AnschlussPunkteGer√§t");
 				if(devicePortSet != null) {
 					for(Iterator devicePortIterator = devicePortSet.getElements().iterator(); devicePortIterator.hasNext(); ) {
 						ConfigurationObject port = (ConfigurationObject)devicePortIterator.next();
 						Data portProperties = port.getConfigurationData(portPropertiesAtg);
 						long portAddress = portProperties.getScaledValue("PortNummer").longValue();
 						if((portAddress > 254) || (portAddress < 1)) {
-							_debug.error("Ung¸ltige PortNummer " + portAddress + " am Anschlusspunkt " + port);
+							_debug.error("Ung√ºltige PortNummer " + portAddress + " am Anschlusspunkt " + port);
 							// fehlerhafter Anschlusspunkt wir ignoriert
-							// Mit n‰chstem Anschlusspunkt weitermachen
+							// Mit n√§chstem Anschlusspunkt weitermachen
 							continue;
 						}
 						ObjectSet remotePortSet = port.getObjectSet("AnschlussPunkteKommunikationsPartner");
@@ -145,7 +151,7 @@ public class TlsNetworkInitializer {
 												+ "fehlgeschlagen: " + e
 										);
 										// fehlerhafter Anschlusspunkt wird ignoriert
-										// Mit n‰chstem Anschlusspunkt weitermachen
+										// Mit n√§chstem Anschlusspunkt weitermachen
 										continue;
 									}
 								}
@@ -158,7 +164,7 @@ public class TlsNetworkInitializer {
 								_debug.finest("Dauer der Abfrage von Konfigurationsdaten: " + (t1 - t0));
 								long remotePortAddress = remotePortProperties.getUnscaledValue("PortNummer").longValue();
 								SystemObject remoteDevice = remotePortProperties.getReferenceValue("KommunikationsPartner").getSystemObject();
-								// Knotennummer des entfernten Ger‰ts bestimmen
+								// Knotennummer des entfernten Ger√§ts bestimmen
 								Data remoteDeviceProperties = remoteDevice.getConfigurationData(devicePropertiesAtg);
 								int remoteDeviceAddress = remoteDeviceProperties.getScaledValue("KnotenNummer").intValue();
 								final boolean isLinkTransparent = (typeKri != null) && remoteDevice.isOfType(typeKri);
@@ -166,11 +172,11 @@ public class TlsNetworkInitializer {
 								final boolean dontIncrementOsi3Pointer = (typeAntKri != null) && remoteDevice.isOfType(typeAntKri);
 								DataLinkLayer upLinkLayer = null;
 								if(remoteDevice.equals(localDevice)) {
-									//Bei Verbindungen zum lokalen Ger‰t entsprechendes Protokoll initialisieren
+									//Bei Verbindungen zum lokalen Ger√§t entsprechendes Protokoll initialisieren
 									String portProtocol = remotePortProperties.getTextValue("ProtokollTyp").getText();
 									if(portProtocol.equals("")) {
 										_debug.warning(
-												"Die Verbindung zum Ger‰t '" + device + "' am " + "AnschlusspunktKommunikationspartner '" + remotePort + "' "
+												"Die Verbindung zum Ger√§t '" + device + "' am " + "AnschlusspunktKommunikationspartner '" + remotePort + "' "
 												+ "wird ignoriert, da kein Kommunikationsprotokoll angegeben wurde"
 										);
 										continue;
@@ -187,11 +193,11 @@ public class TlsNetworkInitializer {
 										}
 										catch(Exception e) {
 											_debug.error(
-													"Initialisierung des Kommunikationsprotokolls '" + portProtocol + "' " + "f¸r die Verbindung zum Ger‰t '"
+													"Initialisierung des Kommunikationsprotokolls '" + portProtocol + "' " + "f√ºr die Verbindung zum Ger√§t '"
 													+ device + "' " + "am AnschlusspunktKommunikationspartner '" + remotePort + "' " + "fehlgeschlagen: " + e
 											);
 											// fehlerhafter AnschlusspunktKommunikationspartner wird ignoriert
-											// Mit n‰chstem AnschlusspunktKommunikationspartner weitermachen
+											// Mit n√§chstem AnschlusspunktKommunikationspartner weitermachen
 											continue;
 										}
 									}
@@ -240,11 +246,11 @@ public class TlsNetworkInitializer {
 	}
 
 	/**
-	 * Diese Methode ersetzt die fr¸her (vor der Umstellung der Packagestruktur) verwendeten Klassennamen f¸r OSI-2 Module durch die neueren Namen.
+	 * Diese Methode ersetzt die fr√ºher (vor der Umstellung der Packagestruktur) verwendeten Klassennamen f√ºr OSI-2 Module durch die neueren Namen.
 	 *
 	 * @param portProtocol Evtl. zu ersetzende Klassenname
 	 *
-	 * @return Neuer Klassenname, falls der ¸bergebene Klassenname ersetzt werden muss; ¸bergebene Klassenname falls keine Ersetzung durchgef¸hrt wurde.
+	 * @return Neuer Klassenname, falls der √ºbergebene Klassenname ersetzt werden muss; √ºbergebene Klassenname falls keine Ersetzung durchgef√ºhrt wurde.
 	 */
 	private String convertOldClassname(final String portProtocol) {
 		String convertedName = null;
@@ -272,7 +278,7 @@ public class TlsNetworkInitializer {
 		receiver.subscribe();
 	}
 
-	/** Klasse zur An- und Abmeldung sowie f¸r den Empfang von Parameter-Datens‰tzen f¸r OSI-2-Protokolle und Verbindungen. */
+	/** Klasse zur An- und Abmeldung sowie f√ºr den Empfang von Parameter-Datens√§tzen f√ºr OSI-2-Protokolle und Verbindungen. */
 	private static class ProtocolSettingsParameterReceiver implements ClientReceiverInterface {
 
 		public enum SettingsType {
@@ -291,11 +297,11 @@ public class TlsNetworkInitializer {
 
 		/**
 		 * Aktualisierungsmethode, die nach Empfang eines Parameter-Datensatzes von den Datenverteiler-Applikationsfunktionen aufgerufen wird.
-		 * <p/>
+		 * <p>
 		 * Der Datensatz wird in ein Properties-Objekt konvertiert und mit der Methode {@link DataLinkLayer#setProperties(java.util.Properties)} an das Protokoll
-		 * ¸bergeben. Nach dem Empfang des ersten Datensatzes f¸r ein Protokoll wird das Protokoll gestartet.
+		 * √ºbergeben. Nach dem Empfang des ersten Datensatzes f√ºr ein Protokoll wird das Protokoll gestartet.
 		 *
-		 * @param results Feld mit den empfangenen Ergebnisdatens‰tzen.
+		 * @param results Feld mit den empfangenen Ergebnisdatens√§tzen.
 		 */
 		public void update(ResultData results[]) {
 			Properties properties = new Properties();
@@ -327,8 +333,8 @@ public class TlsNetworkInitializer {
 		 * Erzeugt ein neues Objekt der Klasse.
 		 *
 		 * @param connection      Datenverteiler-Verbindung.
-		 * @param port            Anschluﬂpunkt an dem die Parameter des Protokolls verwaltet werden.
-		 * @param linkOrLinkLayer OSI-2-Protokollinstanz bzw. OSI-2-Verbindung, die bei ƒnderungen informiert werden soll.
+		 * @param port            Anschlu√üpunkt an dem die Parameter des Protokolls verwaltet werden.
+		 * @param linkOrLinkLayer OSI-2-Protokollinstanz bzw. OSI-2-Verbindung, die bei √Ñnderungen informiert werden soll.
 		 */
 		public ProtocolSettingsParameterReceiver(ClientDavInterface connection, ConfigurationObject port, Object linkOrLinkLayer, SettingsType settingsType) {
 			_connection = connection;

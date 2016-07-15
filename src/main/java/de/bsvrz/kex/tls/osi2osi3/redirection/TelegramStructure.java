@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -29,7 +35,7 @@ import java.util.List;
  * Klasse mit Methoden zur Behandlung von OSI7 Telegrammen.
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 7106 $
+ * @version $Revision$
  * 
  */
 public class TelegramStructure {
@@ -43,17 +49,17 @@ public class TelegramStructure {
 
 	
 	/**
-	 * Konstruktor. Als Parameter wird ein OSI7-Telegramm übergeben.
+	 * Konstruktor. Als Parameter wird ein OSI7-Telegramm Ã¼bergeben.
 	 * 
 	 * @param osi7bytes
 	 *            Bytearray eines OSI7-Telegramm.
 	 */
 	public TelegramStructure(byte[] osi7bytes) {
 		if(osi7bytes == null) {
-			_debug.warning("Null als OSI7-Telegramm übergeben", osi7bytes);
+			_debug.warning("Null als OSI7-Telegramm Ã¼bergeben", osi7bytes);
 		}
 		else if(osi7bytes.length < 4) {
-			_debug.warning("OSI7-Telegramm mit weniger als 4 Bytes übergeben", osi7bytes);
+			_debug.warning("OSI7-Telegramm mit weniger als 4 Bytes Ã¼bergeben", osi7bytes);
 		}
 		else {
 			_nodeNumber = (((int)osi7bytes[0]) & 0xff) | ((((int)osi7bytes[1]) & 0xff) << 8) | ((((int)osi7bytes[2]) & 0xff) << 16);
@@ -71,7 +77,7 @@ public class TelegramStructure {
 	}
 	
 	/**
-	 * Konstruktor. Als Parameter wird die Knotennummer übergeben.
+	 * Konstruktor. Als Parameter wird die Knotennummer Ã¼bergeben.
 	 * 
 	 * @param nodeNumber
 	 *            Knotennummer
@@ -86,7 +92,7 @@ public class TelegramStructure {
 	}
 
 	/**
-	 * Konstruktor. Als Parameter wird die Knotennummer und eine Liste der Einzeltelegramme übergeben.
+	 * Konstruktor. Als Parameter wird die Knotennummer und eine Liste der Einzeltelegramme Ã¼bergeben.
 	 * 
 	 * @param nodeNumber
 	 *            Knotennummer
@@ -100,7 +106,7 @@ public class TelegramStructure {
 
 	
 	/**
-	 * Liefert die Funktionsgruppe des Einzeltelegramms zurück.
+	 * Liefert die Funktionsgruppe des Einzeltelegramms zurÃ¼ck.
 	 * 
 	 * @param singleTelegram
 	 *            Einzeltelegramm
@@ -111,7 +117,7 @@ public class TelegramStructure {
 	}
 	
 	/**
-	 * Gibt das OSI7 Telegramm als Byte-Array zurück.
+	 * Gibt das OSI7 Telegramm als Byte-Array zurÃ¼ck.
 	 * 
 	 * @return OSI7 Telegramm als Byte-Array
 	 */
@@ -134,7 +140,7 @@ public class TelegramStructure {
 	}
 	
 	/**
-	 * Gibt die Knotennummer des OSI7-Telegramms zurück.
+	 * Gibt die Knotennummer des OSI7-Telegramms zurÃ¼ck.
 	 * 
 	 * @return Knotennummer
 	 */
@@ -143,7 +149,7 @@ public class TelegramStructure {
 	}
 	
 	/**
-	 * Gibt die Einzeltelegramme des OSI7 Telegramms zurück.
+	 * Gibt die Einzeltelegramme des OSI7 Telegramms zurÃ¼ck.
 	 * 
 	 * @return Liste mit Bytearrays der Einzeltelegramme
 	 */

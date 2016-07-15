@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi3;
@@ -38,7 +44,7 @@ import java.util.*;
  * Implementierung der TLS-OSI-3 Netzwerkebene.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 13027 $
+ * @version $Revision$
  */
 public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 
@@ -106,10 +112,10 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Methode zum Versenden von Telegrammen mit vorgegebener Priorit‰t
+	 * Methode zum Versenden von Telegrammen mit vorgegebener Priorit√§t
 	 *
 	 * @param destination  Knotennummer, an die gesendet werden soll
-	 * @param priority     Priorit‰t, unter der das Telegramm versendet werden soll
+	 * @param priority     Priorit√§t, unter der das Telegramm versendet werden soll
 	 * @param data         Bytearray Telegrammdaten OSI7
 	 * @param longTelegram true = Es soll ein Langtelegramm verschickt werden, das nicht der TLS-Norm entspricht
 	 *
@@ -119,7 +125,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	public void sendData(int destination, int priority, byte[] data, boolean longTelegram) throws DestinationUnreachableException {
 		_debug.fine("TlsNetworkLayer.send: Soll Daten der Klasse " + priority + " an Knoten " + destination + " senden");
 		_debug.finer(HexDumper.toString(data));
-		if(priority < 1 || priority > 2) throw new IllegalArgumentException("Ung¸ltige Priorit‰t");
+		if(priority < 1 || priority > 2) throw new IllegalArgumentException("Ung√ºltige Priorit√§t");
 		if(data == null) throw new IllegalArgumentException("Keine Daten");
 		boolean normalProcessing = true;
 		if(!longTelegram) {
@@ -130,7 +136,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 			sendWithoutRedirection(destination, priority, data, longTelegram);
 		}
 		else {
-			_debug.fine("TlsNetworkLayer.send: Die Daten der Klasse " + priority + " an Knoten " + destination + " wurden unterdr¸ckt");
+			_debug.fine("TlsNetworkLayer.send: Die Daten der Klasse " + priority + " an Knoten " + destination + " wurden unterdr√ºckt");
 			_debug.finer(HexDumper.toString(data));
 		}
 	}
@@ -144,15 +150,15 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 		}
 		RouteInfo routeInfo = getRouteInfo(destination);
 		if(routeInfo == null) {
-			throw new DestinationUnreachableException("Keine Route versorgt f¸r Zielknoten " + destination);
+			throw new DestinationUnreachableException("Keine Route versorgt f√ºr Zielknoten " + destination);
 		}
 		byte[] tlsOsi3Header = routeInfo._tlsOsi3Header;
 		if(tlsOsi3Header == null) {
-			throw new DestinationUnreachableException("Routing nicht ermittelbar f¸r Zielknoten " + destination);
+			throw new DestinationUnreachableException("Routing nicht ermittelbar f√ºr Zielknoten " + destination);
 		}
 		DataLinkLayer.Link link = routeInfo._firstLinkInfo._link;
 		if(link == null) {
-			throw new DestinationUnreachableException("kein Protokoll f¸r ersten Vermittlungsabschnitt versorgt. Zielknoten " + destination);
+			throw new DestinationUnreachableException("kein Protokoll f√ºr ersten Vermittlungsabschnitt versorgt. Zielknoten " + destination);
 		}
 		if(!longTelegram) {
 			// Es ist kein Langtelegramm, also keine Sonderbehandlung
@@ -163,7 +169,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 
 			if(_longTelegramSegmenter == null) {
 				// Das Objekt wird erzeugt, wenn ein Langtelegramm verschickt werden soll.
-				// Threads und Speicher werden also erst dann angefordert, wenn sie auch wirklich benˆtigt werden
+				// Threads und Speicher werden also erst dann angefordert, wenn sie auch wirklich ben√∂tigt werden
 				_longTelegramSegmenter = new Osi7LongTelegramSegment(_localDeviceAddress, this);
 			}
 
@@ -188,13 +194,13 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 			System.arraycopy(data, 0, frame, tlsOsi3Header.length, data.length);
 		}
 
-		//Prio im ersten Routingbyte eintragen, oberstes Bit wird bei Priorit‰tsklasse 2 gesetzt
+		//Prio im ersten Routingbyte eintragen, oberstes Bit wird bei Priorit√§tsklasse 2 gesetzt
 		if(priority == PRIORITY_CLASS_2) frame[0] |= 0x80;
 		try {
 			link.send(frame, priority);
 		}
 		catch(UnsupportedOperationException e) {
-			throw new DestinationUnreachableException("Versand wird vom OSI-2 Protokoll nicht unterst¸tzt: " + e);
+			throw new DestinationUnreachableException("Versand wird vom OSI-2 Protokoll nicht unterst√ºtzt: " + e);
 		}
 		catch(InterruptedException e) {
 			throw new DestinationUnreachableException("Versand wurde unterbrochen: " + e);
@@ -213,14 +219,14 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Weiterleitung eines empfangenen Langtelegramms an die Osi7 Schicht, falls es vollst‰ndig ist.
+	 * Weiterleitung eines empfangenen Langtelegramms an die Osi7 Schicht, falls es vollst√§ndig ist.
 	 *
 	 * @param sender Absender des Telegramms
-	 * @param data   Telegramm/Nutzdaten f¸r die Osi7 Schicht
+	 * @param data   Telegramm/Nutzdaten f√ºr die Osi7 Schicht
 	 */
 	private void notifyLongReceive(int sender, byte[] data) {
 
-		// Es wurde ein Langtelegramm, bzw. ein Teil empfangen. Dies wird eingef¸gt, bzw ein neues Langtelegramm wird erzeugt.
+		// Es wurde ein Langtelegramm, bzw. ein Teil empfangen. Dies wird eingef√ºgt, bzw ein neues Langtelegramm wird erzeugt.
 		if(_longTelegramCombiner.telegramReceived(data) == true) {
 			// Langtelegramm anfordern, damit das richtige Langtelegramm gefunden werden kann, wird das letzte Teiltelegramm
 			// mitgegeben
@@ -237,7 +243,8 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 						String nl = System.getProperty("line.separator");
 						_debug.error(
 								"Ausnahme bei Aufruf von dataReceived des NetworkLayerListeners " + nl + "Listener: " + listener + nl + "Exception: " + e + nl
-								+ "Knotennummer Absender: " + sender + nl + "data: " + HexDumper.toString(data) + "Langtelegramm: true"
+								+ "Knotennummer Absender: " + sender + nl + "data: " + HexDumper.toString(data) + "Langtelegramm: true",
+								e
 						);
 						e.printStackTrace();
 					}
@@ -250,7 +257,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	 * Weiterleitung eines empfangenen Telegramms an die Osi7-Schicht.
 	 *
 	 * @param sender Absender des Telegramms
-	 * @param data   Telegramm/Nutzdaten f¸r die Osi7 Schicht
+	 * @param data   Telegramm/Nutzdaten f√ºr die Osi7 Schicht
 	 */
 	private void notifyReceive(int sender, byte[] data) {
 		synchronized(_networkLayerListeners) {
@@ -258,9 +265,9 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 			while(iterator.hasNext()) {
 				NetworkLayerListener listener = ((NetworkLayerListener)iterator.next());
 				try {
-					// dataReceived(sender, data) gibt ein byte[] zur¸ck.
+					// dataReceived(sender, data) gibt ein byte[] zur√ºck.
 					// Wenn leeres byte[] => Keine lokale Verarbeitung
-					// Die Mindestgrˆﬂe des Byte-Arrays sollte >= 9 sein
+					// Die Mindestgr√∂√üe des Byte-Arrays sollte >= 9 sein
 					// OSI7 Telegramm (Allgemeiner Telegrammkopf (4 Bytes) + Einzeltelegrammkopf (5 Bytes)
 					final byte[] normalProcessingBytes = _telegramProcessor.dataReceived(sender, data);
 					if(normalProcessingBytes.length >= 9) listener.dataReceived(sender, normalProcessingBytes, false);
@@ -269,7 +276,8 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 					String nl = System.getProperty("line.separator");
 					_debug.error(
 							"Ausnahme bei Aufruf von dataReceived des NetworkLayerListeners " + nl + "Listener: " + listener + nl + "Exception: " + e + nl
-							+ "Knotennummer Absender: " + sender + nl + "data: " + HexDumper.toString(data) + "Langtelegramm: false"
+							+ "Knotennummer Absender: " + sender + nl + "data: " + HexDumper.toString(data) + "Langtelegramm: false",
+							e
 					);
 					e.printStackTrace();
 				}
@@ -278,13 +286,13 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Benachrichtigung der Osi7-Listener ¸ber die ƒnderung eines Verbindungsstatus
+	 * Benachrichtigung der Osi7-Listener √ºber die √Ñnderung eines Verbindungsstatus
 	 *
-	 * @param device Zustands‰nderung von diesem Ger‰t
-	 * @param state  Zustand der Verbindung. 0 steht f¸r verbunden, sonst ist die Verbindung unterbrochen.
+	 * @param device Zustands√§nderung von diesem Ger√§t
+	 * @param state  Zustand der Verbindung. 0 steht f√ºr verbunden, sonst ist die Verbindung unterbrochen.
 	 */
 	private void notifyStateChange(int device, int state) {
-		_debug.info("Status‰nderung: Knoten " + device + ", Status " + (state == 0 ? "VERBUNDEN" : "UNTERBROCHEN"));
+		_debug.info("Status√§nderung: Knoten " + device + ", Status " + (state == 0 ? "VERBUNDEN" : "UNTERBROCHEN"));
 		synchronized(_networkLayerListeners) {
 			Iterator iterator = _networkLayerListeners.iterator();
 			while(iterator.hasNext()) {
@@ -296,7 +304,8 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 					String nl = System.getProperty("line.separator");
 					_debug.error(
 							"Ausnahme bei Aufruf von stateChanged des NetworkLayerListeners " + nl + "Listener: " + listener + nl + "Exception: " + e + nl
-							+ "Knotennummer Ger‰t: " + device + nl + "state: " + state
+							+ "Knotennummer Ger√§t: " + device + nl + "state: " + state,
+							e
 					);
 					e.printStackTrace();
 				}
@@ -305,8 +314,8 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Es wird gepr¸ft ob die Option auf ReduzierungAufSteuerbyte aktiviert ist, d.h. der Osi3-Header wird auf das Steuerbyte reduziert (Osi3-Routinginformationen
-	 * entfernt) Falls keine Einstellung daf¸r vorhanden ist, wird das Telegram normal (mit Osi3-Routinginformationen) weitergeleitet.
+	 * Es wird gepr√ºft ob die Option auf ReduzierungAufSteuerbyte aktiviert ist, d.h. der Osi3-Header wird auf das Steuerbyte reduziert (Osi3-Routinginformationen
+	 * entfernt) Falls keine Einstellung daf√ºr vorhanden ist, wird das Telegram normal (mit Osi3-Routinginformationen) weitergeleitet.
 	 *
 	 * @param link Verbindung, von der die Einstellungen bezogen werden
 	 *
@@ -321,7 +330,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 			catch(IllegalArgumentException ex) {
 				_debug.warning(
 						"Der Parameter atg.protokollEinstellungenStandard, " + TlsNetworkLayerSetting.reduceToControlByte
-						+ " hat einen ung¸ltigen Wert.\n", ex
+						+ " hat einen ung√ºltigen Wert.\n", ex
 				);
 			}
 		}
@@ -330,8 +339,8 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 
 	/**
 	 * Wird aufgerufen, wenn ein Daten-Telegramm von der Osi2 Schnittstelle empfangen wird.
-	 * <p/>
-	 * Wenn das Telegramm keine Informationen ¸ber den Verbindungdstatus beinhaltet, wird das Telegram anhand des Osi3-Header-Information (Steuerbyte und
+	 * <p>
+	 * Wenn das Telegramm keine Informationen √ºber den Verbindungdstatus beinhaltet, wird das Telegram anhand des Osi3-Header-Information (Steuerbyte und
 	 * Routinginformationen) ausgewertet und weitergeleitet.
 	 *
 	 * @param event Beinhaltet das Telegram und die verwendeten Schnittstellen-Informationen.
@@ -342,7 +351,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 			try {
 				final DataLinkLayer.Link link = event.getLink();
 				if(link == null) {
-					// Daten wurden nicht ¸ber eine OSI-2 Verbindung empfangen, dies kann nur durch die
+					// Daten wurden nicht √ºber eine OSI-2 Verbindung empfangen, dies kann nur durch die
 					// Loopback-Funktion, d.h. Aufruf der sendData-Funktion mit dem lokalen Knoten als
 					// Ziel passieren. In diesem Fall ist kein OSI-3 Header in den Daten enthalten.
 					_debug.info("Daten via Loopback empfangen, Absender: " + _localDeviceAddress + "\nOSI7: " + HexDumper.toString(data));
@@ -352,11 +361,11 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 				final int osi3HeaderByte = data[0] & 0xff;
 				final int osi3Pointer = osi3HeaderByte & 0x07;
 				final int osi3Length = (osi3HeaderByte >>> 3) & 0x07;
-				// Wenn oberstes Bit 0 ist, dann wird Priorit‰tsklasse
+				// Wenn oberstes Bit 0 ist, dann wird Priorit√§tsklasse
 				final int osi3PriorityClass = ((osi3HeaderByte & 0x80) == 0) ? PRIORITY_CLASS_1 : PRIORITY_CLASS_2;
 				final int dataOffset = 1 + osi3Length * 2;
-				if(dataOffset > data.length) throw new Exception("OSI 3 L‰ngenangabe fehlerhaft");
-				if(osi3Pointer > osi3Length) throw new Exception("OSI 3 Pointer grˆﬂer als OSI 3 L‰nge");
+				if(dataOffset > data.length) throw new Exception("OSI 3 L√§ngenangabe fehlerhaft");
+				if(osi3Pointer > osi3Length) throw new Exception("OSI 3 Pointer gr√∂√üer als OSI 3 L√§nge");
 				final byte[] nextLayerData = new byte[data.length - dataOffset];
 				System.arraycopy(data, dataOffset, nextLayerData, 0, nextLayerData.length);
 				final byte[] osi3HeaderData = new byte[dataOffset];
@@ -372,20 +381,20 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 				if(!osi3IgnoreReceivedAddress && osi3Pointer != 0 && osi3Pointer < osi3Length) {
 					// Telegramm muss weiter vermittelt werden
 
-					// Verbindungsinfo zu n‰chstem Vermittlungsabschnitt bestimmen
+					// Verbindungsinfo zu n√§chstem Vermittlungsabschnitt bestimmen
 					int newOsi3Pointer = osi3Pointer + 1;
 					final int portAddress1 = osi3HeaderData[newOsi3Pointer * 2 - 1] & 0xff;
 					final int portAddress2 = osi3HeaderData[newOsi3Pointer * 2] & 0xff;
 					LinkInfo linkInfo = findLinkInfo(_localDeviceAddress, portAddress1, portAddress2, true);
 					if(linkInfo == null) {
 						throw new Exception(
-								"Keine Verbindung zur OSI-3 Vermittlung ¸ber Vermittlungsabschnitt " + newOsi3Pointer + " (" + portAddress1 + "->"
+								"Keine Verbindung zur OSI-3 Vermittlung √ºber Vermittlungsabschnitt " + newOsi3Pointer + " (" + portAddress1 + "->"
 								+ portAddress2 + ")"
 						);
 					}
 					if(linkInfo._link == null) {
 						throw new Exception(
-								"Keine Kommunikation auf Verbindung zur OSI-3 Vermittlung ¸ber Vermittlungsabschnitt " + newOsi3Pointer + " (" + portAddress1
+								"Keine Kommunikation auf Verbindung zur OSI-3 Vermittlung √ºber Vermittlungsabschnitt " + newOsi3Pointer + " (" + portAddress1
 								+ "->" + portAddress2 + ")"
 						);
 					}
@@ -397,9 +406,9 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 					//Der Einfachheit halber wird hier das ganze Byte incrementiert, betroffen ist aber nur der osi3Pointer in den unteren 3 Bits
 					if(!linkInfo._dontIncrementOsi3Pointer) osi3HeaderData[0] = (byte)(osi3HeaderByte + 1);
 
-					//Es wird gepr¸ft ob die Option auf ReduzierungAufSteuerbyte aktiviert ist,
+					//Es wird gepr√ºft ob die Option auf ReduzierungAufSteuerbyte aktiviert ist,
 					//d.h. das Telegram wird auf das Steuerbyte reduziert (Osi3 Routinginformationen entfernt)
-					//Falls keine Einstellung daf¸r vorhanden ist, wird das Telegram normal (mit Osi3 Routinginformationen)
+					//Falls keine Einstellung daf√ºr vorhanden ist, wird das Telegram normal (mit Osi3 Routinginformationen)
 					//weitergeleitet
 					if(isReducingToControlByte(link)) {
 						sendData(linkInfo._link, osi3PriorityClass, new byte[]{0}, nextLayerData);
@@ -416,7 +425,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 					// Zielknoten des Telegramms ist erreicht
 					int senderDevice = 0;
 					int lastDevice = -1;
-					// Bestimmen der Verbindung ¸ber die das Telegramm empfangen wurde, dazu werden statt OSI-3 Adressen
+					// Bestimmen der Verbindung √ºber die das Telegramm empfangen wurde, dazu werden statt OSI-3 Adressen
 					// OSI-2 Adressen benutzt
 					LinkInfo inputLinkInfo = findLinkInfo(
 							_localDeviceAddress, event.getDataLinkLayer().getLocalAddress(), event.getLink().getRemoteAddress(), false
@@ -424,13 +433,13 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 					_debug.fine(inputLinkInfo == null ? "Kein weg gefunden." : "Ein Weg gefunden zu " + inputLinkInfo);
 					// Bestimmen des Absender-Knotens des Telegramms mithilfe der OSI-2 oder OSI-3 Adressen
 					if(osi3IgnoreReceivedAddress || osi3Length == 0) {
-						// Bei Null-Routing wird als Absender-Knoten das auf der OSI-2 Verbindung gegen¸berliegende Ger‰t verwendet
+						// Bei Null-Routing wird als Absender-Knoten das auf der OSI-2 Verbindung gegen√ºberliegende Ger√§t verwendet
 						senderDevice = inputLinkInfo._remoteDevice;
 					}
 					else {
 						if(osi3Pointer == 0) {
 							//OSI3-Routing beim Empfang spiegeln (optional, bei ANT-KRI ist das Spiegeln implizit enthalten)
-							//Mit diesem Schalter muss die Mˆglichkeit bestehen, die Eigenschaft des ANT-KRI nachzubilden.
+							//Mit diesem Schalter muss die M√∂glichkeit bestehen, die Eigenschaft des ANT-KRI nachzubilden.
 							boolean shouldReflectOsi3Routing = false;
 							if(link.getProperty(TlsNetworkLayerSetting.reflectOsi3Routing) != null) {
 								try {
@@ -439,13 +448,13 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 								catch(IllegalArgumentException ex) {
 									_debug.warning(
 											"Der Parameter atg.protokollEinstellungenPrimary, " + TlsNetworkLayerSetting.reflectOsi3Routing
-											+ " hat einen ung¸ltigen Wert.\n" , ex
+											+ " hat einen ung√ºltigen Wert.\n" , ex
 									);
 								}
 							}
 
 							if(inputLinkInfo._mirroredReceive || shouldReflectOsi3Routing) {
-								// zur¸ck spiegeln der vom ANT-KRI bereits gespiegelten OSI3
+								// zur√ºck spiegeln der vom ANT-KRI bereits gespiegelten OSI3
 								for(int i = osi3HeaderData.length - 1; i > 0; i--) {
 									osi3HeaderData[i] = data[osi3HeaderData.length - i];
 								}
@@ -454,7 +463,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 								throw new Exception("OSI 3 Pointer ist 0");
 							}
 						}
-						// Ausgehend vom lokalen Ger‰t wird ¸ber die Vermittlungsabschnitte in der
+						// Ausgehend vom lokalen Ger√§t wird √ºber die Vermittlungsabschnitte in der
 						// OSI-3-Adresse ausgehend vom letzten iteriert. Zum Schluss ergibt sich dadurch die Knotennummer
 						// des Absenders.
 						senderDevice = _localDeviceAddress;
@@ -466,7 +475,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 								linkInfo = findLinkInfo(senderDevice, portAddress2, portAddress1, true, lastDevice);
 								if(linkInfo == null) {
 									throw new Exception(
-											"Unbekannte Adresse im " + i + ". OSI-3 Vermittlungsabschnitt" + " (von Ger‰t " + senderDevice + " ¸ber Port "
+											"Unbekannte Adresse im " + i + ". OSI-3 Vermittlungsabschnitt" + " (von Ger√§t " + senderDevice + " √ºber Port "
 											+ portAddress2 + " nach Adresse " + portAddress1 + ", i=" + i + ")"
 									);
 								}
@@ -480,7 +489,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 							"Daten empfangen, Absender: " + senderDevice, new Object() {
 						public String toString() {
 							// Die toString-Methode wird nur aufgerufen, wenn das Debug-Level hoch genug eingestellt ist.
-							// Die aufw‰ndigen HexDumps werden also nur dann durchgef¸hrt, wenn sie auch benˆtigt werden.
+							// Die aufw√§ndigen HexDumps werden also nur dann durchgef√ºhrt, wenn sie auch ben√∂tigt werden.
 							return "\nOSI3:\n" + HexDumper.toString(data, 0, dataOffset) + "\nOSI7:\n" + HexDumper.toString(data, dataOffset, -1);
 						}
 					}
@@ -515,9 +524,9 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Setzt die Knotennummer des lokalen Ger‰ts.
+	 * Setzt die Knotennummer des lokalen Ger√§ts.
 	 *
-	 * @param localDeviceAddress Knotennummer des lokalen Ger‰ts.
+	 * @param localDeviceAddress Knotennummer des lokalen Ger√§ts.
 	 */
 	void setLocalDeviceAddress(int localDeviceAddress) {
 		_debug.config("lokale Addresse KNr-" + localDeviceAddress);
@@ -525,7 +534,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Map, ¸ber die sich die von einem Ger‰t ausgehenden Verbindungen bestimmen lassen. Als Key der Map wird ein Integer-Objekt mit der Knotennummer des Ger‰ts
+	 * Map, √ºber die sich die von einem Ger√§t ausgehenden Verbindungen bestimmen lassen. Als Key der Map wird ein Integer-Objekt mit der Knotennummer des Ger√§ts
 	 * benutzt. Als Wert ist je Knoten ein List-Objekt mit LinkInfo-Objekten der Verbindungen enthalten.
 	 */
 	private Map _device2LinksMap = new HashMap();
@@ -533,31 +542,31 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	private TelegramProcessor _telegramProcessor;
 
 	/**
-	 * Sucht eine Verbindung  ausgehend von einem vorgegebenen Ger‰t ¸ber ein bestimmtes Adressenpaar.
+	 * Sucht eine Verbindung  ausgehend von einem vorgegebenen Ger√§t √ºber ein bestimmtes Adressenpaar.
 	 *
-	 * @param device                  Ger‰t von dem aus gesucht werden soll.
-	 * @param portAddress             Port-Adresse am Ger‰t von dem die gesuchte Verbindung ausgeht.
-	 * @param remotePortAdress        Port-Adresse des anderen Ger‰ts an dem die gesuchte Verbindung ankommt.
+	 * @param device                  Ger√§t von dem aus gesucht werden soll.
+	 * @param portAddress             Port-Adresse am Ger√§t von dem die gesuchte Verbindung ausgeht.
+	 * @param remotePortAdress        Port-Adresse des anderen Ger√§ts an dem die gesuchte Verbindung ankommt.
 	 * @param resolveTransparentLinks Flag, das gesetzt sein muss, wenn bei Verbindungen, die auf OSI-3 Ebene transparent sind, (also Verbindungen zu KRI) rekursiv
 	 *                                weitergesucht werden soll.
 	 *
-	 * @return Gew¸nschtes LinkInfo Objekt oder null, wenn keine entsprechende Verbindung gefunden wurde.
+	 * @return Gew√ºnschtes LinkInfo Objekt oder null, wenn keine entsprechende Verbindung gefunden wurde.
 	 */
 	private LinkInfo findLinkInfo(int device, int portAddress, int remotePortAdress, boolean resolveTransparentLinks) {
 		return findLinkInfo(device, portAddress, remotePortAdress, resolveTransparentLinks, -1);
 	}
 
 	/**
-	 * Sucht eine Verbindung  ausgehend von einem vorgegebenen Ger‰t ¸ber ein bestimmtes Adressenpaar.
+	 * Sucht eine Verbindung  ausgehend von einem vorgegebenen Ger√§t √ºber ein bestimmtes Adressenpaar.
 	 *
-	 * @param device                  Ger‰t von dem aus gesucht werden soll.
-	 * @param portAddress             Port-Adresse am Ger‰t von dem die gesuchte Verbindung ausgeht.
-	 * @param remotePortAdress        Port-Adresse des anderen Ger‰ts an dem die gesuchte Verbindung ankommt.
+	 * @param device                  Ger√§t von dem aus gesucht werden soll.
+	 * @param portAddress             Port-Adresse am Ger√§t von dem die gesuchte Verbindung ausgeht.
+	 * @param remotePortAdress        Port-Adresse des anderen Ger√§ts an dem die gesuchte Verbindung ankommt.
 	 * @param resolveTransparentLinks Flag, das gesetzt sein muss, wenn bei Verbindungen, die auf OSI-3 Ebene transparent sind, (also Verbindungen zu KRI) rekursiv
 	 *                                weitergesucht werden soll.
-	 * @param ignoreDevice            Verbindungen zum angegebenen Ger‰t sollen bei der Suche ignoriert werden, um zyklische rekursive Aufrufe zu unterbinden.
+	 * @param ignoreDevice            Verbindungen zum angegebenen Ger√§t sollen bei der Suche ignoriert werden, um zyklische rekursive Aufrufe zu unterbinden.
 	 *
-	 * @return Gew¸nschtes LinkInfo Objekt oder null, wenn keine entsprechende Verbindung gefunden wurde.
+	 * @return Gew√ºnschtes LinkInfo Objekt oder null, wenn keine entsprechende Verbindung gefunden wurde.
 	 */
 	private LinkInfo findLinkInfo(int device, int portAddress, int remotePortAdress, boolean resolveTransparentLinks, int ignoreDevice) {
 		_debug.fine("findLinkInfo( " + device + ", " + portAddress + ", " + remotePortAdress + ", " + resolveTransparentLinks + " )");
@@ -566,9 +575,9 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 		for(Iterator linkIterator = deviceLinks.iterator(); linkIterator.hasNext(); ) {
 			LinkInfo linkInfo = (LinkInfo)linkIterator.next();
 			if(resolveTransparentLinks && linkInfo._linkIsTransparent) {
-				// Es wird nicht das Ergebnis des rekursiven Aufrufs zur¸ckgegeben, weil dann bei transparenten
-				// Verbindungen die letzte (und nicht transparente Verbindung) als Ergebnis zur¸ckgegeben w¸rde.
-				// Da die Funktion immer die erste Verbindung, die auf dem Weg zum Ziel liegt, zur¸ckgeben soll
+				// Es wird nicht das Ergebnis des rekursiven Aufrufs zur√ºckgegeben, weil dann bei transparenten
+				// Verbindungen die letzte (und nicht transparente Verbindung) als Ergebnis zur√ºckgegeben w√ºrde.
+				// Da die Funktion immer die erste Verbindung, die auf dem Weg zum Ziel liegt, zur√ºckgeben soll
 				// (auch wenn sie transparent ist) wird der rekursive Aufruf nur benutzt, um abzufragen, ob es
 				// das gesuchte Adressenpaar hinter dem transparenten Link gibt.
 				if(ignoreDevice != linkInfo._remoteDevice && findLinkInfo(linkInfo._remoteDevice, portAddress, remotePortAdress, true, device) != null) {
@@ -630,11 +639,11 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 
 
 	/**
-	 * Suchalgorithmus zur Ermittlung aller mˆglichen Routen zu anderen Ger‰ten. Der Algorithmus arbeitet nicht rekursiv nach unten, sondern etagenweise
-	 * (breadth-first-search) um bei einem Netz mit Maschen die jeweils k¸rzeste Route zu jedem erreichbaren anderen Knoten zu ermitteln. Ausgehend von einer
-	 * Liste, die nur den lokalen Knoten enth‰lt werden alle Knoten in spiralfˆrmiger Weise iteriert und jeweils das Routing initialisiert und alle noch nicht
-	 * bearbeiteten Ger‰te, die ausgehend vom jeweils bearbeiteten Ger‰t eine direkte Verbindung haben werden hinten an die Liste angehangen. Als erstes wird ein
-	 * spezielles Routing f¸r das lokale Ger‰t selbst eintragen, damit man auch Telegramme an sich selbst senden kann.
+	 * Suchalgorithmus zur Ermittlung aller m√∂glichen Routen zu anderen Ger√§ten. Der Algorithmus arbeitet nicht rekursiv nach unten, sondern etagenweise
+	 * (breadth-first-search) um bei einem Netz mit Maschen die jeweils k√ºrzeste Route zu jedem erreichbaren anderen Knoten zu ermitteln. Ausgehend von einer
+	 * Liste, die nur den lokalen Knoten enth√§lt werden alle Knoten in spiralf√∂rmiger Weise iteriert und jeweils das Routing initialisiert und alle noch nicht
+	 * bearbeiteten Ger√§te, die ausgehend vom jeweils bearbeiteten Ger√§t eine direkte Verbindung haben werden hinten an die Liste angehangen. Als erstes wird ein
+	 * spezielles Routing f√ºr das lokale Ger√§t selbst eintragen, damit man auch Telegramme an sich selbst senden kann.
 	 */
 	public void completeInitialization() {
 		Integer localDevice = new Integer(_localDeviceAddress);
@@ -647,26 +656,26 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 			RouteInfo route = getRouteInfo(device);
 			List links = (List)_device2LinksMap.get(device);
 			if(links == null) {
-				_debug.warning("keine g¸ltige Verbindung am Ger‰t mit Knotennummer " + device + " gefunden");
+				_debug.warning("keine g√ºltige Verbindung am Ger√§t mit Knotennummer " + device + " gefunden");
 				continue;
 			}
-			// Schleife ¸ber alle Verbindungen am jeweils betrachteten Ger‰t
+			// Schleife √ºber alle Verbindungen am jeweils betrachteten Ger√§t
 			for(Iterator linksIterator = links.iterator(); linksIterator.hasNext(); ) {
 				LinkInfo link = (LinkInfo)linksIterator.next();
 				Integer remoteDevice = new Integer(link._remoteDevice);
 				RouteInfo remoteRoute = getRouteInfo(remoteDevice);
-				//Feststellen, ob bereits Route zum Ger‰t auf neuem Link vorhanden ist.
-				// Wenn ja, dann wird die neue Route ignoriert, weil sie nicht k¸rzer als die bestehende Route ist.
-				// Wenn nein, dann wird die neue Route eingetragen und das neue Ger‰t in spiral eingetragen, damit
-				// es in einem sp‰teren Durchlauf der while-Schleife auch die Routings der ¸ber das neue Ger‰t
-				// erreichbaren Ger‰te ber¸cksichtigt werden.
+				//Feststellen, ob bereits Route zum Ger√§t auf neuem Link vorhanden ist.
+				// Wenn ja, dann wird die neue Route ignoriert, weil sie nicht k√ºrzer als die bestehende Route ist.
+				// Wenn nein, dann wird die neue Route eingetragen und das neue Ger√§t in spiral eingetragen, damit
+				// es in einem sp√§teren Durchlauf der while-Schleife auch die Routings der √ºber das neue Ger√§t
+				// erreichbaren Ger√§te ber√ºcksichtigt werden.
 				if(remoteRoute == null) {
 					// neue Route eintragen: neue Route = alte route + neue Verbindung;
 					remoteRoute = new RouteInfo(route, link);
 					putRouteInfo(remoteDevice, remoteRoute);
-					//... neues Ger‰t in spiral aufnehmen
+					//... neues Ger√§t in spiral aufnehmen
 					spiral.addLast(remoteDevice);
-					// Ger‰te, die direkt hinter dem aktuellen Ger‰t liegen, am aktuellen Ger‰t vermerken
+					// Ger√§te, die direkt hinter dem aktuellen Ger√§t liegen, am aktuellen Ger√§t vermerken
 					putRemoteDevice(device, remoteDevice);
 				}
 			}
@@ -674,11 +683,11 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Speichert zu einem Ausgangsger‰t ein direkt an diesem angeschlossenes entferntes  Ger‰t ab, das ¸ber das Ger‰t erreichbar ist, d.h. das Routing zum
-	 * entfernten Ger‰t wird ¸ber das Ausgangsger‰t f¸hren.
+	 * Speichert zu einem Ausgangsger√§t ein direkt an diesem angeschlossenes entferntes  Ger√§t ab, das √ºber das Ger√§t erreichbar ist, d.h. das Routing zum
+	 * entfernten Ger√§t wird √ºber das Ausgangsger√§t f√ºhren.
 	 *
-	 * @param device       Ausgangsger‰t
-	 * @param remoteDevice Entferntes Ger‰t
+	 * @param device       Ausgangsger√§t
+	 * @param remoteDevice Entferntes Ger√§t
 	 */
 	private void putRemoteDevice(Integer device, Integer remoteDevice) {
 		List directRoutedDeviceList = (List)_device2DirectRoutedDeviceListMap.get(device);
@@ -691,7 +700,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 
 	private void putRouteInfo(Integer device, RouteInfo route) {
 		_device2RouteMap.put(device, route);
-		_debug.fine("Route zum Ger‰t " + device + ": " + route);
+		_debug.fine("Route zum Ger√§t " + device + ": " + route);
 	}
 
 	private RouteInfo getRouteInfo(Integer device) {
@@ -713,8 +722,8 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 //		private DataLinkLayer.Link _localLink;
 
 		/**
-		 * Enth‰lt den TLS-OSI-3 Header zum Versand von Telegrammen ¸ber die Route. Wird auf <code>null</code> gesetzt, wenn die Route mehr als 7
-		 * Vermittlungsabschnitte enth‰lt und vom TLS-OSI-3 Routing nicht mehr verarbeitet werden kann.
+		 * Enth√§lt den TLS-OSI-3 Header zum Versand von Telegrammen √ºber die Route. Wird auf <code>null</code> gesetzt, wenn die Route mehr als 7
+		 * Vermittlungsabschnitte enth√§lt und vom TLS-OSI-3 Routing nicht mehr verarbeitet werden kann.
 		 */
 		public final byte[] _tlsOsi3Header;
 
@@ -792,7 +801,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 		}
 
 		public String toString() {
-			return " mit  TLS OSI 3 Header: " + HexDumper.toString(_tlsOsi3Header) + "\n" + "¸ber Verbindung " + (_firstLinkInfo == null
+			return " mit  TLS OSI 3 Header: " + HexDumper.toString(_tlsOsi3Header) + "\n" + "√ºber Verbindung " + (_firstLinkInfo == null
 			                                                                                                      ? "-"
 			                                                                                                      : (_firstLinkInfo._link == null
 			                                                                                                         ? "--"
@@ -801,37 +810,37 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Informationen von Verbindungen zwischen Ger‰ten. Zu beachten ist, das die Verbindungen hier Richtungsabh‰ngig verwaltet werden. Eine bidirektionale
-	 * Verbindung zwischen zwei Ger‰ten A und B wird hier durch zwei unabh‰ngige Verbindungsobjekte A->B und B->A repr‰sentiert.
+	 * Informationen von Verbindungen zwischen Ger√§ten. Zu beachten ist, das die Verbindungen hier Richtungsabh√§ngig verwaltet werden. Eine bidirektionale
+	 * Verbindung zwischen zwei Ger√§ten A und B wird hier durch zwei unabh√§ngige Verbindungsobjekte A->B und B->A repr√§sentiert.
 	 */
 	static class LinkInfo {
 
-		/** Knotennummer des Ger‰ts von dem die Verbindung aus geht. */
+		/** Knotennummer des Ger√§ts von dem die Verbindung aus geht. */
 		public final int _device;
 
-		/** OSI-2 Portnummer des Ger‰ts von dem die Verbindung aus geht. */
+		/** OSI-2 Portnummer des Ger√§ts von dem die Verbindung aus geht. */
 		public final long _portAddress;
 
 		/**
-		 * LinkLayer (OSI-2) Protokoll ¸ber das diese Verbindung realisiert wird. Dieses Feld wird nur verwendet, wenn das _device dem lokalen Ger‰t entspricht, sonst
+		 * LinkLayer (OSI-2) Protokoll √ºber das diese Verbindung realisiert wird. Dieses Feld wird nur verwendet, wenn das _device dem lokalen Ger√§t entspricht, sonst
 		 * null.
 		 */
 		public final DataLinkLayer _linkLayer;
 
 		/**
-		 * LinkLayer Verbindungsobjekt ¸ber das diese Verbindung realisiert wird. Dieses Feld wird nur verwendet, wenn das _device dem lokalen Ger‰t entspricht, sonst
+		 * LinkLayer Verbindungsobjekt √ºber das diese Verbindung realisiert wird. Dieses Feld wird nur verwendet, wenn das _device dem lokalen Ger√§t entspricht, sonst
 		 * null.
 		 */
 		public final DataLinkLayer.Link _link;
 
-		/** Knotennummer des Ger‰ts zu dem diese Verbindung hin geht. */
+		/** Knotennummer des Ger√§ts zu dem diese Verbindung hin geht. */
 		public final long _remotePortAddress;
 
-		/** OSI-2 Portnummer des Ger‰ts zu dem die Verbindung hin geht. */
+		/** OSI-2 Portnummer des Ger√§ts zu dem die Verbindung hin geht. */
 		public final int _remoteDevice;
 
 		/**
-		 * Flag, das gesetzt ist, wenn die Verbindung nicht im OSI-3-Routing ber¸cksichtigt werden soll. Dies ist zum Beispiel f¸r Verbindungen zwischen Unterzentrale
+		 * Flag, das gesetzt ist, wenn die Verbindung nicht im OSI-3-Routing ber√ºcksichtigt werden soll. Dies ist zum Beispiel f√ºr Verbindungen zwischen Unterzentrale
 		 * und Kommunikationsrecher-Inselbus (KRI) der Fall.
 		 */
 		public final boolean _linkIsTransparent;
@@ -885,10 +894,10 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 		}
 
 		/**
-		 * Liefert die Priorit‰tsklasse des Objektes zur¸ck. Der Wert 1 entspricht dabei der Klasse mit der hˆchsten Priorit‰t. Grˆﬂere Werte kennzeichnen
-		 * Priorit‰tsklassen mit niedrigerer Priorit‰t.
+		 * Liefert die Priorit√§tsklasse des Objektes zur√ºck. Der Wert 1 entspricht dabei der Klasse mit der h√∂chsten Priorit√§t. Gr√∂√üere Werte kennzeichnen
+		 * Priorit√§tsklassen mit niedrigerer Priorit√§t.
 		 *
-		 * @return Priorit‰tsklasse als positive Zahl.
+		 * @return Priorit√§tsklasse als positive Zahl.
 		 */
 		public int getPriorityClass() {
 			return _priorityClass;
@@ -896,7 +905,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 	}
 
 	/**
-	 * Klasse zur Entkopplung von OSI2 und OSI7 beim Empfang von Daten. Durch den Einsatz eines eigenen Threads kann w‰hrend der Verarbeitung von empfangenen Daten
+	 * Klasse zur Entkopplung von OSI2 und OSI7 beim Empfang von Daten. Durch den Einsatz eines eigenen Threads kann w√§hrend der Verarbeitung von empfangenen Daten
 	 * durch die OSI-7 Ebene das Polling auf OSI-2 Ebene fortgesetzt werden. Daten der OSI-2 werden von der Methode {@link
 	 * #handleDataLinkLayerEvent(de.bsvrz.kex.tls.osi2osi3.osi2.api.DataLinkLayerEvent)} entgegengenommen und in einer begrenzten Queue gespeichert. Die Queue wird
 	 * von einem eigenen Thread abgearbeitet.
@@ -915,7 +924,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 						/**
 						 * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes the object's <code>run</code> method
 						 * to be called in that separately executing thread.
-						 * <p/>
+						 * <p>
 						 * The general contract of the method <code>run</code> is that it may take any action whatsoever.
 						 *
 						 * @see Thread#run()
@@ -942,7 +951,7 @@ public class TlsNetworkLayer implements NetworkLayer, NetworkLayerSender {
 		}
 
 		/**
-		 * Wird von der Sicherungsschicht aufgerufen, wenn ein Kommunikationsereignis aufgetreten ist, das von der Anwendung bzw. der n‰chst hˆheren Protokollebene
+		 * Wird von der Sicherungsschicht aufgerufen, wenn ein Kommunikationsereignis aufgetreten ist, das von der Anwendung bzw. der n√§chst h√∂heren Protokollebene
 		 * ausgewertet werden muss.
 		 *
 		 * @param event Aufgetretenes Kommunikationsereignis.

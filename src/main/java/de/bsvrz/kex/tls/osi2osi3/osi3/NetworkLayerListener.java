@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi3;
@@ -25,7 +31,7 @@ package de.bsvrz.kex.tls.osi2osi3.osi3;
  * Interface, dass von der OSI-7 Schicht zur entgegennahme empfangener Telegramme und zur Verarbeitung von Statuswechseln implementiert werden muss.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 9349 $
+ * @version $Revision$
  */
 public interface NetworkLayerListener {
 
@@ -34,12 +40,12 @@ public interface NetworkLayerListener {
 	public static final int DEVICE_DISCONNECTED = 1;
 
 	/**
-	 * Diese Methode nimmt ein Telegramm entgegen und reicht es an den entsprechenden Empf‰nger weiter.
+	 * Diese Methode nimmt ein Telegramm entgegen und reicht es an den entsprechenden Empf√§nger weiter.
 	 *
 	 * @param sender       Absender des Telegramms
 	 * @param data         Telegramm
-	 * @param longTelegram true = Das Telegramm, das ¸bergeben wird, ist ein zusammengebautes Langtelegramm und muss besonders behandelt werden (Anzahl
-	 *                     Einzeltelgramme fehlen, L‰nge Einzeltelegramme fehlt, usw), da es nicht der TLS Definition entspricht false = Die Daten entsprechen der
+	 * @param longTelegram true = Das Telegramm, das √ºbergeben wird, ist ein zusammengebautes Langtelegramm und muss besonders behandelt werden (Anzahl
+	 *                     Einzeltelgramme fehlen, L√§nge Einzeltelegramme fehlt, usw), da es nicht der TLS Definition entspricht false = Die Daten entsprechen der
 	 *                     TLS Definition
 	 */
 	public void dataReceived(int sender, byte[] data, boolean longTelegram);

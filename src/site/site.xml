@@ -14,7 +14,7 @@
             <leftColumnClass>span3</leftColumnClass>
             <bodyColumnClass>span9</bodyColumnClass>
             <gitHub>
-                <projectId>datenverteiler/de.bsvrz.kex.tls.osi2osi3</projectId>
+                <projectId>bitctrl/de.bsvrz.kex.tls.osi2osi3</projectId>
                 <ribbonOrientation>right</ribbonOrientation>
             </gitHub>
         </fluidoSkin>

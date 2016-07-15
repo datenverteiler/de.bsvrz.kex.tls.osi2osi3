@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -31,10 +37,10 @@ import de.bsvrz.sys.funclib.debug.Debug;
 import java.util.*;
 
 /**
- * Klasse TlsModel, die die Informationen zu den Tls-Geräten verwaltet.
+ * Klasse TlsModel, die die Informationen zu den Tls-GerÃ¤ten verwaltet.
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 10172 $
+ * @version $Revision$
  */
 public class TlsModel {
 	
@@ -44,7 +50,7 @@ public class TlsModel {
 	private final DataModel _configuration;
 	
 	/**
-	 * Map, in der zu dem Schlüssel Systemobjekt die entsprechenden Tls-Knoten vorgehalten werden.
+	 * Map, in der zu dem SchlÃ¼ssel Systemobjekt die entsprechenden Tls-Knoten vorgehalten werden.
 	 */
 	private final Map<SystemObject, TlsNode> _tlsDevices;
 	
@@ -60,7 +66,7 @@ public class TlsModel {
 	public Map<String, Integer> _deTyp2FgNr;
 	
 	/**
-	 * Konstruktor. Das übergebene Datenmodell darf nicht null sein. Im Konstruktor werden die Informationen zu den TLS-Geräten aus der Konfiguration gelesen
+	 * Konstruktor. Das Ã¼bergebene Datenmodell darf nicht null sein. Im Konstruktor werden die Informationen zu den TLS-GerÃ¤ten aus der Konfiguration gelesen
 	 * und in einer eigene Struktur vorgehalten.
 	 * 
 	 * @param configuration
@@ -75,8 +81,8 @@ public class TlsModel {
 		// Aufbau der Map
 		_deTyp2FgNr = new HashMap<String, Integer>();
 		
-		// An dieser Stelle müssen alle der Konfiguration bekannten (Haupt)DE-Typen aufgeführt sein.
-		// Eventuell abgeleitete DE-Typen werden automatisch ergänzt.
+		// An dieser Stelle mÃ¼ssen alle der Konfiguration bekannten (Haupt)DE-Typen aufgefÃ¼hrt sein.
+		// Eventuell abgeleitete DE-Typen werden automatisch ergÃ¤nzt.
 		setDeTypes2Fg("typ.deLve", 1);
 		setDeTypes2Fg("typ.deAxl", 2);
 		setDeTypes2Fg("typ.deUfd", 3);
@@ -94,31 +100,31 @@ public class TlsModel {
 		setDeTypes2Fg("typ.deSys", 254);
 		
 		/**
-		 * Liste mit allen der Konfiguration bekannten Konfigurationsobjekte vom Typ typ.gerät
+		 * Liste mit allen der Konfiguration bekannten Konfigurationsobjekte vom Typ typ.gerÃ¤t
 		 */
-		final List<SystemObject> devices = _configuration.getType("typ.gerät").getElements();
+		final List<SystemObject> devices = _configuration.getType("typ.gerÃ¤t").getElements();
 		
 		// Auszuwertende konfigurierende Attributgruppen
-		final AttributeGroup atgGerät = _configuration.getAttributeGroup("atg.gerät");
+		final AttributeGroup atgGerÃ¤t = _configuration.getAttributeGroup("atg.gerÃ¤t");
 		final AttributeGroup atgAnschlussPunktKommunikationsPartner = _configuration.getAttributeGroup("atg.anschlussPunktKommunikationsPartner");
 		
-		// Für alle Geräte ein Tls-Knoten Objekt anlegen und in die Map einfügen 
-		// Erster Lauf über die Geräte, damit beim nächsten Lauf die zu refernzierenden Objekte bereits vorhanden sind.
+		// FÃ¼r alle GerÃ¤te ein Tls-Knoten Objekt anlegen und in die Map einfÃ¼gen 
+		// Erster Lauf Ã¼ber die GerÃ¤te, damit beim nÃ¤chsten Lauf die zu refernzierenden Objekte bereits vorhanden sind.
 		for(SystemObject device : devices) {
-			final int nodeNumber = device.getConfigurationData(atgGerät).getItem("KnotenNummer").asScaledValue().intValue();
+			final int nodeNumber = device.getConfigurationData(atgGerÃ¤t).getItem("KnotenNummer").asScaledValue().intValue();
 			_tlsDevices.put(device, new TlsNode(device, nodeNumber));
 		}
 		
-		// Ermittlung der Kinderknoten, des Vaterknotens und der vorhandenen FG (Bei Geräten vom Typ typ.steuerModul)
-		// Schleife über alle Geräte (Zeiter Lauf)
+		// Ermittlung der Kinderknoten, des Vaterknotens und der vorhandenen FG (Bei GerÃ¤ten vom Typ typ.steuerModul)
+		// Schleife Ã¼ber alle GerÃ¤te (Zeiter Lauf)
 		for(SystemObject device : devices) {
 			
-			final List<SystemObject> connectionPointDevices = ((ConfigurationObject)device).getObjectSet("AnschlussPunkteGerät").getElements();
+			final List<SystemObject> connectionPointDevices = ((ConfigurationObject)device).getObjectSet("AnschlussPunkteGerÃ¤t").getElements();
 			
-			// Schleife über alle Anschlusspunkte
+			// Schleife Ã¼ber alle Anschlusspunkte
 			for(SystemObject connectionPointDevice : connectionPointDevices) {
 				
-				// Schleife über alle Anschlusspunkte, die an dem Anschlusspunkt angeschlossen sind
+				// Schleife Ã¼ber alle Anschlusspunkte, die an dem Anschlusspunkt angeschlossen sind
 				final List<SystemObject> connectionPointsPartner = ((ConfigurationObject)connectionPointDevice).getObjectSet(
 				        "AnschlussPunkteKommunikationsPartner").getElements();
 				
@@ -131,7 +137,7 @@ public class TlsModel {
 						        .getItem("KommunikationsPartner")
 						        .asReferenceValue()
 						        .getSystemObject();
-						//						System.out.println("Füge dem Knoten " + device + " den Subknoten "+ partnerDevice + " hinzu");
+						//						System.out.println("FÃ¼ge dem Knoten " + device + " den Subknoten "+ partnerDevice + " hinzu");
 						_tlsDevices.get(device).addSubNode(_tlsDevices.get(partnerDevice));
 						_tlsDevices.get(partnerDevice).setParent(_tlsDevices.get(device));
 					}
@@ -147,7 +153,7 @@ public class TlsModel {
 						final String deTyp = de.getType().getPid();
 						final Integer fg = _deTyp2FgNr.get(deTyp);
 						if(fg == null) {
-							_debug.warning("Keine Umsetzung für DE vom Typ " + deTyp + " auf eine FG in TlsNode definiert");
+							_debug.warning("Keine Umsetzung fÃ¼r DE vom Typ " + deTyp + " auf eine FG in TlsNode definiert");
 						}
 						else {
 							_tlsDevices.get(device).addFg(fg);
@@ -159,7 +165,7 @@ public class TlsModel {
 	}
 	
 	/**
-	 * Funktion, die die Map mit der Zuordnung von DE-Typen zu Funktiongruppen aufbaut. Hierbei werden zu den übergebenen DE-Typen jeweils automatisch alle
+	 * Funktion, die die Map mit der Zuordnung von DE-Typen zu Funktiongruppen aufbaut. Hierbei werden zu den Ã¼bergebenen DE-Typen jeweils automatisch alle
 	 * eventuell abgeleiteten DE-Typen ermittelt und ebenfalls in die Map aufgenommen.
 	 *
 	 * @param deType
@@ -181,7 +187,7 @@ public class TlsModel {
 	}
 	
 	/**
-	 * Gibt den TLS-Knoten zu dem übergebenen Gerät zurück.
+	 * Gibt den TLS-Knoten zu dem Ã¼bergebenen GerÃ¤t zurÃ¼ck.
 	 * 
 	 * @param systemObject
 	 * @return TLS-Knoten
@@ -189,16 +195,16 @@ public class TlsModel {
 	public TlsNode getTlsNode(final SystemObject systemObject) {
 		
 		final TlsNode tlsNode = _tlsDevices.get(systemObject);
-		if(tlsNode == null) throw new IllegalArgumentException("Das Systemobjekt muss vom Typ Gerät sein: " + systemObject);
+		if(tlsNode == null) throw new IllegalArgumentException("Das Systemobjekt muss vom Typ GerÃ¤t sein: " + systemObject);
 		return tlsNode;
 	}
 
 	/**
-	 * Gibt alle Tls-Knoten zurück, die unterhalb des übergeordneten TlsKnotens (superiorNodeSystemObject)
-	 * sind und vom Gerätetyp (typReference) sind. Wenn null für den übergeordneten TlsKnoten übergeben wird,
-	 * werden alle Knoten des Gerätetyps bestimmt. Wenn als Gerätetyp null angegeben wird, werden alle gefundenen 
-	 * Knoten bestimmt. Wenn der Gerätetyp Steuermodul ist, wird kann die Auswahl 
-	 * durch die erforderliche Funktionsgruppe eingeschränkt werden (255 bedeutet alle FG).
+	 * Gibt alle Tls-Knoten zurÃ¼ck, die unterhalb des Ã¼bergeordneten TlsKnotens (superiorNodeSystemObject)
+	 * sind und vom GerÃ¤tetyp (typReference) sind. Wenn null fÃ¼r den Ã¼bergeordneten TlsKnoten Ã¼bergeben wird,
+	 * werden alle Knoten des GerÃ¤tetyps bestimmt. Wenn als GerÃ¤tetyp null angegeben wird, werden alle gefundenen 
+	 * Knoten bestimmt. Wenn der GerÃ¤tetyp Steuermodul ist, wird kann die Auswahl 
+	 * durch die erforderliche Funktionsgruppe eingeschrÃ¤nkt werden (255 bedeutet alle FG).
 	 * 
 	 * @param superiorNodeSystemObject
 	 * @param typReference
@@ -241,19 +247,19 @@ public class TlsModel {
     }
 
 	/**
-	 * Gibt den Tls-Knoten zurück, der oberhalb des übergebenen Knotens ist und den vorgegebenen 
-	 * Typ aufweist. Wenn kein übergeordneter Knoten dieses Typs vorhanden ist, wird null zurückgegeben.
-	 * Als Typen sind nur die Typen zugelassen, die von Gerät abgeleitet sind.
-	 * Wenn ein anderer Typ (oder Typ Gerät) angegeben wurde, wird eine Warnung ausgegeben und 
-	 * als Rückgabe wird null zurückgegeben.
+	 * Gibt den Tls-Knoten zurÃ¼ck, der oberhalb des Ã¼bergebenen Knotens ist und den vorgegebenen 
+	 * Typ aufweist. Wenn kein Ã¼bergeordneter Knoten dieses Typs vorhanden ist, wird null zurÃ¼ckgegeben.
+	 * Als Typen sind nur die Typen zugelassen, die von GerÃ¤t abgeleitet sind.
+	 * Wenn ein anderer Typ (oder Typ GerÃ¤t) angegeben wurde, wird eine Warnung ausgegeben und 
+	 * als RÃ¼ckgabe wird null zurÃ¼ckgegeben.
 	 * 
      * @param tlsNode  Betrachteter Tls-Knoten
-     * @param typeSuperiorTlsNode Gesuchter (Geräte)Typ des übergeordneten Knotens
+     * @param typeSuperiorTlsNode Gesuchter (GerÃ¤te)Typ des Ã¼bergeordneten Knotens
      */
     public TlsNode getSuperiorNodeOfType(TlsNode tlsNode, SystemObject typeSuperiorTlsNode) {
-    	// Prüfung, ob ein akzeptierter Typ von Gerät angegeben wurde.
-    	// Hier sind nur Typen zugelassen, die von Gerät abgeleitet sind.
-    	List<SystemObjectType> subTypesOfDevice = _configuration.getType("typ.gerät").getSubTypes();
+    	// PrÃ¼fung, ob ein akzeptierter Typ von GerÃ¤t angegeben wurde.
+    	// Hier sind nur Typen zugelassen, die von GerÃ¤t abgeleitet sind.
+    	List<SystemObjectType> subTypesOfDevice = _configuration.getType("typ.gerÃ¤t").getSubTypes();
     	TlsNode result = null;
     	int results = 0;
     	boolean acceptedType = false;
@@ -261,7 +267,7 @@ public class TlsModel {
 	        if(systemObjectType.equals(typeSuperiorTlsNode)) acceptedType = true;
         }
     	if(!acceptedType){
-    		_debug.warning("Nicht unterstützen Typ eines Geräts angegeben.",typeSuperiorTlsNode);
+    		_debug.warning("Nicht unterstÃ¼tzen Typ eines GerÃ¤ts angegeben.",typeSuperiorTlsNode);
     		return null;
     	}
     	

@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,18 +14,24 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi3;
 
 /**
- * Eine Hilfsklasse, für die Osi3 Schicht. Hier sind einstellbare Parameter festgelegt. Des weiteren gibt es eine Methode, die den Wert eines Parameters als
- * Boolean zurück gibt, falls möglich.
+ * Eine Hilfsklasse, fÃ¼r die Osi3 Schicht. Hier sind einstellbare Parameter festgelegt. Des weiteren gibt es eine Methode, die den Wert eines Parameters als
+ * Boolean zurÃ¼ck gibt, falls mÃ¶glich.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10824 $
+ * @version $Revision$
  */
 public class TlsNetworkLayerSetting {
 
@@ -51,9 +57,9 @@ public class TlsNetworkLayerSetting {
 
 	/**
 	 * eine Methode, die den Wert eines Paramaters als
-     * Boolean zurück gibt, falls möglich.
+     * Boolean zurÃ¼ck gibt, falls mÃ¶glich.
 	 * @param value Parameter Wert
-	 * @return False : Für nein/false/falsch/no , True für ja/true/wahr/yes
+	 * @return False : FÃ¼r nein/false/falsch/no , True fÃ¼r ja/true/wahr/yes
 	 * @throws IllegalArgumentException Falls der Boolsche Ausdruck nicht bestimmt werden kann.
 	 */
 	public static boolean getBooleanProperty(String value) throws IllegalArgumentException {
@@ -66,14 +72,14 @@ public class TlsNetworkLayerSetting {
 		if(value.equals("falsch")) return false;
 		if(value.equals("yes")) return true;
 		if(value.equals("no")) return false;
-		throw new IllegalArgumentException("Ungültiger Wert (" + value + "), " + getValidBooleanPropertys());
+		throw new IllegalArgumentException("UngÃ¼ltiger Wert (" + value + "), " + getValidBooleanPropertys());
 	}
 
 	/**
-	 * Ein möglicher Fehlertext bzw. Hinweis, was erlaubt ist, damit ein der Boolscher Ausdruck gültig ist.
+	 * Ein mÃ¶glicher Fehlertext bzw. Hinweis, was erlaubt ist, damit ein der Boolscher Ausdruck gÃ¼ltig ist.
 	 * @return Hinweistext/Fehlertext
 	 */
 	static public String getValidBooleanPropertys() {
-		return "Gültig sind ja/nein, true/false, wahr/falsch, yes/no . Groß- und Kleinschreibung wird nicht unterschieden.";
+		return "GÃ¼ltig sind ja/nein, true/false, wahr/falsch, yes/no . GroÃŸ- und Kleinschreibung wird nicht unterschieden.";
 	}
 }
