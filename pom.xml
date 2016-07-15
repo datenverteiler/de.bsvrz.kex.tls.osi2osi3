@@ -67,7 +67,7 @@
                     </snapshots>
                     <id>bintray-datenverteiler-maven</id>
                     <name>bintray</name>
-                    <url>http://dl.bintray.com/bitctrl/maven</url>
+                    <url>http://dl.bintray.com/datenverteiler/maven</url>
                 </repository>
             </repositories>
             <pluginRepositories>
@@ -77,7 +77,7 @@
                     </snapshots>
                     <id>bintray-datenverteiler-maven</id>
                     <name>bintray-plugins</name>
-                    <url>http://dl.bintray.com/bitctrl/maven</url>
+                    <url>http://dl.bintray.com/datenverteiler/maven</url>
                 </pluginRepository>
             </pluginRepositories>
             <distributionManagement>
