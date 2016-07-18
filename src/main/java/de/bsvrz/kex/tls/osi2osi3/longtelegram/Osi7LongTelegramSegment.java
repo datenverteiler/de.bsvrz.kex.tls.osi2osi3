@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2005 by Kappich+Kniß Systemberatung Aachen (K2S)
+ * Copyright 2005 by Kappich+KniÃŸ Systemberatung Aachen (K2S)
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.longtelegram;
@@ -30,21 +36,21 @@ import de.bsvrz.sys.funclib.hexdump.HexDumper;
 import java.util.*;
 
 /**
- * Zerlegt ein Langtelegramm und verschickt die Teilstücke
+ * Zerlegt ein Langtelegramm und verschickt die TeilstÃ¼cke
  *
  * @author Kappich Systemberatung
- * @version $Revision: 5114 $
+ * @version $Revision$
  */
 public class Osi7LongTelegramSegment {
 
 	/** Knotennummer des Senders, dieser Sender verschickt alle Langtelegramme */
 	private final int _nodeNumberSender;
 
-	/** DebugLogger für Debug-Ausgaben */
+	/** DebugLogger fÃ¼r Debug-Ausgaben */
 	private static final Debug _debug = Debug.getLogger();
 
 
-	/** Speichert Sender/Empfängerkombinationen */
+	/** Speichert Sender/EmpfÃ¤ngerkombinationen */
 	private final Map<Integer, SenderReceiverCombination> _sender = new HashMap<Integer, SenderReceiverCombination>();
 
 	/** Objekt, das nacheinander Telegramm verschickt */
@@ -52,7 +58,7 @@ public class Osi7LongTelegramSegment {
 
 	/**
 	 * @param nodeNumberSender Knotennummer des Sender
-	 * @param sender           Objekt, mit dem Telegramme verschickt werden können
+	 * @param sender           Objekt, mit dem Telegramme verschickt werden kÃ¶nnen
 	 */
 	public Osi7LongTelegramSegment(int nodeNumberSender, NetworkLayer sender) {
 		_nodeNumberSender = nodeNumberSender;
@@ -63,15 +69,15 @@ public class Osi7LongTelegramSegment {
 	}
 
 	/**
-	 * Diese Methode zerlegt ein Langtelegramm und verschickt es an den entsprechenden Empfänger. Die Methode kann blockieren, falls eine bestimmte Anzahl von
-	 * Telegrammen von diesem Sender zu dem angegebenen Empfänger unterwegs sind.
+	 * Diese Methode zerlegt ein Langtelegramm und verschickt es an den entsprechenden EmpfÃ¤nger. Die Methode kann blockieren, falls eine bestimmte Anzahl von
+	 * Telegrammen von diesem Sender zu dem angegebenen EmpfÃ¤nger unterwegs sind.
 	 *
-	 * @param nodeNumberReceiver Knotennummer des Empfängers
+	 * @param nodeNumberReceiver Knotennummer des EmpfÃ¤ngers
 	 * @param longTelegram       Langtelegramm, das verschickt werden soll
-	 * @param priority           Priorität, mit der das Telegramm verschickt werden soll
+	 * @param priority           PrioritÃ¤t, mit der das Telegramm verschickt werden soll
 	 */
 	public void sendLongData(final int nodeNumberReceiver, final byte[] longTelegram, final int priority) {
-		// In der Map nach der Sender/Empfängerkombination suchen und dieser das Telegramm übergeben.
+		// In der Map nach der Sender/EmpfÃ¤ngerkombination suchen und dieser das Telegramm Ã¼bergeben.
 		// Falls das Objekt noch nicht exisitert, wird es angelegt.
 
 		final SenderReceiverCombination combination;
@@ -85,12 +91,12 @@ public class Osi7LongTelegramSegment {
 			// Dieses Objekt nimmt das Telegramm entgegen und verschickt es
 			combination = _sender.get(nodeNumberReceiver);
 		}
-		// Dieser Aufruf kann blockieren, wenn bereits 15 Telegramme zu diesem Empfänger unterwegs sind
+		// Dieser Aufruf kann blockieren, wenn bereits 15 Telegramme zu diesem EmpfÃ¤nger unterwegs sind
 		combination.sendLongTelegram(longTelegram, priority);
 	}
 
 	/**
-	 * Diese Klasse speichert eine Sender/Empfängerkombination und verwaltet diese. Es dürfen nur eine bestimmte Anzahl von Telegramme für eine Kombination
+	 * Diese Klasse speichert eine Sender/EmpfÃ¤ngerkombination und verwaltet diese. Es dÃ¼rfen nur eine bestimmte Anzahl von Telegramme fÃ¼r eine Kombination
 	 * verschickt werden. Wenn ein Telegramm verschickt wurde, darf ein weiteres Paket verschickt werden, usw. .
 	 */
 	private final static class SenderReceiverCombination {
@@ -98,10 +104,10 @@ public class Osi7LongTelegramSegment {
 		/** Wird in jedem Telegramm mitgeschickt */
 		final int _nodeNumberSender;
 
-		/** Telegramme, die gleichzeitig verschickt werden dürfen */
+		/** Telegramme, die gleichzeitig verschickt werden dÃ¼rfen */
 		final int _numberOfParallelSendTelegrams = 15;
 
-		/** Wird jedem Telegrammobjekt mitgegeben und wird benötigt um an dieses Objekt über eine Map zu kommen */
+		/** Wird jedem Telegrammobjekt mitgegeben und wird benÃ¶tigt um an dieses Objekt Ã¼ber eine Map zu kommen */
 		final int _nodeNumberReceiver;
 
 		/**
@@ -111,8 +117,8 @@ public class Osi7LongTelegramSegment {
 		final Semaphore _parallelLocks = new Semaphore(_numberOfParallelSendTelegrams);
 
 		/**
-		 * Diese Liste speichert alle Datenblocknummer, die noch benutzt werden dürfen. Wird eine Nummer benötigt, wird diese aus der Liste entfernt. Wird einer
-		 * Nummer "frei" wird diese hinten an der Liste angefügt.
+		 * Diese Liste speichert alle Datenblocknummer, die noch benutzt werden dÃ¼rfen. Wird eine Nummer benÃ¶tigt, wird diese aus der Liste entfernt. Wird einer
+		 * Nummer "frei" wird diese hinten an der Liste angefÃ¼gt.
 		 */
 		private final LinkedList<Byte> _listWithUnusedDataBlockNumbers = new LinkedList<Byte>();
 
@@ -146,7 +152,7 @@ public class Osi7LongTelegramSegment {
 				}
 				catch(Exception e) {
 					e.printStackTrace();
-					_debug.error("Es müßte eine Datenblocknummer verfügbar sein", e);
+					_debug.error("Es mÃ¼ÃŸte eine Datenblocknummer verfÃ¼gbar sein", e);
 					return;
 				}
 			}
@@ -166,10 +172,10 @@ public class Osi7LongTelegramSegment {
 		public void removeTelegram(FragmentedLongTelegram removeTelegram) {
 			_debug.finest("DatenBlocknummer wird freigegeben: " + removeTelegram.getDataBlockNumber());
 			synchronized(_listWithUnusedDataBlockNumbers) {
-				// Die Nummer kann wieder verwendet werden (die Nummer wird hinten angefügt, damit
-				// sie "möglichst spät" wieder benutzt wird. somit werden alle Nummern "reihe um" benutzt)
+				// Die Nummer kann wieder verwendet werden (die Nummer wird hinten angefÃ¼gt, damit
+				// sie "mÃ¶glichst spÃ¤t" wieder benutzt wird. somit werden alle Nummern "reihe um" benutzt)
 				_listWithUnusedDataBlockNumbers.addLast(removeTelegram.getDataBlockNumber());
-				// Es darf wieder ein Telegramm an diesen Empfänger verschickt werden, da eine freie DatenBlockNummer
+				// Es darf wieder ein Telegramm an diesen EmpfÃ¤nger verschickt werden, da eine freie DatenBlockNummer
 				// vorhanden ist
 				_parallelLocks.release();
 			}
@@ -179,12 +185,12 @@ public class Osi7LongTelegramSegment {
 	/** Verschickt Langtelegramme */
 	private final static class SenderThread implements Runnable {
 
-		/** Liste, die alle sendebereiten Telegramme enthält */
+		/** Liste, die alle sendebereiten Telegramme enthÃ¤lt */
 		private final List<FragmentedLongTelegram> _telegrams = new LinkedList<FragmentedLongTelegram>();
 
 		/**
-		 * Speichert alle "Sender/Empfänger Kombinationen. Mit dem Objekt ist es möglich ein versendetes Telegramm zu melden, somit kann das nächste Telegramm an den
-		 * Empfänger verschickt werden (falls eines vorhanden ist)
+		 * Speichert alle "Sender/EmpfÃ¤nger Kombinationen. Mit dem Objekt ist es mÃ¶glich ein versendetes Telegramm zu melden, somit kann das nÃ¤chste Telegramm an den
+		 * EmpfÃ¤nger verschickt werden (falls eines vorhanden ist)
 		 */
 		private final Map<Integer, SenderReceiverCombination> _senderInformations;
 
@@ -210,7 +216,7 @@ public class Osi7LongTelegramSegment {
 			while(Thread.currentThread().isInterrupted() == false) {
 				synchronized(_telegrams) {
 					while(_telegrams.size() == 0) {
-						// Es gibt keine Telegramme, die verschickt werden können
+						// Es gibt keine Telegramme, die verschickt werden kÃ¶nnen
 						try {
 							_telegrams.wait();
 						}
@@ -221,50 +227,50 @@ public class Osi7LongTelegramSegment {
 
 					// Es gibt mindestens ein Telegramm, das verschickt werden soll
 
-					// Diese Liste speichert alle Telegramme, die entfernt werden können
-					// (weil entweder alle Daten verschickt wurden oder weil das Telegramm aufgrund eines Fehlers einen Teil nicht übertragen konnte)
+					// Diese Liste speichert alle Telegramme, die entfernt werden kÃ¶nnen
+					// (weil entweder alle Daten verschickt wurden oder weil das Telegramm aufgrund eines Fehlers einen Teil nicht Ã¼bertragen konnte)
 					final List<FragmentedLongTelegram> removeTelegramList = new LinkedList<FragmentedLongTelegram>();
 
 					for(int nr = 0; nr < _telegrams.size(); nr++) {
 						FragmentedLongTelegram fragmentedLongTelegram = _telegrams.get(nr);
 
-						// Teilstück holen und verschicken
+						// TeilstÃ¼ck holen und verschicken
 						final byte[] telegramPiece = fragmentedLongTelegram.getNextPiece();
 
-						// Diese Variable zeigt an, ob ein Teiltelegramm übertragen werden konnte
-						// true = Fehler, Telegramm komplett löschen
+						// Diese Variable zeigt an, ob ein Teiltelegramm Ã¼bertragen werden konnte
+						// true = Fehler, Telegramm komplett lÃ¶schen
 						boolean transferError = false;
 
 						try {
 							sendTelegramPiece(fragmentedLongTelegram.getSenderNodeNumber(), fragmentedLongTelegram.getPriority(), telegramPiece);
 						}
 						catch(DestinationUnreachableException e) {
-							// Das Telegramm kann nicht verschickt werden, also können die restlichen Daten gelöscht werden.
-							// Dieser Schritt ist notwendig, da nicht bekannt ist, wann die restlichen Daten verschickt werden können und
-							// es nicht erwünscht ist, dass die Daten über Tage gepuffert werden.
+							// Das Telegramm kann nicht verschickt werden, also kÃ¶nnen die restlichen Daten gelÃ¶scht werden.
+							// Dieser Schritt ist notwendig, da nicht bekannt ist, wann die restlichen Daten verschickt werden kÃ¶nnen und
+							// es nicht erwÃ¼nscht ist, dass die Daten Ã¼ber Tage gepuffert werden.
 							transferError = true;
 							_debug.error(
 									"Langtelegramm kann nicht versendet werden: Knotennummer Sender: " + fragmentedLongTelegram.getSenderNodeNumber()
-									+ " Priorität: " + fragmentedLongTelegram.getPriority() + " Langtelegramm(stück): " + HexDumper.toString(telegramPiece), e
+									+ " PrioritÃ¤t: " + fragmentedLongTelegram.getPriority() + " Langtelegramm(stÃ¼ck): " + HexDumper.toString(telegramPiece), e
 							);
 						}
 
 						if((fragmentedLongTelegram.isOnePieceLeft() == false) || (transferError)) {
-							// Das Telegramm hat alle Teilstücke verschickt, somit kann es gelöscht werden oder
+							// Das Telegramm hat alle TeilstÃ¼cke verschickt, somit kann es gelÃ¶scht werden oder
 							// es ist ein Fehler aufgetreten
 							removeTelegramList.add(fragmentedLongTelegram);
 						}
 					}
 
-					// Die Liste mit den Telegrammen, die senden können, um die Telegramme bereinigen, die alle
-					// Daten verschickt haben oder die nicht übertragen werden konnten (Fehler beim verschicken eines Teiltelegramms)
+					// Die Liste mit den Telegrammen, die senden kÃ¶nnen, um die Telegramme bereinigen, die alle
+					// Daten verschickt haben oder die nicht Ã¼bertragen werden konnten (Fehler beim verschicken eines Teiltelegramms)
 
 					for(int nr = 0; nr < removeTelegramList.size(); nr++) {
 						FragmentedLongTelegram telegramDelete = removeTelegramList.get(nr);
 
 						_telegrams.remove(telegramDelete);
 
-						// Für die Sender/Empfängerkombination wird die Nummer und der Semaphore freigegben.
+						// FÃ¼r die Sender/EmpfÃ¤ngerkombination wird die Nummer und der Semaphore freigegben.
 						// Somit kann ein weiteres Telegramm losgeschickt werden.
 						synchronized(_senderInformations) {
 							_senderInformations.get(telegramDelete.getReceiverNodeNumber()).removeTelegram(telegramDelete);
@@ -279,25 +285,25 @@ public class Osi7LongTelegramSegment {
 		}
 	}
 
-	/** Zerlegt ein Langtelegramm in Teilstücke und stellt diese per Methodenaufruf zur Verfügung */
+	/** Zerlegt ein Langtelegramm in TeilstÃ¼cke und stellt diese per Methodenaufruf zur VerfÃ¼gung */
 	private final static class FragmentedLongTelegram {
 
-		/** Speichert das zu übertragene Telegramm */
+		/** Speichert das zu Ã¼bertragene Telegramm */
 		private final byte[] _wholeTelegram;
 
 		/** Adresse des Senders */
 		private final int _senderNodeNumber;
 
-		/** Die Empfängeradresse wird von einer anderen Klasse benötigt, um an den Empfänger zu kommen. Der Wert dient als Key in einer Map. */
+		/** Die EmpfÃ¤ngeradresse wird von einer anderen Klasse benÃ¶tigt, um an den EmpfÃ¤nger zu kommen. Der Wert dient als Key in einer Map. */
 		private final int _receiverNodeNumber;
 
-		/** Speichert den Long-Type, den das zu übertragenen Telegramm haben muss damit alle Daten übertragen werden können */
+		/** Speichert den Long-Type, den das zu Ã¼bertragenen Telegramm haben muss damit alle Daten Ã¼bertragen werden kÃ¶nnen */
 		private final LongTelegramType _telegramType;
 
-		/** Speichert den Index im Byte-Array, ab dem Daten verschickt werden dürfen. Diese "Marke" wandert über das Byte-Array, bis alle Daten verschickt wurden. */
+		/** Speichert den Index im Byte-Array, ab dem Daten verschickt werden dÃ¼rfen. Diese "Marke" wandert Ã¼ber das Byte-Array, bis alle Daten verschickt wurden. */
 		private int _dataPosition = 0;
 
-		/** Speichert, wieviele Bytes noch verschickt werden müssen. Ist diese Zahl 0, wurden alle Byte verschickt. */
+		/** Speichert, wieviele Bytes noch verschickt werden mÃ¼ssen. Ist diese Zahl 0, wurden alle Byte verschickt. */
 		private int _dataBytesLeft = 0;
 
 		/** Gibt an, ob noch ein Teil-Telegramm vorhanden ist, das verschickt werden muss. */
@@ -307,30 +313,30 @@ public class Osi7LongTelegramSegment {
 		private boolean _startBlockSend = false;
 
 		/**
-		 * Legt die maximale Größe eines Teil-Telegramms fest. Dieser Platz steht für Header, Nutzdaten, CRC zur Verfügung. So bleibt genügend Platz für das OSI 3
+		 * Legt die maximale GrÃ¶ÃŸe eines Teil-Telegramms fest. Dieser Platz steht fÃ¼r Header, Nutzdaten, CRC zur VerfÃ¼gung. So bleibt genÃ¼gend Platz fÃ¼r das OSI 3
 		 * Routing.
 		 */
 		private final int _maxDataForTelegram = 238;
 
 		/**
 		 * Speichert die maximale Anzahl von Bytes, die in einem LongTelegram vom Typ Big gesendet werden kann. Anzahl NextBigPiece * Bytes pro BigPiece (253*231) +
-		 * Bytes, die in einem StartBig verpackt werden können (229) + Bytes, die in einem EndBig verpackt werden können (230)
+		 * Bytes, die in einem StartBig verpackt werden kÃ¶nnen (229) + Bytes, die in einem EndBig verpackt werden kÃ¶nnen (230)
 		 */
 		private final int _maxDataForBigTelegram = (231 * 253) + 229 + 230;
 
 		/**
-		 * Jeder DatenBlock, der verschickt wird, bekommt die gleiche Nummer, aus dieser Nummer schließt der Empfänger zu welchem Langtelegramm das Teilstück gehört.
+		 * Jeder DatenBlock, der verschickt wird, bekommt die gleiche Nummer, aus dieser Nummer schlieÃŸt der EmpfÃ¤nger zu welchem Langtelegramm das TeilstÃ¼ck gehÃ¶rt.
 		 * (Die Zahl ist zwischen 1 und 15)
 		 */
 		private final byte _dataBlockNumber;
 
-		/** Wieviele Datenblockstücke müssen verschickt werden (Start und Ende zählen nicht) */
+		/** Wieviele DatenblockstÃ¼cke mÃ¼ssen verschickt werden (Start und Ende zÃ¤hlen nicht) */
 		private final int _numberOfNeededPieces;
 
 		/** Nummer des Telegramms, das verschickt werden soll. 0 = StartBlock . . . _numberOfNeededPieces + 1 = EndBlock */
 		private int _telegramNumber = -1;
 
-		/** Speichert die CRC-Prüfsumme TBD in dieser Version immer 0 */
+		/** Speichert die CRC-PrÃ¼fsumme TBD in dieser Version immer 0 */
 		private final int _crcChecksum = 0;
 
 		/** Wie viele Bytes "kosten" die Steuerungsinformationen eines StartBiggerBlocks */
@@ -342,7 +348,7 @@ public class Osi7LongTelegramSegment {
 		/** Wie viele Bytes "kosten" die Steuerungsinformationen eines nextBiggerPiece */
 		private final int _costEndBiggerBlock = 10;
 
-		/** Priorität, mit der die Telegrammstücke verschickt werden sollen */
+		/** PrioritÃ¤t, mit der die TelegrammstÃ¼cke verschickt werden sollen */
 		private final int _priority;
 
 		public FragmentedLongTelegram(byte[] telegram, int senderNodeNumber, byte dataBlockNumber, int receiverNodeNumber, int priority) {
@@ -354,40 +360,40 @@ public class Osi7LongTelegramSegment {
 
 			_debug.finer("Es wird ein neues FragmentTelegram erzeugt: Sendernummer " + _senderNodeNumber + " Datenblocknummer " + _dataBlockNumber);
 
-			// Es müssen noch alle Bytes verschickt werden
+			// Es mÃ¼ssen noch alle Bytes verschickt werden
 			_dataBytesLeft = _wholeTelegram.length;
 
 			// Welcher Type (Short,Big,Bigger) muss benutzt werden, um das gesamte Telegramm zu verschicken
 
 			if((_wholeTelegram.length + 6) <= _maxDataForTelegram) {
-				// Die Daten können in einem Telegramm verschickt werden
+				// Die Daten kÃ¶nnen in einem Telegramm verschickt werden
 				_telegramType = LongTelegramType.SHORT_BLOCK;
 
-				// Bei einem ShortBlock gibt es keine Blöcke, es wird nur ein Telegramm verschickt
+				// Bei einem ShortBlock gibt es keine BlÃ¶cke, es wird nur ein Telegramm verschickt
 				_numberOfNeededPieces = 0;
 			}
 			else if(_maxDataForBigTelegram > telegram.length) {
 				// Es kann Big benutzt werden (253 BigPieces + BigStart + BigEnd)
 				_telegramType = LongTelegramType.BIG;
 
-				// Wieviele Stücke werden benötigt ?
+				// Wieviele StÃ¼cke werden benÃ¶tigt ?
 
 				final int sizeOfData = _wholeTelegram.length;
 
-				// Soviele Daten können in einem Start und Endblock verschickt werden
+				// Soviele Daten kÃ¶nnen in einem Start und Endblock verschickt werden
 				final int startEndBlockDataCapazity = (_maxDataForTelegram - 9) + (_maxDataForTelegram - 8);
 
-				// Paßt alles in den Start und Ende Block ?
+				// PaÃŸt alles in den Start und Ende Block ?
 
 				if(sizeOfData < startEndBlockDataCapazity) {
 					_numberOfNeededPieces = 0;
 				}
 				else {
-					// Es müssen NextPiecesBlöcke verschickt werden, davon können Start und Endblock abgezogen werden
-					// da diese auch Daten enthalten können.
+					// Es mÃ¼ssen NextPiecesBlÃ¶cke verschickt werden, davon kÃ¶nnen Start und Endblock abgezogen werden
+					// da diese auch Daten enthalten kÃ¶nnen.
 					final int sizeOfNextPieceData = sizeOfData - startEndBlockDataCapazity;
 
-					// Wieviele Datenbytes können in einem NextBigPiece verschickt werden
+					// Wieviele Datenbytes kÃ¶nnen in einem NextBigPiece verschickt werden
 					final int dataForEveryPiece = _maxDataForTelegram - 7;
 
 					if(sizeOfNextPieceData % dataForEveryPiece != 0) {
@@ -401,23 +407,23 @@ public class Osi7LongTelegramSegment {
 			}
 			else {
 				_telegramType = LongTelegramType.BIGGER;
-				// Wieviele Bigger-Stücke werden benötigt ?
+				// Wieviele Bigger-StÃ¼cke werden benÃ¶tigt ?
 				final int sizeOfData = _wholeTelegram.length;
 
-				// Soviele Daten können in einem Start und Endblock verschickt werden
+				// Soviele Daten kÃ¶nnen in einem Start und Endblock verschickt werden
 				final int startEndBlockDataCapazity = (_maxDataForTelegram - 11) + (_maxDataForTelegram - 10);
 
-				// Paßt alles in den Start und Ende Block ?
+				// PaÃŸt alles in den Start und Ende Block ?
 
 				if(sizeOfData < startEndBlockDataCapazity) {
 					_numberOfNeededPieces = 0;
 				}
 				else {
-					// Es müssen NextBiggerPiecesBlöcke verschickt werden, davon können Start und Endblock abgezogen werden
-					// da diese auch Daten enthalten können.
+					// Es mÃ¼ssen NextBiggerPiecesBlÃ¶cke verschickt werden, davon kÃ¶nnen Start und Endblock abgezogen werden
+					// da diese auch Daten enthalten kÃ¶nnen.
 					final int sizeOfNextPieceData = sizeOfData - startEndBlockDataCapazity;
 
-					// Wieviele Datenbytes können in einem NextBiggerPiece verschickt werden
+					// Wieviele Datenbytes kÃ¶nnen in einem NextBiggerPiece verschickt werden
 					final int dataForEveryPiece = _maxDataForTelegram - 8;
 
 					if(sizeOfNextPieceData % dataForEveryPiece != 0) {
@@ -438,20 +444,20 @@ public class Osi7LongTelegramSegment {
 					throw new IllegalStateException("Es ist kein Teil-Telegramm mehr vorhanden, Telegrammtyp: " + _telegramType);
 				}
 
-				// Was für ein Teil-Telegramm muss verschickt werden ?
+				// Was fÃ¼r ein Teil-Telegramm muss verschickt werden ?
 
 				if(_telegramType == LongTelegramType.SHORT_BLOCK) {
-					// 6 Byte Header, der Rest ist für Nutzdaten
+					// 6 Byte Header, der Rest ist fÃ¼r Nutzdaten
 					final byte[] shortTelegramm = new byte[6 + _dataBytesLeft];
 
-					// Im übergebenen Byte-Array wird der Header eingetragen, der Rückgabewert bestimmt den Index,
-					// ab dem Daten eingetragen werden dürfen
+					// Im Ã¼bergebenen Byte-Array wird der Header eingetragen, der RÃ¼ckgabewert bestimmt den Index,
+					// ab dem Daten eingetragen werden dÃ¼rfen
 					int dataIndex = createTelegramFrame(shortTelegramm);
 
 					// Die Daten in den ShortBlock kopieren
 					System.arraycopy(_wholeTelegram, _dataPosition, shortTelegramm, dataIndex, _wholeTelegram.length);
 
-					// Es gibt kein nächstes Telegramm mehr
+					// Es gibt kein nÃ¤chstes Telegramm mehr
 					_onePieceLeft = false;
 
 					// Alle Bytes wurden verschickt
@@ -460,14 +466,14 @@ public class Osi7LongTelegramSegment {
 					return shortTelegramm;
 				}
 				else if(_telegramType == LongTelegramType.BIG) {
-					// Es kann 3 Fälle geben, das erste Telegramm soll verschickt werden, ein NextPiece soll verschickt werden oder
+					// Es kann 3 FÃ¤lle geben, das erste Telegramm soll verschickt werden, ein NextPiece soll verschickt werden oder
 					// es wird das Endpaket verschickt.
 
 					_telegramNumber++;
 
 					if(_startBlockSend == false) {
 
-						// Der BigStartBlock wurde noch nicht verschickt. Es werden soviele Daten wie möglich
+						// Der BigStartBlock wurde noch nicht verschickt. Es werden soviele Daten wie mÃ¶glich
 						// verschickt.
 
 						if(_dataBytesLeft > (_maxDataForTelegram - 9)) {
@@ -479,7 +485,7 @@ public class Osi7LongTelegramSegment {
 
 							_dataPosition = _dataPosition + (_maxDataForTelegram - 9);
 
-							// Es wurden _maxDataForTelegram - 9 viele Byte übertragen
+							// Es wurden _maxDataForTelegram - 9 viele Byte Ã¼bertragen
 							_dataBytesLeft = _dataBytesLeft - (_maxDataForTelegram - 9);
 
 							// Das erste Telegramm wurde verschickt
@@ -488,7 +494,7 @@ public class Osi7LongTelegramSegment {
 							return startBigTelegram;
 						}
 						else {
-							// Es können alle Daten mit dem StartTelegramm verschickt werden
+							// Es kÃ¶nnen alle Daten mit dem StartTelegramm verschickt werden
 							final byte[] startBigTelegram = new byte[_dataBytesLeft + 9];
 							final int dataIndex = createTelegramFrame(startBigTelegram);
 							System.arraycopy(_wholeTelegram, _dataPosition, startBigTelegram, dataIndex, _dataBytesLeft);
@@ -504,31 +510,31 @@ public class Osi7LongTelegramSegment {
 						}
 					}
 					else {
-						// Das Starttelegramm wurde verschickt, also kann als nächstes nur ein BigPiece oder
+						// Das Starttelegramm wurde verschickt, also kann als nÃ¤chstes nur ein BigPiece oder
 						// BigEnd verschickt werden
 
 						if(sendEndBlock() == false) {
 							// Es kann noch ein BigPiece verschickt werden
 
-							// wieviele Daten können verschickt werden
+							// wieviele Daten kÃ¶nnen verschickt werden
 
 							if(_dataBytesLeft > (_maxDataForTelegram - 7)) {
 
-								// Es sind genügend Daten vorhanden, das Stück wird ganz benötigt
+								// Es sind genÃ¼gend Daten vorhanden, das StÃ¼ck wird ganz benÃ¶tigt
 								final byte[] bigPieceTelegram = new byte[_maxDataForTelegram];
 								final int dataIndex = createTelegramFrame(bigPieceTelegram);
 								System.arraycopy(_wholeTelegram, _dataPosition, bigPieceTelegram, dataIndex, (_maxDataForTelegram - 7));
 
-								// Den Zeiger auf dem zu kopierenden Byte-Array weiterführen
+								// Den Zeiger auf dem zu kopierenden Byte-Array weiterfÃ¼hren
 								_dataPosition = _dataPosition + (_maxDataForTelegram - 7);
 
-								// Es wurden _maxDataForTelegram - 7 viele Byte übertragen
+								// Es wurden _maxDataForTelegram - 7 viele Byte Ã¼bertragen
 								_dataBytesLeft = _dataBytesLeft - (_maxDataForTelegram - 7);
 
 								return bigPieceTelegram;
 							}
 							else {
-								// Es wird nur ein Teil des Pieces benötigt
+								// Es wird nur ein Teil des Pieces benÃ¶tigt
 
 								final byte[] bigPieceTelegram = new byte[_dataBytesLeft + 7];
 								final int dataIndex = createTelegramFrame(bigPieceTelegram);
@@ -544,7 +550,7 @@ public class Osi7LongTelegramSegment {
 							}
 						}
 						else {
-							// Es ist kein BigPiece mehr übrig, also muss der EndBlock verschickt werden
+							// Es ist kein BigPiece mehr Ã¼brig, also muss der EndBlock verschickt werden
 
 							// Kommen noch Daten in den Endblock
 
@@ -586,14 +592,14 @@ public class Osi7LongTelegramSegment {
 				}
 				else if(_telegramType == LongTelegramType.BIGGER) {
 
-					// Es kann 3 Fälle geben, das erste Telegramm(BiggerStart) soll verschickt werden, ein NextBiggerPiece soll verschickt werden oder
+					// Es kann 3 FÃ¤lle geben, das erste Telegramm(BiggerStart) soll verschickt werden, ein NextBiggerPiece soll verschickt werden oder
 					// es wird das BiggerEndpaket verschickt.
 
 					_telegramNumber++;
 
 					if(_startBlockSend == false) {
 
-						// Der BiggerStartBlock wurde noch nicht verschickt. Es werden soviele Daten wie möglich
+						// Der BiggerStartBlock wurde noch nicht verschickt. Es werden soviele Daten wie mÃ¶glich
 						// verschickt.
 
 						if(_dataBytesLeft > (_maxDataForTelegram - _costStartBiggerBlock)) {
@@ -613,7 +619,7 @@ public class Osi7LongTelegramSegment {
 							return startBiggerTelegram;
 						}
 						else {
-							// Es können alle Daten mit dem StartTelegramm verschickt werden
+							// Es kÃ¶nnen alle Daten mit dem StartTelegramm verschickt werden
 							final byte[] startBiggerTelegram = new byte[_dataBytesLeft + _costStartBiggerBlock];
 							final int dataIndex = createTelegramFrame(startBiggerTelegram);
 							System.arraycopy(_wholeTelegram, _dataPosition, startBiggerTelegram, dataIndex, _dataBytesLeft);
@@ -629,22 +635,22 @@ public class Osi7LongTelegramSegment {
 						}
 					}
 					else {
-						// Das Starttelegramm wurde verschickt, also kann als nächstes nur ein BigPiece oder
+						// Das Starttelegramm wurde verschickt, also kann als nÃ¤chstes nur ein BigPiece oder
 						// BigEnd verschickt werden
 
 						if(sendEndBlock() == false) {
 							// Es kann noch ein BiggerPiece verschickt werden
 
-							// wieviele Daten können verschickt werden
+							// wieviele Daten kÃ¶nnen verschickt werden
 
 							if(_dataBytesLeft > (_maxDataForTelegram - _costNextBiggerPiece)) {
 
-								// Es sind genügend Daten vorhanden, das Stück wird ganz benötigt
+								// Es sind genÃ¼gend Daten vorhanden, das StÃ¼ck wird ganz benÃ¶tigt
 								final byte[] biggerPieceTelegram = new byte[_maxDataForTelegram];
 								final int dataIndex = createTelegramFrame(biggerPieceTelegram);
 								System.arraycopy(_wholeTelegram, _dataPosition, biggerPieceTelegram, dataIndex, (_maxDataForTelegram - _costNextBiggerPiece));
 
-								// Den Zeiger auf dem zu kopierenden Byte-Array weiterführen
+								// Den Zeiger auf dem zu kopierenden Byte-Array weiterfÃ¼hren
 								_dataPosition = _dataPosition + (_maxDataForTelegram - _costNextBiggerPiece);
 
 								_dataBytesLeft = _dataBytesLeft - (_maxDataForTelegram - _costNextBiggerPiece);
@@ -652,7 +658,7 @@ public class Osi7LongTelegramSegment {
 								return biggerPieceTelegram;
 							}
 							else {
-								// Es wird nur ein Teil des Pieces benötigt
+								// Es wird nur ein Teil des Pieces benÃ¶tigt
 
 								final byte[] biggerPieceTelegram = new byte[_dataBytesLeft + _costNextBiggerPiece];
 								final int dataIndex = createTelegramFrame(biggerPieceTelegram);
@@ -668,7 +674,7 @@ public class Osi7LongTelegramSegment {
 							}
 						}
 						else {
-							// Es ist kein BiggerPiece mehr übrig, also muss der EndBlock verschickt werden
+							// Es ist kein BiggerPiece mehr Ã¼brig, also muss der EndBlock verschickt werden
 
 							// Kommen noch Daten in den Endblock
 
@@ -715,8 +721,8 @@ public class Osi7LongTelegramSegment {
 		}
 
 		/**
-		 * Diese Methode gibt true zurück, wenn noch ein Teil-Telegramm zur Verfügung steht. Steht kein Teil-Telegramm mehr zur Verfügung, dann wird false
-		 * zurückgegeben.
+		 * Diese Methode gibt true zurÃ¼ck, wenn noch ein Teil-Telegramm zur VerfÃ¼gung steht. Steht kein Teil-Telegramm mehr zur VerfÃ¼gung, dann wird false
+		 * zurÃ¼ckgegeben.
 		 *
 		 * @return s.o.
 		 */
@@ -727,12 +733,12 @@ public class Osi7LongTelegramSegment {
 		}
 
 		/**
-		 * Erzeugt einen Header und trägt den richtigen Typ (ShortBlock, StartBig,EndBig, usw ein) Danach können in das Array die Bytes des Datenblocks eingefügt
+		 * Erzeugt einen Header und trÃ¤gt den richtigen Typ (ShortBlock, StartBig,EndBig, usw ein) Danach kÃ¶nnen in das Array die Bytes des Datenblocks eingefÃ¼gt
 		 * werden, CRC wird ebenfalls eingetragen.
 		 *
 		 * @param byteArray s.o.
 		 *
-		 * @return ab welcher Position können Daten eingefügt werden
+		 * @return ab welcher Position kÃ¶nnen Daten eingefÃ¼gt werden
 		 */
 		private int createTelegramFrame(byte[] byteArray) {
 			synchronized(this) {
@@ -741,29 +747,29 @@ public class Osi7LongTelegramSegment {
 				// 0 Eintragen
 				byteArray[3] = 0;
 
-				// Ab welchem Index dürfen Daten eingefügt werden
+				// Ab welchem Index dÃ¼rfen Daten eingefÃ¼gt werden
 				final int dataIndex;
 
 				// Von welchem Typ ist das Telegramm (ShortBlock, StartBig, StartBigger, usw. ...)
 				if(_telegramType == LongTelegramType.SHORT_BLOCK) {
 					// Es soll ein ShortBlock verschickt werden
 
-					// Bit 4 enthält eine "1", Bit 0 bis 3 enthalten den Pakettyp
+					// Bit 4 enthÃ¤lt eine "1", Bit 0 bis 3 enthalten den Pakettyp
 					byteArray[4] = (byte)(0x10 + _telegramType.getTypeNumber());
 
 					dataIndex = 6;
 				}
 				else if(_telegramType == LongTelegramType.BIG) {
-					// Es soll ein Big Teilstück verschickt werden. Was ist das für ein Stück ?
+					// Es soll ein Big TeilstÃ¼ck verschickt werden. Was ist das fÃ¼r ein StÃ¼ck ?
 					// StartBigBlock oder NextBigPiece oder EndBigBlock
 
 					if(_startBlockSend == false) {
 						// Der Startblock wurde noch nicht verschickt
 
-						// Bit 4 enthält eine "1", Bit 0 bis 3 enthalten den Pakettyp
+						// Bit 4 enthÃ¤lt eine "1", Bit 0 bis 3 enthalten den Pakettyp
 						byteArray[4] = (byte)(0x10 + LongTelegramType.START_BIG_BLOCK.getTypeNumber());
 
-						// Länge des kompletten Datenblocks speichern
+						// LÃ¤nge des kompletten Datenblocks speichern
 						final int sizeOfWholeData = _wholeTelegram.length;
 
 						// High-Byte
@@ -772,10 +778,10 @@ public class Osi7LongTelegramSegment {
 						// Low-Byte
 						byteArray[7] = (byte)(sizeOfWholeData & 0x000000FF);
 
-						// Anzahl Stücke gesamt (Start und End zählen nicht)
+						// Anzahl StÃ¼cke gesamt (Start und End zÃ¤hlen nicht)
 						byteArray[8] = (byte)(_numberOfNeededPieces & 0x000000FF);
 
-						// Ein StartBigBlock ist fertig, die Daten können ab Index 9 eingefügt werden
+						// Ein StartBigBlock ist fertig, die Daten kÃ¶nnen ab Index 9 eingefÃ¼gt werden
 						dataIndex = 9;
 					}
 					else {
@@ -786,10 +792,10 @@ public class Osi7LongTelegramSegment {
 							// Es muss der letzte Block verschickt werden
 							byteArray[4] = (byte)(0x10 + LongTelegramType.END_BIG_BLOCK.getTypeNumber());
 
-							// Ab dieser Position dürfen die Daten stehen
+							// Ab dieser Position dÃ¼rfen die Daten stehen
 							dataIndex = 6;
 
-							// Es muss die CRC Prüfsumme eingefügt werden, diese steht in den letzten 2
+							// Es muss die CRC PrÃ¼fsumme eingefÃ¼gt werden, diese steht in den letzten 2
 							// Bytes des Byte-Arrays
 
 							// Vorletzte Position im Byte-Array, high Byte
@@ -805,7 +811,7 @@ public class Osi7LongTelegramSegment {
 							// Die Nummer des Datensatzes
 							byteArray[6] = (byte)_telegramNumber;
 
-							// Ab dieser Stelle können Daten stehen
+							// Ab dieser Stelle kÃ¶nnen Daten stehen
 							dataIndex = 7;
 						}
 					}
@@ -814,10 +820,10 @@ public class Osi7LongTelegramSegment {
 					if(_startBlockSend == false) {
 						// Der Startblock wurde noch nicht verschickt
 
-						// Bit 4 enthält eine "1", Bit 0 bis 3 enthalten den Pakettyp
+						// Bit 4 enthÃ¤lt eine "1", Bit 0 bis 3 enthalten den Pakettyp
 						byteArray[4] = (byte)(0x10 + LongTelegramType.START_BIGGER_BLOCK.getTypeNumber());
 
-						// Länge des kompletten Datenblocks speichern
+						// LÃ¤nge des kompletten Datenblocks speichern
 						final int sizeOfWholeData = _wholeTelegram.length;
 
 						// Extra High-Byte
@@ -829,7 +835,7 @@ public class Osi7LongTelegramSegment {
 						// Low-Byte
 						byteArray[8] = (byte)((sizeOfWholeData & 0x000000FF));
 
-						// Anzahl Stücke gesamt (Start und End zählen nicht)
+						// Anzahl StÃ¼cke gesamt (Start und End zÃ¤hlen nicht)
 
 						// High
 						byteArray[9] = (byte)((_numberOfNeededPieces & 0x0000FF00) >> 8);
@@ -847,10 +853,10 @@ public class Osi7LongTelegramSegment {
 							// Es muss der letzte Block verschickt werden
 							byteArray[4] = (byte)(0x10 + LongTelegramType.END_BIGGER_BLOCK.getTypeNumber());
 
-							// Ab dieser Position können Daten stehen
+							// Ab dieser Position kÃ¶nnen Daten stehen
 							dataIndex = 6;
 
-							// Die letzten 4 Bytes des Byte-Arrays sind der CRC Prüfsumme vorbehalten
+							// Die letzten 4 Bytes des Byte-Arrays sind der CRC PrÃ¼fsumme vorbehalten
 
 							// ultra high Byte
 							byteArray[byteArray.length - 4] = ((_crcChecksum & 0xFF000000) >> 24);
@@ -865,7 +871,7 @@ public class Osi7LongTelegramSegment {
 							// Es ist ein NextBiggerPiece Telegramm
 							byteArray[4] = (byte)(0x10 + LongTelegramType.NEXT_BIGGER_PIECE.getTypeNumber());
 
-							// Nummer des Datenblockstücks
+							// Nummer des DatenblockstÃ¼cks
 
 							// High
 							byteArray[6] = (byte)((_telegramNumber & 0x0000FF00) >> 8);
@@ -882,7 +888,7 @@ public class Osi7LongTelegramSegment {
 					throw new IllegalStateException("Der Typ des Telegramms kann nicht identifiziert werden: " + _telegramType);
 				}
 
-				// DatenBlockTyp und DatenBlockNummer eintragen, diese Einträge können wieder bei allen Typen
+				// DatenBlockTyp und DatenBlockNummer eintragen, diese EintrÃ¤ge kÃ¶nnen wieder bei allen Typen
 				// gleich behandelt werden.
 
 				// Eine "1" im Bit 4, in den Bits 0 bis 3 steht die DatenBlockNummer
@@ -909,16 +915,16 @@ public class Osi7LongTelegramSegment {
 		}
 
 		/**
-		 * Diese Methode trägt in dem übergebenen Byte-Array die Knotennummer des Senders ein
+		 * Diese Methode trÃ¤gt in dem Ã¼bergebenen Byte-Array die Knotennummer des Senders ein
 		 *
 		 * @param byteArray s.o.
 		 */
 		private void createSenderNodeNumber(byte[] byteArray) {
-			// Alles löschen, bis auf die ersten 8 Bit (low-Byte)
+			// Alles lÃ¶schen, bis auf die ersten 8 Bit (low-Byte)
 			byteArray[0] = (byte)(_senderNodeNumber & 0x000000FF);
-			// Alles löschen bis auf die high-Byte und shift nach rechts
+			// Alles lÃ¶schen bis auf die high-Byte und shift nach rechts
 			byteArray[1] = (byte)((_senderNodeNumber & 0x0000FF00) >> 8);
-			// Alles löschen bis auf die extra High-Bytes und shift nach rechts
+			// Alles lÃ¶schen bis auf die extra High-Bytes und shift nach rechts
 			byteArray[2] = (byte)((_senderNodeNumber & 0x00FF0000) >> 16);
 		}
 

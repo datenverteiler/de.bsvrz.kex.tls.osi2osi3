@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniß Systemberatung, Aachen
+ * Copyright 2004 by Kappich+KniÃŸ Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.api;
@@ -27,16 +33,16 @@ import de.bsvrz.dav.daf.main.ClientDavInterface;
 import java.util.*;
 
 /**
- * Schnittstelle für Protokolle der Sicherungsschicht (OSI 2).
+ * Schnittstelle fÃ¼r Protokolle der Sicherungsschicht (OSI 2).
  *
  * @author Kappich Systemberatung
- * @version $Revision: 5114 $
+ * @version $Revision$
  */
 public interface DataLinkLayer {
 
 	/**
 	 * Nimmmt die Verbindung zum Datenverteiler entgegen. Diese Methode wird vom OSI-3 Modul nach dem Erzeugen des OSI-2 Moduls durch den jeweiligen Konstruktor
-	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die übergebene Datenverteilerverbindung intern merken, um zu späteren
+	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die Ã¼bergebene Datenverteilerverbindung intern merken, um zu spÃ¤teren
 	 * Zeitpunkten auf die Datenverteiler-Applikationsfunktionen zuzugreifen.
 	 *
 	 * @param connection Verbindung zum Datenverteiler
@@ -67,7 +73,7 @@ public interface DataLinkLayer {
 	String getProperty(String name);
 
 	/**
-	 * Setzt einen neuen Satz von Protokoll-Parametern. Diese dienen auch als Defaultwerte für die Verbindungsparameter.
+	 * Setzt einen neuen Satz von Protokoll-Parametern. Diese dienen auch als Defaultwerte fÃ¼r die Verbindungsparameter.
 	 *
 	 * @param properties Neue Verbindungsparameter.
 	 *
@@ -91,7 +97,7 @@ public interface DataLinkLayer {
 
 	/**
 	 * Beendet die Kommunikation dieses Protokolls. Alle noch verbundenen Links werden mit der Methode {@link Link#shutdown} terminiert. Dabei wird sichergestellt,
-	 * dass Daten, die zuvor an die Methode {@link de.bsvrz.kex.tls.osi2osi3.osi2.api.DataLinkLayer.Link#send} übergeben wurden, auch übertragen werden.
+	 * dass Daten, die zuvor an die Methode {@link de.bsvrz.kex.tls.osi2osi3.osi2.api.DataLinkLayer.Link#send} Ã¼bergeben wurden, auch Ã¼bertragen werden.
 	 */
 	void shutdown();
 
@@ -108,7 +114,7 @@ public interface DataLinkLayer {
 	/**
 	 * Erzeugt eine neue logische Verbindung zu einem bestimmten Kommunikationspartner.
 	 *
-	 * @param remoteAddress OSI-2 Adresse bzw. Portnummer des gewünschten Kommunikationspartners.
+	 * @param remoteAddress OSI-2 Adresse bzw. Portnummer des gewÃ¼nschten Kommunikationspartners.
 	 *
 	 * @return Logische Verbindung zum Kommunikationspartner.
 	 */
@@ -122,7 +128,7 @@ public interface DataLinkLayer {
 	interface Link {
 
 		/**
-		 * Bestimmt das Kommunikationsprotokoll zu dem diese Verbindung gehört.
+		 * Bestimmt das Kommunikationsprotokoll zu dem diese Verbindung gehÃ¶rt.
 		 *
 		 * @return Kommunikationsprotokoll dieser Verbindung.
 		 */
@@ -136,7 +142,7 @@ public interface DataLinkLayer {
 		int getRemoteAddress();
 
 		/**
-		 * Bestimmt den Wert eines bestimmten Verbindungsparameters. Wenn der gewünschte Verbindungsparameter nicht in den verbindungsspezifischen Parametern
+		 * Bestimmt den Wert eines bestimmten Verbindungsparameters. Wenn der gewÃ¼nschte Verbindungsparameter nicht in den verbindungsspezifischen Parametern
 		 * enthalten ist, wird mit der {@link DataLinkLayer#getProperty} Methode des Sicherungsprotokolls ein Defaultwert bestimmt.
 		 *
 		 * @param name Name des Verbindungsparameters.
@@ -160,13 +166,13 @@ public interface DataLinkLayer {
 
 		/**
 		 * Beendet die Kommunikation auf dieser logischen Verbindung. Vor der Terminierung der Verbindung wird sichergestellt, dass Daten, die zuvor an die Methode
-		 * {@link #send} übergeben wurden, auch übertragen werden.
+		 * {@link #send} Ã¼bergeben wurden, auch Ã¼bertragen werden.
 		 */
 		void shutdown() throws InterruptedException;
 
 		/**
-		 * Abbruch der Kommunikation auf dieser logischen Verbindung. Der Aufruf dieser Methode führt zur sofortigen Terminierung der Verbindung. Daten, die zuvor an
-		 * die Methode {@link #send} übergeben wurden und noch nicht übertragen wurden, werden nicht mehr übertragen.
+		 * Abbruch der Kommunikation auf dieser logischen Verbindung. Der Aufruf dieser Methode fÃ¼hrt zur sofortigen Terminierung der Verbindung. Daten, die zuvor an
+		 * die Methode {@link #send} Ã¼bergeben wurden und noch nicht Ã¼bertragen wurden, werden nicht mehr Ã¼bertragen.
 		 */
 		void abort() throws InterruptedException;
 
@@ -178,11 +184,11 @@ public interface DataLinkLayer {
 		public LinkState getState();
 
 		/**
-		 * Übernimmt die übergebenen Nutzdaten in den Sendepuffer. Die übergebenen Nutzdaten werden asynchron in der Reihenfolge der Aufrufe dieser Methode an den
-		 * Kommunikationspartner dieser Verbindung übertragen.
+		 * Ãœbernimmt die Ã¼bergebenen Nutzdaten in den Sendepuffer. Die Ã¼bergebenen Nutzdaten werden asynchron in der Reihenfolge der Aufrufe dieser Methode an den
+		 * Kommunikationspartner dieser Verbindung Ã¼bertragen.
 		 *
-		 * @param bytes    Zu übertragende Nutzdatenbytes.
-		 * @param priority Priorität der zu übertragenden Daten
+		 * @param bytes    Zu Ã¼bertragende Nutzdatenbytes.
+		 * @param priority PrioritÃ¤t der zu Ã¼bertragenden Daten
 		 */
 		void send(byte[] bytes, int priority) throws InterruptedException;
 	}

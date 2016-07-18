@@ -73,6 +73,9 @@ local.properties
 # Eclipse Core
 .project
 
+# Eclipse Checkstyle
+.checkstyle
+
 # External tool builders
 .externalToolBuilders/
 

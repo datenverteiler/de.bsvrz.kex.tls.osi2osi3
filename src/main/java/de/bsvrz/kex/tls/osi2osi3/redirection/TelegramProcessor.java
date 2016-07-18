@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -32,7 +38,7 @@ import java.util.Set;
  * Klasse zum Verarbeiten der empfangenden und zu versendenden Telegramme.
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 7107 $
+ * @version $Revision$
  * 
  */
 public class TelegramProcessor {
@@ -49,7 +55,7 @@ public class TelegramProcessor {
 	}
 	
 	/**
-	 * Prüfung, ob ein zu versendendes Telegramm auch lokal verarbeitet werden soll und ggf. Weiterleitung an weitere Ziele.
+	 * PrÃ¼fung, ob ein zu versendendes Telegramm auch lokal verarbeitet werden soll und ggf. Weiterleitung an weitere Ziele.
 	 * 
 	 * @param destination
 	 *            Knotennummer, an die das Telegramm versendet werden soll.
@@ -58,7 +64,7 @@ public class TelegramProcessor {
 	 * @return Ob das zu versendene Telegramm auch lokal verarbeitet werden soll.
 	 */
 	public boolean dataToSend(int destination, byte[] data) {
-		// Wenn keine Informationen vorhanden sind, true zurückgeben
+		// Wenn keine Informationen vorhanden sind, true zurÃ¼ckgeben
 		// Entspricht Verhaltem ohne Redirection-Mechanismus
 		if(_redirectionInfo == null) return true;
 		
@@ -68,7 +74,7 @@ public class TelegramProcessor {
 		// Knotennummer
 		int nodeNumber = telegramStructure.getNodeNumber();
 		
-		// OSI7-Telegramm, die die Teile des übergebenen Telegramms enthält, die
+		// OSI7-Telegramm, die die Teile des Ã¼bergebenen Telegramms enthÃ¤lt, die
 		// (auch) lokal behandelt werden sollen.
 		TelegramStructure resultLocalTelegram = new TelegramStructure(nodeNumber);
 
@@ -91,17 +97,17 @@ public class TelegramProcessor {
 				printOsi7TelegramConverters2Destinations(sendRedirectionMap);
 				
 				for(Osi7SingleTelegramConverter osi7TelegramConverter : sendRedirectionMap.keySet()) {
-					// Alle Ziele für den Konverter
+					// Alle Ziele fÃ¼r den Konverter
 					Set<Integer> redirectDestinations = sendRedirectionMap.get(osi7TelegramConverter);
 	                if(osi7TelegramConverter!=null){
 	                	singleTelegram = osi7TelegramConverter.convert(singleTelegram);
 	                }
-	                // Nach der Konvertierung kann ein leeres Byte-Array zurückgegeben werden
-	                // Um Telegramme mit 0 DE-Blöcken zu vermeiden muss das Einzeltelegramm mehr als 5 Bytes haben
+	                // Nach der Konvertierung kann ein leeres Byte-Array zurÃ¼ckgegeben werden
+	                // Um Telegramme mit 0 DE-BlÃ¶cken zu vermeiden muss das Einzeltelegramm mehr als 5 Bytes haben
 	                if (singleTelegram.length>7){
 	                
-	                	// Wenn das Einzeltelegramm nur einem DE-Block besteht und der Daten-Endgeräte-Kanal (DE) = 255
-	                	// gesetzt ist (z.B. Zeitstempel) soll der Versand unterdrückt werden
+	                	// Wenn das Einzeltelegramm nur einem DE-Block besteht und der Daten-EndgerÃ¤te-Kanal (DE) = 255
+	                	// gesetzt ist (z.B. Zeitstempel) soll der Versand unterdrÃ¼ckt werden
 	                	if(((singleTelegram[4]&0xff)==1) && ((singleTelegram[6]&0xff)==255)){
 	                		// Telegramm verwerfen
 	                	}
@@ -129,9 +135,9 @@ public class TelegramProcessor {
 		int resultLocalTelegramSize = resultLocalTelegram._singleTelegrams.size();
 		if (resultLocalTelegramSize==0) return false;
 		
-		// Es sollen weniger Einzeltelegramme auch an das ursprüngliche Ziel gesendet werden als 
-		// im übergebenen OSI7-Telegramm erhalten wurden.
-		// In diesem Fall erfolgt der Versand des Telegramms hier und es wird false zurückgegeben.
+		// Es sollen weniger Einzeltelegramme auch an das ursprÃ¼ngliche Ziel gesendet werden als 
+		// im Ã¼bergebenen OSI7-Telegramm erhalten wurden.
+		// In diesem Fall erfolgt der Versand des Telegramms hier und es wird false zurÃ¼ckgegeben.
 		if(resultLocalTelegramSize < singleTelegrams.size()){
 			try {
 	            _networkLayer.sendWithoutRedirection(destination, NetworkLayer.PRIORITY_CLASS_1, resultLocalTelegram.getTelegramBytes(), false);
@@ -153,7 +159,7 @@ public class TelegramProcessor {
     private void printOsi7TelegramConverters2Destinations(Map<Osi7SingleTelegramConverter, Set<Integer>> sendRedirectionMap) {
 	    Set<Osi7SingleTelegramConverter> keySet = sendRedirectionMap.keySet();
 	    for(Osi7SingleTelegramConverter osi7TelegramConverter : keySet) {
-	    	// Alle Ziele für den Konverter
+	    	// Alle Ziele fÃ¼r den Konverter
 	    	Set<Integer> redirectDestinations = sendRedirectionMap.get(osi7TelegramConverter);
 	    	String rDest = redirectDestinations.toString();
 	    	String converterClass = " Kein Konverter ";
@@ -163,8 +169,8 @@ public class TelegramProcessor {
     }
 	
 	/**
-	 * Prüfung, ob ein empfangenes Telegramm auch lokal verarbeitet werden soll.
-	 * Gibt ein Bytearray zurück, das die lokal zu verarbeitenden Bytes enthält.
+	 * PrÃ¼fung, ob ein empfangenes Telegramm auch lokal verarbeitet werden soll.
+	 * Gibt ein Bytearray zurÃ¼ck, das die lokal zu verarbeitenden Bytes enthÃ¤lt.
 	 * Dieses Array ist leer, falls keine lokale Verarbeitung erfolgen soll.
 	 * 
 	 * @param sender
@@ -174,7 +180,7 @@ public class TelegramProcessor {
 	 * @return Ob das empfangene Telegramm auch lokal verarbeitet werden soll.
 	 */
 	public byte[] dataReceived(int sender, byte[] data) {
-		// Wenn keine Informationen vorhanden sind, true zurückgeben
+		// Wenn keine Informationen vorhanden sind, true zurÃ¼ckgeben
 		// Entspricht Verhaltem ohne Redirection-Mechanismus
 		if(_redirectionInfo == null) return data;
 		
@@ -183,7 +189,7 @@ public class TelegramProcessor {
 		// Knotennummer
 		int nodeNumber = telegramStructure.getNodeNumber();
 		
-		// OSI7-Telegramm, die die Teile des übergebenen Telegramms enthält, die
+		// OSI7-Telegramm, die die Teile des Ã¼bergebenen Telegramms enthÃ¤lt, die
 		// (auch) lokal behandelt werden sollen.
 		
 		TelegramStructure resultLocalTelegram = new TelegramStructure(nodeNumber);
@@ -208,16 +214,16 @@ public class TelegramProcessor {
 				printOsi7TelegramConverters2Destinations(receiveRedirectionMap);
 				
 				for(Osi7SingleTelegramConverter osi7TelegramConverter : receiveRedirectionMap.keySet()) {
-					// Alle Ziele für den Konverter
+					// Alle Ziele fÃ¼r den Konverter
 					Set<Integer> redirectDestinations = receiveRedirectionMap.get(osi7TelegramConverter);
 	                if(osi7TelegramConverter!=null){
 	                	singleTelegram = osi7TelegramConverter.convert(singleTelegram);
 	                }
-	                // Nach der Konvertierung kann ein leeres Byte-Array zurückgegeben werden
-	                // Um Telegramme mit 0 DE-Blöcken zu vermeiden muss das Einzeltelegramm mehr als 5 Bytes haben
+	                // Nach der Konvertierung kann ein leeres Byte-Array zurÃ¼ckgegeben werden
+	                // Um Telegramme mit 0 DE-BlÃ¶cken zu vermeiden muss das Einzeltelegramm mehr als 5 Bytes haben
 	                if (singleTelegram.length>7){
-	                	// Wenn das Einzeltelegramm nur einem DE-Block besteht und der Daten-Endgeräte-Kanal (DE) = 255
-	                	// gesetzt ist (z.B. Zeitstempel) soll der Versand unterdrückt werden
+	                	// Wenn das Einzeltelegramm nur einem DE-Block besteht und der Daten-EndgerÃ¤te-Kanal (DE) = 255
+	                	// gesetzt ist (z.B. Zeitstempel) soll der Versand unterdrÃ¼ckt werden
 	                	if(((singleTelegram[4]&0xff)==1) && ((singleTelegram[6]&0xff)==255)){
 	                		// Telegramm verwerfen
 	                	}
@@ -242,7 +248,7 @@ public class TelegramProcessor {
 			}
 		}
 		
-		// Wenn kein Einzeltelegramm enthalten ist, leeres Byte-Array zurückgeben.
+		// Wenn kein Einzeltelegramm enthalten ist, leeres Byte-Array zurÃ¼ckgeben.
 		if (resultLocalTelegram.getNumberOfSingletelegrams()==0) return new byte[0];
 		return resultLocalTelegram.getTelegramBytes();
 	}

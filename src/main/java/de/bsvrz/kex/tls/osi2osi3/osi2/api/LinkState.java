@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniß Systemberatung, Aachen
+ * Copyright 2004 by Kappich+KniÃŸ Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,38 +15,44 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.api;
 
 /**
- * Definiert die möglichen Zustände einer Verbindung.
+ * Definiert die mÃ¶glichen ZustÃ¤nde einer Verbindung.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 5114 $
+ * @version $Revision$
  * @see DataLinkLayer.Link
  */
 public class LinkState {
 
-	/** Stabiler Zustand für eine nicht aufgebaute Verbindung. */
+	/** Stabiler Zustand fÃ¼r eine nicht aufgebaute Verbindung. */
 	public static final LinkState DISCONNECTED = new LinkState("Nicht Verbunden");
 
-	/** Übergangszustand für eine im Aufbau befindliche Verbindung. */
+	/** Ãœbergangszustand fÃ¼r eine im Aufbau befindliche Verbindung. */
 	public static final LinkState CONNECTING = new LinkState("Verbindung wird aufgebaut");
 
-	/** Stabiler Zustand für eine aufgebaute Verbindung. */
+	/** Stabiler Zustand fÃ¼r eine aufgebaute Verbindung. */
 	public static final LinkState CONNECTED = new LinkState("Verbunden");
 
-	/** Übergangszustand für eine im Abbau befindliche Verbindung. */
+	/** Ãœbergangszustand fÃ¼r eine im Abbau befindliche Verbindung. */
 	public static final LinkState DISCONNECTING = new LinkState("Verbindung wird abgebaut");
 
 	/** Name des Verbindungszustands */
 	private final String _name;
 
 	/**
-	 * Liefert eine textuelle Beschreibung dieses Verbindungszustands zurück. Das genaue Format ist nicht festgelegt und kann sich ändern.
+	 * Liefert eine textuelle Beschreibung dieses Verbindungszustands zurÃ¼ck. Das genaue Format ist nicht festgelegt und kann sich Ã¤ndern.
 	 *
 	 * @return Beschreibung dieses Zustands.
 	 */
@@ -55,7 +61,7 @@ public class LinkState {
 	}
 
 	/**
-	 * Nicht öffentlicher Konstruktor der zum Erzeugen der vordefinierten Zustände benutzt wird.
+	 * Nicht Ã¶ffentlicher Konstruktor der zum Erzeugen der vordefinierten ZustÃ¤nde benutzt wird.
 	 *
 	 * @param name Name des Zustandes.
 	 */

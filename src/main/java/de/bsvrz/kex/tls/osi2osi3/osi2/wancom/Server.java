@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.wancom;
@@ -45,41 +51,41 @@ import java.nio.channels.SocketChannel;
 import java.util.*;
 
 /**
- * Klasse, die als OSI-2 Protokollmodul für den server-seitigen Teil einer WanCom-Verbindung eingesetzt werden kann. Zur Verwendung dieses Protokollmoduls als
- * Primary ist an dem jeweiligen Anschlußpunkt in der Konfiguration in der Attributgruppe "atg.anschlussPunkt" im Attribut "ProtokollTyp" der Wert
+ * Klasse, die als OSI-2 Protokollmodul fÃ¼r den server-seitigen Teil einer WanCom-Verbindung eingesetzt werden kann. Zur Verwendung dieses Protokollmoduls als
+ * Primary ist an dem jeweiligen AnschluÃŸpunkt in der Konfiguration in der Attributgruppe "atg.anschlussPunkt" im Attribut "ProtokollTyp" der Wert
  * "de.bsvrz.kex.tls.osi2osi3.osi2.wancom.Server" einzutragen. Zur Verwendung dieses Protokollmoduls als Secondary ist an dem jeweiligen
- * Anschlußpunkt-Kommunikationspartner in der Konfiguration in der Attributgruppe "atg.anschlussPunktKommunikationsPartner" im Attribut "ProtokollTyp" der Wert
- * "de.bsvrz.kex.tls.osi2osi3.osi2.wancom.Server" einzutragen. Im Parameter "atg.protokollEinstellungenStandard" des Anschlußpunkts werden Defaultswerte für
- * alle Verbindungen an diesem Anschlußpunkt eingestellt. Im Parameter "atg.protokollEinstellungenPrimary" bzw. "atg.protokollEinstellungenSecondary" der dem
- * Anschlußpunkt zugeordneten AnschlußPunktKommunikationsPartner werden individuelle Werte für die Verbindung zum jeweiligen Kommunikationspartner eingestellt.
- * Die Parameterdatensätze können mehrere Einträge enthalten die jeweils aus einem Namen und einem Wert bestehen. Folgende Tabelle enthält die Namen,
- * Defaultwerte und eine Beschreibung der unterstützten Einträge: <table cellpadding="2" cellspacing="2" border="1"> <tr> <th> Name </th> <th> Defaultwert </th>
+ * AnschluÃŸpunkt-Kommunikationspartner in der Konfiguration in der Attributgruppe "atg.anschlussPunktKommunikationsPartner" im Attribut "ProtokollTyp" der Wert
+ * "de.bsvrz.kex.tls.osi2osi3.osi2.wancom.Server" einzutragen. Im Parameter "atg.protokollEinstellungenStandard" des AnschluÃŸpunkts werden Defaultswerte fÃ¼r
+ * alle Verbindungen an diesem AnschluÃŸpunkt eingestellt. Im Parameter "atg.protokollEinstellungenPrimary" bzw. "atg.protokollEinstellungenSecondary" der dem
+ * AnschluÃŸpunkt zugeordneten AnschluÃŸPunktKommunikationsPartner werden individuelle Werte fÃ¼r die Verbindung zum jeweiligen Kommunikationspartner eingestellt.
+ * Die ParameterdatensÃ¤tze kÃ¶nnen mehrere EintrÃ¤ge enthalten die jeweils aus einem Namen und einem Wert bestehen. Folgende Tabelle enthÃ¤lt die Namen,
+ * Defaultwerte und eine Beschreibung der unterstÃ¼tzten EintrÃ¤ge: <table cellpadding="2" cellspacing="2" border="1"> <tr> <th> Name </th> <th> Defaultwert </th>
  * <th> Beschreibung </th> </tr> <tr> <td> wancom.port </td> <td> 7100 </td> <td> Lokale TCP-Portnummer auf der Verbindungen entgegengenommen werden. </td>
- * </tr> <tr> <td> wancom.version </td> <td> 35 </td> <td> Im WanCom-Header übertragene Version des eingesetzten Protokolls. </td> </tr> <tr> <td>
+ * </tr> <tr> <td> wancom.version </td> <td> 35 </td> <td> Im WanCom-Header Ã¼bertragene Version des eingesetzten Protokolls. </td> </tr> <tr> <td>
  * wancom.keepAliveTime </td> <td> 20 </td> <td> Zeit in Sekunden zwischen dem Versand von 2 Keep-Alive Telegrammen. </td> </tr> <tr> <td>
  * wancom.keepAliveTimeoutCount </td> <td> 3 </td> <td> Anzahl von in Folge vergangenen keepAliveTime-Intervallen ohne Empfang eines KeepAlive-Telegramms bevor
  * die Verbindung abgebrochen wird. </td> </tr> <tr> <td> wancom.keepAliveType </td> <td> 50 </td> <td> WanCom-Type-Feld in KeepAlive-Telegrammen. </td> </tr>
  * <tr> <td> wancom.tlsType </td> <td> 600 </td> <td> WanCom-Type-Feld in versendeten TLS-Telegrammen. </td> </tr> <tr> <td> wancom.tlsTypeReceive </td> <td>
  * </td> <td> WanCom-Type-Feld in empfangenen TLS-Telegrammen. Dieser Wert muss nur angegeben werden, wenn er sich vom WanCom-Typen zum Versand (wancom.tlsType)
  * unterscheidet. Wenn dieser Wert nicht angegeben wurde, wird der Wert von wancom.tlsType auch zum Empfang verwendet. Wenn der Wert <code>-1</code> angegeben
- * wird, dann werden alle WanCom-Typ-Werte (außer dem Wert für KeepAlive-Telegramme wancom.keepAliveType) akzeptiert.</td> </tr> <tr> <td>
+ * wird, dann werden alle WanCom-Typ-Werte (auÃŸer dem Wert fÃ¼r KeepAlive-Telegramme wancom.keepAliveType) akzeptiert.</td> </tr> <tr> <td>
  * wancom.connectRetryDelay </td> <td> 60 </td> <td> Wartezeit in Sekunden, bevor ein fehlgeschlagener Verbindungsversuch wiederholt wird. </td> </tr> <tr> <td>
  * wancom.localAddress </td> <td> </td> <td> Lokale Adresse, die in Wan-Com-Header als Absender eingetragen werden soll. Ein leerer Text, wird automatisch durch
  * die aktuelle lokale Adresse der Wan-Com-Verbindung ersetzt. </td> </tr> </table>
- * <p/>
+ * <p>
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10187 $
+ * @version $Revision$
  */
 public class Server extends WanCom implements PropertyQueryInterface {
 
-	/** Logger für Debugausgaben */
+	/** Logger fÃ¼r Debugausgaben */
 	private static final Debug _debug = Debug.getLogger();
 
 	/** Thread des Protokolls */
 	private final Thread _workThread;
 
-	/** Runnable Objekt, das vom Protokollthread ausgeführt wird und den Protokollablauf steuert */
+	/** Runnable Objekt, das vom Protokollthread ausgefÃ¼hrt wird und den Protokollablauf steuert */
 	final Server.Worker _worker = new Server.Worker();
 
 	/** Monitor Objekt, das zur Synchronisation des Protokoll-Threads und den API-Zugriffen von fremden Threads auf das Protokoll koordiniert */
@@ -91,12 +97,12 @@ public class Server extends WanCom implements PropertyQueryInterface {
 	/** Verbindungen zu Kommunikationspartnern, die durch das Protokoll verwaltet werden */
 	private List<Link> _links = new LinkedList<Server.Link>();
 
-	/** @return Gibt Informationen des Protokolls für Debugzwecke zurück */
+	/** @return Gibt Informationen des Protokolls fÃ¼r Debugzwecke zurÃ¼ck */
 	public String toString() {
 		return "WAN-Com-Server(" + getLocalAddress() + ", " + _protocolState + ") ";
 	}
 
-	/** Default-Konstruktor, mit dem neue WanCom-Server Protokolle instanziiert werden können */
+	/** Default-Konstruktor, mit dem neue WanCom-Server Protokolle instanziiert werden kÃ¶nnen */
 	public Server() throws IOException {
 		_debug.fine("WanComServer ");
 		_workThread = new Thread(_worker, "wancom.Server.Worker");
@@ -104,7 +110,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 
 	/**
 	 * Nimmmt die Verbindung zum Datenverteiler entgegen. Diese Methode wird vom OSI-3 Modul nach dem Erzeugen des OSI-2 Moduls durch den jeweiligen Konstruktor
-	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die übergebene Datenverteilerverbindung intern merken, um zu späteren
+	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die Ã¼bergebene Datenverteilerverbindung intern merken, um zu spÃ¤teren
 	 * Zeitpunkten auf die Datenverteiler-Applikationsfunktionen zuzugreifen.
 	 *
 	 * @param connection Verbindung zum Datenverteiler
@@ -126,49 +132,49 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		/** Signalisiert dem Protokoll-Thread, das die Kommunikation auf einer Verbindung abgebrochen werden soll */
 		public static final Server.ActionType ABORT_CALLED = new Server.ActionType("ABORT_CALLED");
 
-		/** Signalisiert dem Protokoll-Thread, das die Kommunikation auf einer Verbindung mit Berücksichtigung von evtl. Parameteränderungen neu aufgebaut werden soll */
+		/** Signalisiert dem Protokoll-Thread, das die Kommunikation auf einer Verbindung mit BerÃ¼cksichtigung von evtl. ParameterÃ¤nderungen neu aufgebaut werden soll */
 		public static final Server.ActionType RELOAD_CALLED = new Server.ActionType("RELOAD_CALLED");
 
 		/** Signalisiert dem Protokoll-Thread, das ein Telegramm auf einer Verbindung versendet werden soll */
 		public static final Server.ActionType SEND_CALLED = new Server.ActionType("SEND_CALLED");
 
-		/** Signalisiert dem Protokoll-Thread, das ein erneuter Verbindungsversuch durchgeführt werden soll */
+		/** Signalisiert dem Protokoll-Thread, das ein erneuter Verbindungsversuch durchgefÃ¼hrt werden soll */
 		public static final Server.ActionType RETRY_CONNECT = new Server.ActionType("RETRY_CONNECT");
 
-		/** Signalisiert dem Protokoll-Thread, das ein Keep-Alive-Telegramm gesendet werden soll und das der Empfang von Keep-Alive-Telegrammen geprüft werden soll */
+		/** Signalisiert dem Protokoll-Thread, das ein Keep-Alive-Telegramm gesendet werden soll und das der Empfang von Keep-Alive-Telegrammen geprÃ¼ft werden soll */
 		public static final Server.ActionType KEEPALIVE_TIMER = new Server.ActionType("KEEPALIVE_TIMER");
 
-		/** Name der Aktion für Debugzwecke */
+		/** Name der Aktion fÃ¼r Debugzwecke */
 		private final String _name; // for debug only
 
 		/**
 		 * Erzeugt ein neues Aktionsobjekt mit vorgegebenem Namen
 		 *
-		 * @param name Name der Aktion für Debugzwecke
+		 * @param name Name der Aktion fÃ¼r Debugzwecke
 		 */
 		private ActionType(String name) {
 			_name = name;
 		}
 
-		/** @return Name der Aktion für Debugzwecke */
+		/** @return Name der Aktion fÃ¼r Debugzwecke */
 		public String toString() {
 			return _name;
 		}
 	}
 
-	/** Klasse die das Runnable-Interface implementiert, vom Protokollthread ausgeführt wird und den Protokollablauf steuert */
+	/** Klasse die das Runnable-Interface implementiert, vom Protokollthread ausgefÃ¼hrt wird und den Protokollablauf steuert */
 	private class Worker implements Runnable {
 
 		/**
-		 * Selektor-Objekt, mit dessen Hilfe alle Kommunikationsoperationen (Verbindungsaufbau, Versand und Empfang von Daten) ohne zusätzliche Threads asynchron
-		 * ausgeführt werden.
+		 * Selektor-Objekt, mit dessen Hilfe alle Kommunikationsoperationen (Verbindungsaufbau, Versand und Empfang von Daten) ohne zusÃ¤tzliche Threads asynchron
+		 * ausgefÃ¼hrt werden.
 		 */
 		private final Selector _selector;
 
-		/** Queue zur Übermittlung von Aktionen an den Protokoll-Thread */
+		/** Queue zur Ãœbermittlung von Aktionen an den Protokoll-Thread */
 		private final UnboundedQueue<WorkAction> _workQueue;
 
-		/** Konstruktor initialisiert den Selektor und die Queue zur Übermittlung von Aktionen */
+		/** Konstruktor initialisiert den Selektor und die Queue zur Ãœbermittlung von Aktionen */
 		public Worker() throws IOException {
 			_selector = Selector.open();
 			_workQueue = new UnboundedQueue<Server.Worker.WorkAction>();
@@ -189,7 +195,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 					}
 				}
 			}
-			// Hier wird 30 Sekunden gewartet, um der TLS-OSI-7 genügend Zeit zur Initialisierung zu geben
+			// Hier wird 30 Sekunden gewartet, um der TLS-OSI-7 genÃ¼gend Zeit zur Initialisierung zu geben
 			_debug.fine("WanCom: 30 Sekunden warten: " + toString());
 			try {
 				Thread.sleep(30000);
@@ -201,8 +207,8 @@ public class Server extends WanCom implements PropertyQueryInterface {
 				try {
 					final ProtocolState state;
 					synchronized(_protocolLock) {
-						// Instabile Zwischenzustände werden innerhalb des synchronized Block überprüft,
-						//  da eine Zustandsänderung notwendig sein könnte
+						// Instabile ZwischenzustÃ¤nde werden innerhalb des synchronized Block Ã¼berprÃ¼ft,
+						//  da eine ZustandsÃ¤nderung notwendig sein kÃ¶nnte
 						if(_protocolState == ProtocolState.STARTING) {
 							_protocolState = ProtocolState.STARTED;
 						}
@@ -213,7 +219,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 					}
 
 					if(state == ProtocolState.STARTING) {
-						// wird beim nächsten Schleifendurchlauf im synchronized Block (oben) behandelt
+						// wird beim nÃ¤chsten Schleifendurchlauf im synchronized Block (oben) behandelt
 					}
 					else if(state == ProtocolState.STARTED || state == ProtocolState.STOPPING) {
 						_debug.finest("Protokoll arbeitet: " + this);
@@ -225,7 +231,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 						try {
 							_debug.finest("Aufruf von select()");
 							int count = _selector.select();
-							_debug.finest("Rückgabe von select(): " + count);
+							_debug.finest("RÃ¼ckgabe von select(): " + count);
 							Set<SelectionKey> selectedKeys = _selector.selectedKeys();
 							for(Iterator<SelectionKey> iterator = selectedKeys.iterator(); iterator.hasNext();) {
 								SelectionKey selectionKey = iterator.next();
@@ -243,7 +249,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 						break;
 					}
 					else {
-						_debug.error("ungültiger Zustand: " + state + "; " + this);
+						_debug.error("ungÃ¼ltiger Zustand: " + state + "; " + this);
 					}
 				}
 				catch(InterruptedException e) {
@@ -256,16 +262,16 @@ public class Server extends WanCom implements PropertyQueryInterface {
 			_debug.warning("Thread wird terminiert: " + this);
 		}
 
-		/** @return Informationen dieses Objekts für Debug-Zwecke */
+		/** @return Informationen dieses Objekts fÃ¼r Debug-Zwecke */
 		public String toString() {
-			return "Worker für " + Server.this.toString();
+			return "Worker fÃ¼r " + Server.this.toString();
 		}
 
 		/**
-		 * Kann von einem beliebigen Thread aufgerufen werden, um dem Protokoll-Thread zu signalisieren, dass eine bestimmte Aktion ausgeführt werden soll
+		 * Kann von einem beliebigen Thread aufgerufen werden, um dem Protokoll-Thread zu signalisieren, dass eine bestimmte Aktion ausgefÃ¼hrt werden soll
 		 *
 		 * @param link   Verbindung, auf die sich die Aktion bezieht.
-		 * @param action Durchzuführende Aktion
+		 * @param action DurchzufÃ¼hrende Aktion
 		 */
 		public void notify(Server.Link link, Server.ActionType action) {
 			_workQueue.put(new Server.Worker.WorkAction(link, action));
@@ -283,7 +289,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 			public final Server.ActionType _action;
 
 			/**
-			 * Erzeugt ein neues Hilfsobjekt für eine Aktion, die an einer Verbindung auszuführen ist.
+			 * Erzeugt ein neues Hilfsobjekt fÃ¼r eine Aktion, die an einer Verbindung auszufÃ¼hren ist.
 			 *
 			 * @param link   Zu speichernde Verbindung
 			 * @param action Zu speichernde Aktion
@@ -293,7 +299,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 				_action = action;
 			}
 
-			/** @return Informationen dieses Objekts für Debug-Zwecke */
+			/** @return Informationen dieses Objekts fÃ¼r Debug-Zwecke */
 			public String toString() {
 				return "WorkAction(link: " + _link + ", action: " + _action;
 			}
@@ -330,7 +336,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 	}
 
 
-	/** Terminiert alle Verbindungen des Protokolls und beendet anschließend das Protokoll. */
+	/** Terminiert alle Verbindungen des Protokolls und beendet anschlieÃŸend das Protokoll. */
 	public void shutdown() {
 		_debug.fine("shutdown): " + this);
 		synchronized(_protocolLock) {
@@ -344,7 +350,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		}
 	}
 
-	/** Bricht die Kommunikation auf allen Verbindungen des Protokolls sofort ab und beendet anschließend das Protokoll. */
+	/** Bricht die Kommunikation auf allen Verbindungen des Protokolls sofort ab und beendet anschlieÃŸend das Protokoll. */
 	public void abort() {
 		_debug.fine("abort(): " + this);
 		synchronized(_protocolLock) {
@@ -365,7 +371,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 	 */
 	public void setProperties(Properties properties) {
 		super.setProperties(properties);
-		_debug.fine("Neue Einstellungen für: " + toString() + ", properties = " + properties);
+		_debug.fine("Neue Einstellungen fÃ¼r: " + toString() + ", properties = " + properties);
 		synchronized(_protocolLock) {
 			for(Iterator<Server.Link> iterator = _links.iterator(); iterator.hasNext();) {
 				Server.Link link = iterator.next();
@@ -392,27 +398,27 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		private final PriorityChannel _sendChannel;
 
 		/**
-		 * Enthält während des Verbindungsaufbau das Kommunikationsobjekt mit internem Serversocket, über den die Verbindung des Clients entgegengenommen wird; sonst
+		 * EnthÃ¤lt wÃ¤hrend des Verbindungsaufbau das Kommunikationsobjekt mit internem Serversocket, Ã¼ber den die Verbindung des Clients entgegengenommen wird; sonst
 		 * <code>null</code>.
 		 */
 		private ServerSocketChannel _serverSocketChannel;
 
 		/**
-		 * Enthält während einer bestehenden Verbindung das Kommunikationsobjekt mit internem Server, über den der Datenaustausch mit dem Client abgewickelt wird;
+		 * EnthÃ¤lt wÃ¤hrend einer bestehenden Verbindung das Kommunikationsobjekt mit internem Server, Ã¼ber den der Datenaustausch mit dem Client abgewickelt wird;
 		 * sonst <code>null</code>.
 		 */
 		private SocketChannel _socketChannel;
 
-		/** Enthält die online änderbaren Parameter für diese Verbindung */
+		/** EnthÃ¤lt die online Ã¤nderbaren Parameter fÃ¼r diese Verbindung */
 		private Properties _properties = null;
 
-		/** Wrapper-Objekt zum bequemen Zugriff auf die online änderbaren Parameter dieser Verbindung */
+		/** Wrapper-Objekt zum bequemen Zugriff auf die online Ã¤nderbaren Parameter dieser Verbindung */
 		private final PropertyConsultant _propertyConsultant;
 
 		/** Versionsfeld der WanCom-Telegramme */
 		private int _wanComVersion;
 
-		/** Intervallzeit in Sekunden für den Versand und Empfang von Keep-Alive-Telegrammen */
+		/** Intervallzeit in Sekunden fÃ¼r den Versand und Empfang von Keep-Alive-Telegrammen */
 		private int _wanComKeepAliveTimeSeconds;
 
 		/** Anzahl Intervalle ohne Empfang eines Keep-Alive-Telegramms nach der eine bestehende Verbindung abgebrochen und neu aufgebaut wird. */
@@ -421,13 +427,13 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		/** Wartezeit in Sekunden, die nach einem fehlerbedingten Verbindungsabbruch gewartet wird, bevor die Verbindung neu aufgebaut wird. */
 		private int _wanComConnectRetryDelay = 60;
 
-		/** Timerobjekt mit dem zukünftige Aktionen geplant und ausgeführt werden */
+		/** Timerobjekt mit dem zukÃ¼nftige Aktionen geplant und ausgefÃ¼hrt werden */
 		private final Timer _timer = new Timer(true);
 
-		/** Empfangspuffer für empfangene Telegramme */
+		/** Empfangspuffer fÃ¼r empfangene Telegramme */
 		private final ByteBuffer _readBuffer = ByteBuffer.allocateDirect(2204);
 
-		/** Sendepuffer für versendete Telegramme */
+		/** Sendepuffer fÃ¼r versendete Telegramme */
 		private final ByteBuffer _sendBuffer = ByteBuffer.allocateDirect(28 + getMaximumDataSize());
 
 		/** WanCom-Typfeld ind Keep-Alive-Telegrammen */
@@ -436,10 +442,10 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		/** WanCom-IP-Routing ignorieren */
 		private boolean _wanComIgnoreIpRouting;
 
-		/** WanCom-Typ für versendete TLS-Telegramme */
+		/** WanCom-Typ fÃ¼r versendete TLS-Telegramme */
 		private int _wanComTlsType;
 
-		/** WanCom-Typ für empfangene TLS-Telegramme, -1 bedeutet, dass beliebige Typen akzeptiert werden */
+		/** WanCom-Typ fÃ¼r empfangene TLS-Telegramme, -1 bedeutet, dass beliebige Typen akzeptiert werden */
 		private int _wanComTlsTypeReceive;
 
 		/** Zeitpunkt des letzten empfangenen Keep-Alive-Telegramms in Millisekunden */
@@ -458,9 +464,9 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		byte[] _packetOnTheAir = null;
 
 		/**
-		 * Sendet eine Aktion für dieses Verbindungsobjekt zur Ausführung an den Protokoll-Thread.
+		 * Sendet eine Aktion fÃ¼r dieses Verbindungsobjekt zur AusfÃ¼hrung an den Protokoll-Thread.
 		 *
-		 * @param action Auszuführende Aktion
+		 * @param action AuszufÃ¼hrende Aktion
 		 */
 		private void notifyWorker(Server.ActionType action) {
 			_worker.notify(this, action);
@@ -496,17 +502,17 @@ public class Server extends WanCom implements PropertyQueryInterface {
 			}
 		}
 
-		/** @return Das zu dieser Verbindung gehörende Protokollmodul */
+		/** @return Das zu dieser Verbindung gehÃ¶rende Protokollmodul */
 		public DataLinkLayer getDataLinkLayer() {
 			return Server.this;
 		}
 
 		/**
-		 * Liefert einen Parameterwert zurück.
+		 * Liefert einen Parameterwert zurÃ¼ck.
 		 *
-		 * @param name Name des gewünschten Parameterwerts.
+		 * @param name Name des gewÃ¼nschten Parameterwerts.
 		 *
-		 * @return Gewünschter Parameterwert.
+		 * @return GewÃ¼nschter Parameterwert.
 		 */
 		public String getProperty(String name) {
 			synchronized(_linkPropertyLock) {
@@ -545,7 +551,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 			notifyWorker(Server.ActionType.CONNECT_CALLED);
 		}
 
-		/** Initiiert das Schließen der bestehenden Verbindung dieses Verbindungsobjekts */
+		/** Initiiert das SchlieÃŸen der bestehenden Verbindung dieses Verbindungsobjekts */
 		public void shutdown() {
 			_debug.fine("shutdown " + this);
 			synchronized(_linkLock) {
@@ -580,7 +586,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 			notifyWorker(Server.ActionType.ABORT_CALLED);
 		}
 
-		/** Initiiert den Abbruch und erneuten Verbindungsaufbau einer bestehenden Verbindung mit evtl. geänderten Parametern */
+		/** Initiiert den Abbruch und erneuten Verbindungsaufbau einer bestehenden Verbindung mit evtl. geÃ¤nderten Parametern */
 		public void reload() {
 			_debug.fine("reload " + this);
 			synchronized(_protocolLock) {
@@ -592,12 +598,12 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		 * Initiiert den Versand eines Telegramms.
 		 *
 		 * @param bytes    Bytearray mit den Bytes des zu sendenden Telegramms.
-		 * @param priority Priorität des zu sendenden Telegramms.
+		 * @param priority PrioritÃ¤t des zu sendenden Telegramms.
 		 *
 		 * @throws InterruptedException Wenn der aktuelle Thread unterbrochen wurde.
 		 */
 		public void send(byte[] bytes, int priority) throws InterruptedException {
-			_debug.finer("Telegramm soll gesendet werden, Priorität: " + priority);
+			_debug.finer("Telegramm soll gesendet werden, PrioritÃ¤t: " + priority);
 			//_debug.finer("Daten: " + HexDumper.toString(bytes));
 			synchronized(_linkLock) {
 				if(_linkState != LinkState.CONNECTED) {
@@ -606,16 +612,16 @@ public class Server extends WanCom implements PropertyQueryInterface {
 					);
 				}
 			}
-			_debug.finest("Telegramm wird zum Versand gepuffert, Priorität: " + priority);
+			_debug.finest("Telegramm wird zum Versand gepuffert, PrioritÃ¤t: " + priority);
 			_sendChannel.put(new Server.PriorizedByteArray(bytes, priority));
 			notifyWorker(Server.ActionType.SEND_CALLED);
 		}
 
 		/**
-		 * Führt eine Aktion für dieses Verbindungsobjekt aus. Diese Methode wird vom Protokoll-Thread zur Verarbeitung einer Aktion aufgerufen.
+		 * FÃ¼hrt eine Aktion fÃ¼r dieses Verbindungsobjekt aus. Diese Methode wird vom Protokoll-Thread zur Verarbeitung einer Aktion aufgerufen.
 		 *
-		 * @param action   Auszuführende Aktion
-		 * @param selector Selektor des Protokoll-Threads zum asynchronen Zugriff auf die Kommunikationskanäle.
+		 * @param action   AuszufÃ¼hrende Aktion
+		 * @param selector Selektor des Protokoll-Threads zum asynchronen Zugriff auf die KommunikationskanÃ¤le.
 		 */
 		public void handleAction(Server.ActionType action, Selector selector) {
 			_debug.finer("handleAction(" + action + "): " + this);
@@ -629,7 +635,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 						_sendKeepAlive = true;
 						if(_lastKeepAliveReceive + _wanComKeepAliveTimeSeconds * 1000L < System.currentTimeMillis()) {
 							++_keepAliveReceiveTimeoutCount;
-							_debug.info("KeepAlive Timeout, Zähler: " + _keepAliveReceiveTimeoutCount + "; " + this);
+							_debug.info("KeepAlive Timeout, ZÃ¤hler: " + _keepAliveReceiveTimeoutCount + "; " + this);
 							if(_keepAliveReceiveTimeoutCount >= _wanComKeepAliveTimeoutCount) {
 								_debug.warning("Verbindung wird neu initialisiert wegen fehlenden KeepAlive Telegrammen: " + this);
 								closeChannel();
@@ -659,9 +665,9 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		}
 
 		/**
-		 * Führt den asynchronen Versand von noch zu versendenden Telegrammen aus.
+		 * FÃ¼hrt den asynchronen Versand von noch zu versendenden Telegrammen aus.
 		 *
-		 * @param selector Selektor des Protokoll-Threads zum asynchronen Zugriff auf die Kommunikationskanäle.
+		 * @param selector Selektor des Protokoll-Threads zum asynchronen Zugriff auf die KommunikationskanÃ¤le.
 		 */
 		private void handleAsyncSend(Selector selector) {
 			if(_socketChannel == null) return;
@@ -729,12 +735,12 @@ public class Server extends WanCom implements PropertyQueryInterface {
 						}
 					}
 					if(_sendBuffer.hasRemaining()) {
-						_debug.finest("Sendeversuch für verbleibende " + _sendBuffer.remaining() + " Bytes");
+						_debug.finest("Sendeversuch fÃ¼r verbleibende " + _sendBuffer.remaining() + " Bytes");
 						int sent = _socketChannel.write(_sendBuffer);
 						_debug.finest("erfolgreich gesendete Bytes " + sent);
 					}
 					if(_sendBuffer.hasRemaining()) {
-						_debug.finer("Versand wird sobald möglich fortgesetzt");
+						_debug.finer("Versand wird sobald mÃ¶glich fortgesetzt");
 						_socketChannel.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ, this);
 						break;
 					}
@@ -759,7 +765,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		}
 
 		/**
-		 * Schließt den Kommunikationskanal zum Client und plant den erneuten Aufbau der Kommunikationsverbindung nach der durch den Parameter
+		 * SchlieÃŸt den Kommunikationskanal zum Client und plant den erneuten Aufbau der Kommunikationsverbindung nach der durch den Parameter
 		 * "wancom.connectRetryDelay" vorgebbaren Wartezeit ein.
 		 */
 		private void closeChannel() {
@@ -767,7 +773,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		}
 
 		/**
-		 * Schließt den Kommunikationskanal zum Client und plant den erneuten Aufbau der Kommunikationsverbindung nach einer vorgebbaren Wartezeit ein.
+		 * SchlieÃŸt den Kommunikationskanal zum Client und plant den erneuten Aufbau der Kommunikationsverbindung nach einer vorgebbaren Wartezeit ein.
 		 *
 		 * @param reconnectDelay Wartezeit nach der die Verbindung wieder aufgebaut werden soll.
 		 */
@@ -778,7 +784,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 						_serverSocketChannel.close();
 					}
 					catch(IOException e) {
-						_debug.warning("Fehler beim Schließen des ServerSocketChannels: " + e);
+						_debug.warning("Fehler beim SchlieÃŸen des ServerSocketChannels: " + e);
 					}
 					finally {
 						_serverSocketChannel = null;
@@ -789,7 +795,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 						_socketChannel.close();
 					}
 					catch(IOException e) {
-						_debug.warning("Fehler beim Schließen des SocketChannels: " + e);
+						_debug.warning("Fehler beim SchlieÃŸen des SocketChannels: " + e);
 					}
 					finally {
 						_socketChannel = null;
@@ -801,26 +807,26 @@ public class Server extends WanCom implements PropertyQueryInterface {
 				}
 				else if(_linkState == LinkState.CONNECTED) {
 					_linkState = LinkState.CONNECTING;
-					_debug.fine("Nächster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
+					_debug.fine("NÃ¤chster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
 					scheduleActionTimer(Server.ActionType.RETRY_CONNECT, reconnectDelay);
 					notifyEvent(DataLinkLayerEvent.Type.DISCONNECTED, null);
 				}
 				else if(_linkState == LinkState.CONNECTING) {
-					_debug.fine("Nächster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
+					_debug.fine("NÃ¤chster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
 					scheduleActionTimer(Server.ActionType.RETRY_CONNECT, reconnectDelay);
 				}
 				else {
-					_debug.error("closeChannel: Unmöglicher Zustand: Fehler ohne bestehende Verbindung; " + this);
+					_debug.error("closeChannel: UnmÃ¶glicher Zustand: Fehler ohne bestehende Verbindung; " + this);
 					_linkState = LinkState.DISCONNECTED;
 				}
 			}
 		}
 
 		/**
-		 * Verarbeitet asynchrone Kommunikationsoperationen anhand der vom Selektor des Protokoll-Threads gelieferten Möglichkeiten
+		 * Verarbeitet asynchrone Kommunikationsoperationen anhand der vom Selektor des Protokoll-Threads gelieferten MÃ¶glichkeiten
 		 *
-		 * @param selectionKey Vom Selektor des Protokoll-Threads gelieferte Kommunikationsmöglichkeiten
-		 * @param selector     Selektor des Protokoll-Threads zum asynchronen Zugriff auf die Kommunikationskanäle.
+		 * @param selectionKey Vom Selektor des Protokoll-Threads gelieferte KommunikationsmÃ¶glichkeiten
+		 * @param selector     Selektor des Protokoll-Threads zum asynchronen Zugriff auf die KommunikationskanÃ¤le.
 		 */
 		public void handleSelection(SelectionKey selectionKey, Selector selector) {
 			_debug.finer("handleSelection(" + selectionKey.readyOps() + "/" + selectionKey.interestOps() + "): " + this);
@@ -858,23 +864,23 @@ public class Server extends WanCom implements PropertyQueryInterface {
 									throw new Server.IllegalTelegramException("Falsche WanCom Version: " + telegramVersion);
 								}
 								if(telegramSize < 28) {
-									throw new Server.IllegalTelegramException("Empfangene WanCom-Telegrammgröße ist zu klein: " + telegramSize);
+									throw new Server.IllegalTelegramException("Empfangene WanCom-TelegrammgrÃ¶ÃŸe ist zu klein: " + telegramSize);
 								}
 								if(telegramSize > 2204) {
-									throw new Server.IllegalTelegramException("Empfangene WanCom-Telegrammgröße ist zu groß: " + telegramSize);
+									throw new Server.IllegalTelegramException("Empfangene WanCom-TelegrammgrÃ¶ÃŸe ist zu groÃŸ: " + telegramSize);
 								}
 								if(remaining >= telegramSize) {
 									int telegramType = _readBuffer.getInt(telegramPosition + 8);
 									int telegramDestinationIpCount = _readBuffer.getInt(telegramPosition + 12);
 									if(telegramDestinationIpCount < 0 || telegramDestinationIpCount > 16) {
 										throw new Server.IllegalTelegramException(
-												"Ungültige Anzahl IP-Adressen im WanCom im Telegramm: " + telegramDestinationIpCount
+												"UngÃ¼ltige Anzahl IP-Adressen im WanCom im Telegramm: " + telegramDestinationIpCount
 										);
 									}
 									int telegramDestinationIpPointer = _readBuffer.getInt(telegramPosition + 16);
 									if(telegramDestinationIpPointer < 0 || telegramDestinationIpPointer > telegramDestinationIpCount) {
 										throw new Server.IllegalTelegramException(
-												"Ungültiger IP-Adress-Zeiger im WanCom im Telegramm: " + telegramDestinationIpCount
+												"UngÃ¼ltiger IP-Adress-Zeiger im WanCom im Telegramm: " + telegramDestinationIpCount
 										);
 									}
 									int payloadOffset = 5 * 4 + 8 + telegramDestinationIpCount * 8;
@@ -886,7 +892,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 									int payloadSize = telegramSize - payloadOffset;
 									if(!_wanComIgnoreIpRouting && telegramDestinationIpPointer != telegramDestinationIpCount) {
 										_debug.warning(
-												"IP-Routing in Wan-Com Telegrammen wird nicht unterstützt. Zeiger: " + telegramDestinationIpPointer
+												"IP-Routing in Wan-Com Telegrammen wird nicht unterstÃ¼tzt. Zeiger: " + telegramDestinationIpPointer
 												+ ", Anzahl Zieladressen: " + telegramDestinationIpCount + ". " + this
 										);
 									}
@@ -905,13 +911,13 @@ public class Server extends WanCom implements PropertyQueryInterface {
 											notifyEvent(DataLinkLayerEvent.Type.DATA_RECEIVED, payload);
 										}
 										else {
-											throw new Server.IllegalTelegramException("Ungültiger WanCom Type im Telegramm: " + telegramType);
+											throw new Server.IllegalTelegramException("UngÃ¼ltiger WanCom Type im Telegramm: " + telegramType);
 										}
 									}
 									_readBuffer.position(telegramPosition + telegramSize);
 								}
 								else {
-									// Nicht genügend Bytes im Puffer => Warten auf weitere Daten
+									// Nicht genÃ¼gend Bytes im Puffer => Warten auf weitere Daten
 									break;
 								}
 							}
@@ -939,10 +945,10 @@ public class Server extends WanCom implements PropertyQueryInterface {
 
 		/**
 		 * Asynchroner Verbindungsaufbau. Zum Aufbau der Kommunikationsverbindung wird ein Kommunikationskanal mit einem Serversocket initialisiert, der auf dem
-		 * gewünschten TCP-Port Verbindungen entgegennimmt. Nachdem Verbindungsaufbau wird der Serversocket wieder geschlossen und ein neuer Kommunikationskanal für
+		 * gewÃ¼nschten TCP-Port Verbindungen entgegennimmt. Nachdem Verbindungsaufbau wird der Serversocket wieder geschlossen und ein neuer Kommunikationskanal fÃ¼r
 		 * den Datenaustausch initialisiert.
 		 *
-		 * @param selector Selektor des Protokoll-Threads zum asynchronen Zugriff auf die Kommunikationskanäle.
+		 * @param selector Selektor des Protokoll-Threads zum asynchronen Zugriff auf die KommunikationskanÃ¤le.
 		 */
 		private void connectSocketChannel(Selector selector) {
 			synchronized(_linkLock) {
@@ -995,7 +1001,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 								scheduleActionTimer(Server.ActionType.KEEPALIVE_TIMER, _wanComKeepAliveTimeSeconds);
 							}
 							else {
-								_debug.info("Verbindungsaufbau ist noch nicht abgeschlossen und wird asynchron durchgeführt; " + this);
+								_debug.info("Verbindungsaufbau ist noch nicht abgeschlossen und wird asynchron durchgefÃ¼hrt; " + this);
 								_serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT, this);
 							}
 						}
@@ -1009,10 +1015,10 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		}
 
 		/**
-		 * Plant eine Aktion mit Hilfe eines Timer-Objekts zur späteren Ausführung ein.
+		 * Plant eine Aktion mit Hilfe eines Timer-Objekts zur spÃ¤teren AusfÃ¼hrung ein.
 		 *
-		 * @param actionType   Auszuführende Aktion
-		 * @param delaySeconds Verzögerungszeit in Sekunden nach der die Aktion ausgeführt werden soll.
+		 * @param actionType   AuszufÃ¼hrende Aktion
+		 * @param delaySeconds VerzÃ¶gerungszeit in Sekunden nach der die Aktion ausgefÃ¼hrt werden soll.
 		 */
 		private void scheduleActionTimer(final Server.ActionType actionType, int delaySeconds) {
 			final TimerTask timerTask = new TimerTask() {
@@ -1037,7 +1043,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		}
 	}
 
-	/** Dient zur Speicherung eines zu versendenden Telegramms mit einer zugeordneten Priorität */
+	/** Dient zur Speicherung eines zu versendenden Telegramms mit einer zugeordneten PrioritÃ¤t */
 	private static class PriorizedByteArray implements PriorizedObject {
 
 		/**
@@ -1046,7 +1052,7 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		 */
 		private final byte[] _bytes;
 
-		/** Priorität des zu versendenden Telegramms. Kleinere Werte haben höhere Priorität. */
+		/** PrioritÃ¤t des zu versendenden Telegramms. Kleinere Werte haben hÃ¶here PrioritÃ¤t. */
 		private final int _priority;
 
 		/**
@@ -1054,14 +1060,14 @@ public class Server extends WanCom implements PropertyQueryInterface {
 		 *
 		 * @param bytes    Array mit den einzelnen Bytes des zu versendenden Telegramms. Der Wert <code>null</code> signalisiert, dass keine weiteren Telegramme mehr
 		 *                 versendet werden sollen.
-		 * @param priority Priorität des zu versendenden Telegramms. Kleinere Werte haben höhere Priorität.
+		 * @param priority PrioritÃ¤t des zu versendenden Telegramms. Kleinere Werte haben hÃ¶here PrioritÃ¤t.
 		 */
 		public PriorizedByteArray(byte[] bytes, int priority) {
 			_bytes = bytes;
 			_priority = priority;
 		}
 
-		/** @return Priorität des zu versendenden Telegramms. Kleinere Werte haben höhere Priorität. */
+		/** @return PrioritÃ¤t des zu versendenden Telegramms. Kleinere Werte haben hÃ¶here PrioritÃ¤t. */
 		public int getPriorityClass() {
 			return _priority;
 		}
