@@ -9,7 +9,7 @@
     <version>3.8.0</version>
 
     <name>de.bsvrz.kex.tls.osi2osi3</name>
-    <url>http://datenverteiler.github.io/${project.artifactId}/</url>
+    <url>http://bitctrl.github.io/${project.artifactId}/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,9 +65,9 @@
                     <snapshots>
                         <enabled>false</enabled>
                     </snapshots>
-                    <id>bintray-datenverteiler-maven</id>
+                    <id>bintray-bitctrl-maven</id>
                     <name>bintray</name>
-                    <url>http://dl.bintray.com/datenverteiler/maven</url>
+                    <url>http://dl.bintray.com/bitctrl/maven</url>
                 </repository>
             </repositories>
             <pluginRepositories>
@@ -82,8 +82,8 @@
             </pluginRepositories>
             <distributionManagement>
                 <repository>
-                    <id>bintray-datenverteiler-maven</id>
-                    <name>datenverteiler-maven</name>
+                    <id>bintray-bitctrl-maven</id>
+                    <name>bitctrl-maven</name>
                     <url>https://api.bintray.com/maven/bitctrl/maven/${project.artifactId}/;publish=1</url>
                 </repository>
             </distributionManagement>
