@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniß Systemberatung, Aachen
+ * Copyright 2004 by Kappich+KniÃŸ Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,41 +15,47 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.wancom;
 
 
 /**
- * Definiert die möglichen Zustände eines Protokolls.
+ * Definiert die mÃ¶glichen ZustÃ¤nde eines Protokolls.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 5114 $
+ * @version $Revision$
  */
 public final class ProtocolState {
 
-	/** Stabiler Zustand für ein noch nicht gestartetes Protokoll. */
+	/** Stabiler Zustand fÃ¼r ein noch nicht gestartetes Protokoll. */
 	public static final ProtocolState CREATED = new ProtocolState("Erzeugt");
 
-	/** Übergangszustand für ein startendes Protokoll. */
+	/** Ãœbergangszustand fÃ¼r ein startendes Protokoll. */
 	public static final ProtocolState STARTING = new ProtocolState("Wird gestartet");
 
-	/** Stabiler Zustand für ein gestartetes Protokoll. */
+	/** Stabiler Zustand fÃ¼r ein gestartetes Protokoll. */
 	public static final ProtocolState STARTED = new ProtocolState("Gestartet");
 
-	/** Übergangszustand für ein zu stoppendes Protokoll. */
+	/** Ãœbergangszustand fÃ¼r ein zu stoppendes Protokoll. */
 	public static final ProtocolState STOPPING = new ProtocolState("Wird gestoppt");
 
-	/** Stabiler Zustand für ein gestopptes Protokoll. */
+	/** Stabiler Zustand fÃ¼r ein gestopptes Protokoll. */
 	public static final ProtocolState STOPPED = new ProtocolState("Gestoppt");
 
 	/** Name des Zustands */
 	private final String _name;
 
 	/**
-	 * Liefert eine textuelle Beschreibung dieses Zustands zurück. Das genaue Format ist nicht festgelegt und kann sich ändern.
+	 * Liefert eine textuelle Beschreibung dieses Zustands zurÃ¼ck. Das genaue Format ist nicht festgelegt und kann sich Ã¤ndern.
 	 *
 	 * @return Beschreibung dieses Zustands.
 	 */
@@ -58,7 +64,7 @@ public final class ProtocolState {
 	}
 
 	/**
-	 * Nicht öffentlicher Konstruktor der zum Erzeugen der vordefinierten Zustände benutzt wird.
+	 * Nicht Ã¶ffentlicher Konstruktor der zum Erzeugen der vordefinierten ZustÃ¤nde benutzt wird.
 	 *
 	 * @param name Name des Zustandes.
 	 */

@@ -1,14 +1,14 @@
 /*
  * Copyright 2008 by Kappich Systemberatung, Aachen
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung Aachen (K2S)
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung Aachen (K2S)
  * Copyright 2006 by Kappich Systemberatung Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -17,8 +17,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.wancom;
@@ -46,30 +52,30 @@ import java.nio.channels.SocketChannel;
 import java.util.*;
 
 /**
- * Klasse, die als OSI-2 Protokollmodul f¸r den client-seitige Teil einer WanCom-Verbindung eingesetzt werden kann. Zur Verwendung dieses Protokollmoduls ist an
- * dem jeweiligen Anschluﬂpunkt in der Konfiguration in der Attributgruppe "atg.anschlussPunkt" im Attribut "ProtokollTyp" der Wert
- * "de.bsvrz.kex.tls.osi2osi3.osi2.wancom.Client" einzutragen. Im Parameter "atg.protokollEinstellungenStandard" des Anschluﬂpunkts werden Defaultswerte f¸r
- * alle Verbindungen an diesem Anschluﬂpunkt eingestellt. Im Parameter "atg.protokollEinstellungenPrimary" bzw. "atg.protokollEinstellungenSecondary" der dem
- * Anschluﬂpunkt zugeordneten AnschluﬂPunktKommunikationsPartner werden individuelle Werte f¸r die Verbindung zum jeweiligen Kommunikationspartner eingestellt.
- * Die Parameterdatens‰tze kˆnnen mehrere Eintr‰ge enthalten die jeweils aus einem Namen und einem Wert bestehen. Folgende Tabelle enth‰lt die Namen,
- * Defaultwerte und eine Beschreibung der unterst¸tzten Eintr‰ge: <table cellpadding="2" cellspacing="2" border="1"> <tr> <th> Name </th> <th> Defaultwert </th>
+ * Klasse, die als OSI-2 Protokollmodul f√ºr den client-seitige Teil einer WanCom-Verbindung eingesetzt werden kann. Zur Verwendung dieses Protokollmoduls ist an
+ * dem jeweiligen Anschlu√üpunkt in der Konfiguration in der Attributgruppe "atg.anschlussPunkt" im Attribut "ProtokollTyp" der Wert
+ * "de.bsvrz.kex.tls.osi2osi3.osi2.wancom.Client" einzutragen. Im Parameter "atg.protokollEinstellungenStandard" des Anschlu√üpunkts werden Defaultswerte f√ºr
+ * alle Verbindungen an diesem Anschlu√üpunkt eingestellt. Im Parameter "atg.protokollEinstellungenPrimary" bzw. "atg.protokollEinstellungenSecondary" der dem
+ * Anschlu√üpunkt zugeordneten Anschlu√üPunktKommunikationsPartner werden individuelle Werte f√ºr die Verbindung zum jeweiligen Kommunikationspartner eingestellt.
+ * Die Parameterdatens√§tze k√∂nnen mehrere Eintr√§ge enthalten die jeweils aus einem Namen und einem Wert bestehen. Folgende Tabelle enth√§lt die Namen,
+ * Defaultwerte und eine Beschreibung der unterst√ºtzten Eintr√§ge: <table cellpadding="2" cellspacing="2" border="1"> <tr> <th> Name </th> <th> Defaultwert </th>
  * <th> Beschreibung </th> </tr> <tr> <td> wancom.host </td> <td>  </td> <td> Domainname oder IP-Adresse des Kommunikationspartners. </td> </tr> <tr> <td>
  * wancom.port </td> <td> 7100 </td> <td> TCP-Portnummer des WanCom-Servers beim Kommunikationspartner. </td> </tr> <tr> <td> wancom.version </td> <td> 35 </td>
- * <td> Im WanCom-Header ¸bertragene Version des eingesetzten Protokolls. </td> </tr> <tr> <td> wancom.keepAliveTime </td> <td> 20 </td> <td> Zeit in Sekunden
+ * <td> Im WanCom-Header √ºbertragene Version des eingesetzten Protokolls. </td> </tr> <tr> <td> wancom.keepAliveTime </td> <td> 20 </td> <td> Zeit in Sekunden
  * zwischen dem Versand von 2 Keep-Alive Telegrammen. </td> </tr> <tr> <td> wancom.keepAliveTimeoutCount </td> <td> 3 </td> <td> Anzahl von in Folge vergangenen
  * keepAliveTime-Intervallen ohne Empfang eines KeepAlive-Telegramms bevor die Verbindung abgebrochen wird. </td> </tr> <tr> <td> wancom.keepAliveType </td>
  * <td> 50 </td> <td> WanCom-Type-Feld in KeepAlive-Telegrammen. </td> </tr> <tr> <td> wancom.tlsType </td> <td> 600 </td> <td> WanCom-Type-Feld in versendeten
  * TLS-Telegrammen. </td> </tr> <tr> <td> wancom.tlsTypeReceive </td> <td> </td> <td> WanCom-Type-Feld in empfangenen TLS-Telegrammen. Dieser Wert muss nur
  * angegeben werden, wenn er sich vom WanCom-Typen zum Versand (wancom.tlsType) unterscheidet. Wenn dieser Wert nicht angegeben wurde, wird der Wert von
- * wancom.tlsType auch zum Empfang verwendet. Wenn der Wert <code>-1</code> angegeben wird, dann werden alle WanCom-Typ-Werte (auﬂer dem Wert f¸r
+ * wancom.tlsType auch zum Empfang verwendet. Wenn der Wert <code>-1</code> angegeben wird, dann werden alle WanCom-Typ-Werte (au√üer dem Wert f√ºr
  * KeepAlive-Telegramme wancom.keepAliveType) akzeptiert. </td> </tr> <tr> <td> wancom.connectRetryDelay </td> <td> 60 </td> <td> Wartezeit in Sekunden, bevor
  * ein fehlgeschlagener Verbindungsversuch wiederholt wird. </td> </tr> <tr> <td> wancom.localAddress </td> <td> </td> <td> Lokale Adresse, die in
  * Wan-Com-Header als Absender eingetragen werden soll. Ein leerer Text, wird automatisch durch die aktuelle lokale Adresse der Wan-Com-Verbindung ersetzt.
  * </td> </tr> </table>
- * <p/>
+ * <p>
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10187 $
+ * @version $Revision$
  */
 public class Client extends WanCom implements PropertyQueryInterface {
 
@@ -102,7 +108,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 
 	/**
 	 * Nimmmt die Verbindung zum Datenverteiler entgegen. Diese Methode wird vom OSI-3 Modul nach dem Erzeugen des OSI-2 Moduls durch den jeweiligen Konstruktor
-	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die ¸bergebene Datenverteilerverbindung intern merken, um zu sp‰teren
+	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die √ºbergebene Datenverteilerverbindung intern merken, um zu sp√§teren
 	 * Zeitpunkten auf die Datenverteiler-Applikationsfunktionen zuzugreifen.
 	 *
 	 * @param connection Verbindung zum Datenverteiler
@@ -164,7 +170,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 					}
 				}
 			}
-			// Hier wird testweise 30 Sekunden gewartet, um der TLS-OSI-7 gen¸gend Zeit zur Initialisierung zu geben
+			// Hier wird testweise 30 Sekunden gewartet, um der TLS-OSI-7 gen√ºgend Zeit zur Initialisierung zu geben
 			_debug.fine("WanCom: 30 Sekunden warten: " + toString());
 			try {
 				Thread.sleep(30000);
@@ -176,8 +182,8 @@ public class Client extends WanCom implements PropertyQueryInterface {
 				try {
 					final ProtocolState state;
 					synchronized(_protocolLock) {
-						// Instabile Zwischenzust‰nde werden innerhalb des synchronized Block ¸berpr¸ft,
-						//  da eine Zustands‰nderung notwendig sein kˆnnte
+						// Instabile Zwischenzust√§nde werden innerhalb des synchronized Block √ºberpr√ºft,
+						//  da eine Zustands√§nderung notwendig sein k√∂nnte
 						if(_protocolState == ProtocolState.STARTING) {
 							_protocolState = ProtocolState.STARTED;
 						}
@@ -188,7 +194,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 					}
 
 					if(state == ProtocolState.STARTING) {
-						// nada: wird beim n‰chsten Schleifendurchlauf im synchronized Block (oben) behandelt
+						// nada: wird beim n√§chsten Schleifendurchlauf im synchronized Block (oben) behandelt
 					}
 					else if(state == ProtocolState.STARTED || state == ProtocolState.STOPPING) {
 						_debug.finest("Protokoll arbeitet: " + this);
@@ -200,7 +206,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 						try {
 							_debug.finest("Aufruf von select()");
 							int count = _selector.select();
-							_debug.finest("R¸ckgabe von select(): " + count);
+							_debug.finest("R√ºckgabe von select(): " + count);
 							Set<SelectionKey> selectedKeys = _selector.selectedKeys();
 							for(Iterator<SelectionKey> iterator = selectedKeys.iterator(); iterator.hasNext();) {
 								SelectionKey selectionKey = iterator.next();
@@ -218,7 +224,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 						break;
 					}
 					else {
-						_debug.error("ung¸ltiger Zustand: " + state + "; " + this);
+						_debug.error("ung√ºltiger Zustand: " + state + "; " + this);
 					}
 				}
 				catch(InterruptedException e) {
@@ -232,7 +238,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 		}
 
 		public String toString() {
-			return "Worker f¸r " + Client.this.toString();
+			return "Worker f√ºr " + Client.this.toString();
 		}
 
 		public void notify(Link link, ActionType action) {
@@ -315,7 +321,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 
 	public void setProperties(Properties properties) {
 		super.setProperties(properties);
-		_debug.fine("Neue Einstellungen f¸r: " + toString() + ", properties = " + properties);
+		_debug.fine("Neue Einstellungen f√ºr: " + toString() + ", properties = " + properties);
 		synchronized(_protocolLock) {
 			for(Iterator<Link> iterator = _links.iterator(); iterator.hasNext();) {
 				Link link = iterator.next();
@@ -354,10 +360,10 @@ public class Client extends WanCom implements PropertyQueryInterface {
 
 		private int _wanComKeepAliveType;
 
-		/** WanCom-Typ f¸r versendete TLS-Telegramme */
+		/** WanCom-Typ f√ºr versendete TLS-Telegramme */
 		private int _wanComTlsType;
 
-		/** WanCom-Typ f¸r empfangene TLS-Telegramme, -1 bedeutet, dass beliebige Typen akzeptiert werden */
+		/** WanCom-Typ f√ºr empfangene TLS-Telegramme, -1 bedeutet, dass beliebige Typen akzeptiert werden */
 		private int _wanComTlsTypeReceive;
 
 		private long _lastKeepAliveReceive;
@@ -478,7 +484,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 		}
 
 		public void send(byte[] bytes, int priority) throws InterruptedException {
-			_debug.finer("Telegramm soll gesendet werden, Priorit‰t: " + priority);
+			_debug.finer("Telegramm soll gesendet werden, Priorit√§t: " + priority);
 			//_debug.finer("Daten: " + HexDumper.toString(bytes));
 			synchronized(_linkLock) {
 				if(_linkState != LinkState.CONNECTED) {
@@ -487,7 +493,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 					);
 				}
 			}
-			_debug.finest("Telegramm wird zum Versand gepuffert, Priorit‰t: " + priority);
+			_debug.finest("Telegramm wird zum Versand gepuffert, Priorit√§t: " + priority);
 			_sendChannel.put(new PriorizedByteArray(bytes, priority));
 			notifyWorker(ActionType.SEND_CALLED);
 		}
@@ -505,7 +511,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 						if(_linkState == LinkState.CONNECTED) _sendKeepAlive = true;
 						if(_lastKeepAliveReceive + _wanComKeepAliveTimeSeconds * 1000L < System.currentTimeMillis()) {
 							++_keepAliveReceiveTimeoutCount;
-							_debug.info("KeepAlive Timeout, Z‰hler: " + _keepAliveReceiveTimeoutCount + "; " + this);
+							_debug.info("KeepAlive Timeout, Z√§hler: " + _keepAliveReceiveTimeoutCount + "; " + this);
 							if(_keepAliveReceiveTimeoutCount >= _wanComKeepAliveTimeoutCount) {
 								_debug.warning("Verbindung wird neu initialisiert wegen fehlenden KeepAlive Telegrammen: " + this);
 								closeChannel();
@@ -600,12 +606,12 @@ public class Client extends WanCom implements PropertyQueryInterface {
 						}
 					}
 					if(_sendBuffer.hasRemaining()) {
-						_debug.finest("Sendeversuch f¸r verbleibende " + _sendBuffer.remaining() + " Bytes");
+						_debug.finest("Sendeversuch f√ºr verbleibende " + _sendBuffer.remaining() + " Bytes");
 						int sent = _socketChannel.write(_sendBuffer);
 						_debug.finest("erfolgreich gesendete Bytes " + sent);
 					}
 					if(_sendBuffer.hasRemaining()) {
-						_debug.finer("Versand wird sobald mˆglich fortgesetzt");
+						_debug.finer("Versand wird sobald m√∂glich fortgesetzt");
 						_socketChannel.register(selector, SelectionKey.OP_WRITE | SelectionKey.OP_READ, this);
 						break;
 					}
@@ -641,7 +647,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 						_socketChannel.close();
 					}
 					catch(IOException e) {
-						_debug.warning("Fehler beim Schlieﬂen des SocketChannels: " + e);
+						_debug.warning("Fehler beim Schlie√üen des SocketChannels: " + e);
 					}
 					finally {
 						_socketChannel = null;
@@ -653,16 +659,16 @@ public class Client extends WanCom implements PropertyQueryInterface {
 				}
 				else if(_linkState == LinkState.CONNECTED) {
 					_linkState = LinkState.CONNECTING;
-					_debug.fine("N‰chster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
+					_debug.fine("N√§chster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
 					scheduleActionTimer(ActionType.RETRY_CONNECT, reconnectDelay);
 					notifyEvent(DataLinkLayerEvent.Type.DISCONNECTED, null);
 				}
 				else if(_linkState == LinkState.CONNECTING) {
-					_debug.fine("N‰chster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
+					_debug.fine("N√§chster Verbundungsversuch in " + reconnectDelay + " Sekunden; " + this);
 					scheduleActionTimer(ActionType.RETRY_CONNECT, reconnectDelay);
 				}
 				else {
-					_debug.error("closeChannel: Unmˆglicher Zustand: Fehler ohne bestehende Verbindung; " + this);
+					_debug.error("closeChannel: Unm√∂glicher Zustand: Fehler ohne bestehende Verbindung; " + this);
 					_linkState = LinkState.DISCONNECTED;
 				}
 			}
@@ -671,7 +677,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 		public void handleSelection(SelectionKey selectionKey, Selector selector) {
 			_debug.finer("handleSelection(" + selectionKey.readyOps() + "/" + selectionKey.interestOps() + "): " + this);
 			if(selectionKey.isConnectable()) {
-				_debug.fine("Verbindungsaufbau abschlieﬂen");
+				_debug.fine("Verbindungsaufbau abschlie√üen");
 				connectSocketChannel(selector);
 			}
 			if(!selectionKey.isValid()) return;
@@ -704,23 +710,23 @@ public class Client extends WanCom implements PropertyQueryInterface {
 									throw new IllegalTelegramException("Falsche WanCom Version: " + telegramVersion);
 								}
 								if(telegramSize < 28) {
-									throw new IllegalTelegramException("Empfangene WanCom-Telegrammgrˆﬂe ist zu klein: " + telegramSize);
+									throw new IllegalTelegramException("Empfangene WanCom-Telegrammgr√∂√üe ist zu klein: " + telegramSize);
 								}
 								if(telegramSize > 2204) {
-									throw new IllegalTelegramException("Empfangene WanCom-Telegrammgrˆﬂe ist zu groﬂ: " + telegramSize);
+									throw new IllegalTelegramException("Empfangene WanCom-Telegrammgr√∂√üe ist zu gro√ü: " + telegramSize);
 								}
 								if(remaining >= telegramSize) {
 									int telegramType = _readBuffer.getInt(telegramPosition + 8);
 									int telegramDestinationIpCount = _readBuffer.getInt(telegramPosition + 12);
 									if(telegramDestinationIpCount < 0 || telegramDestinationIpCount > 16) {
 										throw new IllegalTelegramException(
-												"Ung¸ltiger Anzahl IP-Adressen im WanCom im Telegramm: " + telegramDestinationIpCount
+												"Ung√ºltiger Anzahl IP-Adressen im WanCom im Telegramm: " + telegramDestinationIpCount
 										);
 									}
 									int telegramDestinationIpPointer = _readBuffer.getInt(telegramPosition + 16);
 									if(telegramDestinationIpPointer < 0 || telegramDestinationIpPointer > telegramDestinationIpCount) {
 										throw new IllegalTelegramException(
-												"Ung¸ltiger IP-Adress-Zeiger im WanCom im Telegramm: " + telegramDestinationIpCount
+												"Ung√ºltiger IP-Adress-Zeiger im WanCom im Telegramm: " + telegramDestinationIpCount
 										);
 									}
 									int payloadOffset = 5 * 4 + 8 + telegramDestinationIpCount * 8;
@@ -731,7 +737,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 									}
 									int payloadSize = telegramSize - payloadOffset;
 									if(telegramDestinationIpPointer != telegramDestinationIpCount) {
-										_debug.warning("IP-Routing in Wan-Com Telegrammen wird nicht unterst¸tzt");
+										_debug.warning("IP-Routing in Wan-Com Telegrammen wird nicht unterst√ºtzt");
 									}
 									else {
 										if(_wanComTlsTypeReceive == -1 || telegramType == _wanComKeepAliveType || telegramType == _wanComTlsTypeReceive) {
@@ -757,13 +763,13 @@ public class Client extends WanCom implements PropertyQueryInterface {
 											}
 										}
 										else {
-											throw new IllegalTelegramException("Ung¸ltiger WanCom Type im Telegramm: " + telegramType);
+											throw new IllegalTelegramException("Ung√ºltiger WanCom Type im Telegramm: " + telegramType);
 										}
 									}
 									_readBuffer.position(telegramPosition + telegramSize);
 								}
 								else {
-									// Nicht gen¸gend Bytes im Puffer => Warten auf weitere Daten
+									// Nicht gen√ºgend Bytes im Puffer => Warten auf weitere Daten
 									break;
 								}
 							}
@@ -846,7 +852,7 @@ public class Client extends WanCom implements PropertyQueryInterface {
 							scheduleActionTimer(ActionType.KEEPALIVE_TIMER, _wanComKeepAliveTimeSeconds);
 						}
 						else {
-							_debug.info("Verbindungsaufbau ist noch nicht abgeschlossen und wird asynchron durchgef¸hrt; " + this);
+							_debug.info("Verbindungsaufbau ist noch nicht abgeschlossen und wird asynchron durchgef√ºhrt; " + this);
 							_socketChannel.register(selector, SelectionKey.OP_CONNECT, this);
 						}
 					}

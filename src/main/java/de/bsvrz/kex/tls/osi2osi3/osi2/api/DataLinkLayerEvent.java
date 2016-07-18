@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.api;
@@ -29,10 +35,10 @@ import java.util.*;
 
 /**
  * Objekte dieser Klasse beschreiben ein OSI2-Kommunikations-Ereignis. Diese Ereignisse werden i.a. von einer konkreten OSI2-Protokollimplementierung an eine
- * Anwendung bzw. an die n‰chst hˆhere Protokollebene ¸bergeben.
+ * Anwendung bzw. an die n√§chst h√∂here Protokollebene √ºbergeben.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 5114 $
+ * @version $Revision$
  * @see DataLinkLayer#addEventListener
  */
 public class DataLinkLayerEvent {
@@ -41,7 +47,7 @@ public class DataLinkLayerEvent {
 	public static class Type {
 
 		/**
-		 * Ereignistyp der signalisiert, dass ein Fehler im Protokoll aufgetreten ist. Ereignisse dieses Typs kˆnnen als zus‰tzliche Daten eine Zeichenkette (vom Typ
+		 * Ereignistyp der signalisiert, dass ein Fehler im Protokoll aufgetreten ist. Ereignisse dieses Typs k√∂nnen als zus√§tzliche Daten eine Zeichenkette (vom Typ
 		 * String) mit einer Fehlerbeschreibung enthalten.
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -49,7 +55,7 @@ public class DataLinkLayerEvent {
 		public static final Type ERROR = new Type("Fehler");
 
 		/**
-		 * Ereignistyp der signalisiert, dass im Protokollablauf eine unerwartete Ausnahme aufgetreten ist. Ereignisse dieses Typs kˆnnen als zus‰tzliche Daten das
+		 * Ereignistyp der signalisiert, dass im Protokollablauf eine unerwartete Ausnahme aufgetreten ist. Ereignisse dieses Typs k√∂nnen als zus√§tzliche Daten das
 		 * Ausnahmeobjekt (vom Typ Exception) enthalten.
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -63,7 +69,7 @@ public class DataLinkLayerEvent {
 		public static final Type DISCONNECTED = new Type("Verbindung terminiert");
 
 		/**
-		 * Ereignistyp der signalisiert, dass Nutzdaten ordnungsgem‰ﬂ empfangen wurden. Ereignisse dieses Typs enthalten als zus‰tzliche Daten die empfangenen
+		 * Ereignistyp der signalisiert, dass Nutzdaten ordnungsgem√§√ü empfangen wurden. Ereignisse dieses Typs enthalten als zus√§tzliche Daten die empfangenen
 		 * Nutzdaten (vom Typ byte[]).
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -71,8 +77,8 @@ public class DataLinkLayerEvent {
 		public static final Type DATA_RECEIVED = new Type("Daten empfangen");
 
 		/**
-		 * Ereignistyp der signalisiert, dass Nutzdaten, die mit der Methode {@link DataLinkLayer.Link#send} zum Versand ¸bergeben wurden, ordnungsgem‰ﬂ ¸bertragen
-		 * wurden. Ereignisse dieses Typs enthalten als zus‰tzliche Daten die versendeten Nutzdaten (vom Typ byte[]).
+		 * Ereignistyp der signalisiert, dass Nutzdaten, die mit der Methode {@link DataLinkLayer.Link#send} zum Versand √ºbergeben wurden, ordnungsgem√§√ü √ºbertragen
+		 * wurden. Ereignisse dieses Typs enthalten als zus√§tzliche Daten die versendeten Nutzdaten (vom Typ byte[]).
 		 *
 		 * @see DataLinkLayerEvent#getData
 		 */
@@ -81,7 +87,7 @@ public class DataLinkLayerEvent {
 		;
 
 		/**
-		 * Ereignistyp der signalisiert, das Bytes von tieferen Protokollebenen entgegengenommen wurden. Ereignisse dieses Typs enthalten als zus‰tzliche Daten die
+		 * Ereignistyp der signalisiert, das Bytes von tieferen Protokollebenen entgegengenommen wurden. Ereignisse dieses Typs enthalten als zus√§tzliche Daten die
 		 * empfangenen Bytes (vom Typ byte[]).
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -89,7 +95,7 @@ public class DataLinkLayerEvent {
 		public static final Type BYTES_RECEIVED = new Type("Bytes empfangen");
 
 		/**
-		 * Ereignistyp der signalisiert, das Bytes an tiefere Protokollebenen zu Versand ¸bergeben wurde. Ereignisse dieses Typs enthalten als zus‰tzliche Daten die
+		 * Ereignistyp der signalisiert, das Bytes an tiefere Protokollebenen zu Versand √ºbergeben wurde. Ereignisse dieses Typs enthalten als zus√§tzliche Daten die
 		 * versendeten Bytes (vom Typ byte[]).
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -97,7 +103,7 @@ public class DataLinkLayerEvent {
 		public static final Type BYTES_SENT = new Type("Bytes gesendet");
 
 		/**
-		 * Ereignistyp der signalisiert, dass das ein Telegramm empfangen wurde. Ereignisse dieses Typs enthalten als zus‰tzliche Daten eine Zeichenkette (vom Typ
+		 * Ereignistyp der signalisiert, dass das ein Telegramm empfangen wurde. Ereignisse dieses Typs enthalten als zus√§tzliche Daten eine Zeichenkette (vom Typ
 		 * String), die alle Einzelheiten des Telegramms in Textform wiedergibt.
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -105,7 +111,7 @@ public class DataLinkLayerEvent {
 		public static final Type TELEGRAM_RECEIVED = new Type("Telegramm empfangen");
 
 		/**
-		 * Ereignistyp der signalisiert, dass das ein Telegramm versendet wurde. Ereignisse dieses Typs enthalten als zus‰tzliche Daten eine Zeichenkette (vom Typ
+		 * Ereignistyp der signalisiert, dass das ein Telegramm versendet wurde. Ereignisse dieses Typs enthalten als zus√§tzliche Daten eine Zeichenkette (vom Typ
 		 * String), die alle Einzelheiten des Telegramms in Textform wiedergibt.
 		 *
 		 * @see DataLinkLayerEvent#getData
@@ -113,7 +119,7 @@ public class DataLinkLayerEvent {
 		public static final Type TELEGRAM_SENT = new Type("Telegramm gesendet");
 
 		/**
-		 * Liefert eine textuelle Beschreibung dieses Ereignistyps zur¸ck. Das genaue Format ist nicht festgelegt und kann sich ‰ndern.
+		 * Liefert eine textuelle Beschreibung dieses Ereignistyps zur√ºck. Das genaue Format ist nicht festgelegt und kann sich √§ndern.
 		 *
 		 * @return Beschreibung dieses Ereignistyps.
 		 */
@@ -145,7 +151,7 @@ public class DataLinkLayerEvent {
 	 * @param link          Verbindung, auf dass sich dieses Ereignis bezieht oder <code>null</code>, wenn sich das Ereignis nicht auf eine spezielle Verbindung
 	 *                      bezieht.
 	 * @param type          Typ des neuen Ereignisses.
-	 * @param data          Zus‰tzliche vom Typ abh‰ngige Daten des Ereignisses oder <code>null</code>, wenn keine weiteren Daten vorliegen.
+	 * @param data          Zus√§tzliche vom Typ abh√§ngige Daten des Ereignisses oder <code>null</code>, wenn keine weiteren Daten vorliegen.
 	 */
 	public DataLinkLayerEvent(DataLinkLayer dataLinkLayer, DataLinkLayer.Link link, Type type, Object data) {
 		_dataLinkLayer = dataLinkLayer;
@@ -156,7 +162,7 @@ public class DataLinkLayerEvent {
 	}
 
 	/*
-	 * Liefert den Typ des Ereignisses zur¸ck.
+	 * Liefert den Typ des Ereignisses zur√ºck.
 	 * @return Typ des Ereignisses.
 	 */
 	public Type getType() {
@@ -164,7 +170,7 @@ public class DataLinkLayerEvent {
 	}
 
 	/*
-	 * Liefert den Zeitpunkt der Erzeugung des Ereignisses zur¸ck.
+	 * Liefert den Zeitpunkt der Erzeugung des Ereignisses zur√ºck.
 	 * @return Zeit in Millisekunden seit 1970.
 	 */
 	public long getTime() {
@@ -172,7 +178,7 @@ public class DataLinkLayerEvent {
 	}
 
 	/*
-	 * Liefert das diesem Ereignis zugeordnete Protokoll zur¸ck.
+	 * Liefert das diesem Ereignis zugeordnete Protokoll zur√ºck.
 	 * @return Zugeordnetes Protokoll.
 	 */
 	public DataLinkLayer getDataLinkLayer() {
@@ -180,7 +186,7 @@ public class DataLinkLayerEvent {
 	}
 
 	/*
-	 * Liefert die dem Ereignis zugeordnete Verbindung zur¸ck.
+	 * Liefert die dem Ereignis zugeordnete Verbindung zur√ºck.
 	 * @return Zugeordnete Verbindung oder <code>null</code>, wenn sich das
 	 *         Ereignis nicht auf eine spezielle Verbindung bezieht.
 	 */
@@ -189,15 +195,15 @@ public class DataLinkLayerEvent {
 	}
 
 	/*
-	 * Liefert die dem Ereignis zugeordnete zus‰tzlichen Daten zur¸ck.
-	 * @return Zus‰tzliche Ereignisdaten oder <code>null</code>.
+	 * Liefert die dem Ereignis zugeordnete zus√§tzlichen Daten zur√ºck.
+	 * @return Zus√§tzliche Ereignisdaten oder <code>null</code>.
 	 */
 	public Object getData() {
 		return _data;
 	}
 
 	/**
-	 * Liefert eine textuelle Beschreibung dieses Ereignisses zur¸ck. Das genaue Format ist nicht festgelegt und kann sich ‰ndern.
+	 * Liefert eine textuelle Beschreibung dieses Ereignisses zur√ºck. Das genaue Format ist nicht festgelegt und kann sich √§ndern.
 	 *
 	 * @return Beschreibung dieses Ereignisses.
 	 */

@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -28,10 +34,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * TlsNode zur Ermittlung aller benötigten Informationen zu einem TLS-Knoten
+ * TlsNode zur Ermittlung aller benÃ¶tigten Informationen zu einem TLS-Knoten
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 7038 $
+ * @version $Revision$
  * 
  */
 public class TlsNode {
@@ -46,7 +52,7 @@ public class TlsNode {
 	private Set<Integer> _fgPresent;
 	
 	/**
-	 * Gibt das Systemobjekt zurück, das durch den Knoten repräsentiert wird.
+	 * Gibt das Systemobjekt zurÃ¼ck, das durch den Knoten reprÃ¤sentiert wird.
 	 * 
 	 * @return Systemobjekt zum TLS-Knoten
 	 */
@@ -55,9 +61,9 @@ public class TlsNode {
 	}
 	
 	/**
-	 * Gibt den Vaterknoten zu dem TLS-Knoten zurück (falls vorhanden).
+	 * Gibt den Vaterknoten zu dem TLS-Knoten zurÃ¼ck (falls vorhanden).
 	 * 
-	 * @return Vaterknoten zu dem TLS-Knoten zurück (sonst null)
+	 * @return Vaterknoten zu dem TLS-Knoten zurÃ¼ck (sonst null)
 	 */
 	public TlsNode getParentNode() {
 		return _parentNode;
@@ -74,7 +80,7 @@ public class TlsNode {
 	 * Konstruktor
 	 * 
 	 * @param systemObject
-	 *            Das dem TLS-Knoten zugeordnete Gerät
+	 *            Das dem TLS-Knoten zugeordnete GerÃ¤t
 	 */
 	public TlsNode(SystemObject systemObject) {
 		if(systemObject == null) throw new IllegalArgumentException("Systemobjekt ist null");
@@ -86,7 +92,7 @@ public class TlsNode {
 	 * Konstruktor
 	 * 
 	 * @param systemObject
-	 *            Das dem TLS-Knoten zugeordnete Gerät
+	 *            Das dem TLS-Knoten zugeordnete GerÃ¤t
 	 * @param nodeNumber
 	 *            Knotennummer des TLS-Knotens
 	 */
@@ -99,7 +105,7 @@ public class TlsNode {
 	}
 	
 	/**
-	 * Gibt die Knotennummer des TLS-Knotens zurück
+	 * Gibt die Knotennummer des TLS-Knotens zurÃ¼ck
 	 * 
 	 * @return Knotennummer der TLS-Knotens
 	 */
@@ -117,10 +123,10 @@ public class TlsNode {
 	}
 	
 	/**
-	 * Fügt dem TLS-Knoten einen Unterknoten hinzu.
+	 * FÃ¼gt dem TLS-Knoten einen Unterknoten hinzu.
 	 * 
 	 * @param subNode
-	 *            Hinzuzufügender TLS-Knoten
+	 *            HinzuzufÃ¼gender TLS-Knoten
 	 */
 	void addSubNode(TlsNode subNode) {
 		if(subNode == null) throw new IllegalArgumentException("subNode ist null");
@@ -132,7 +138,7 @@ public class TlsNode {
 	}
 	
 	/**
-	 * Gibt die Menge der Unterknoten zum TLS-Knoten zurück.
+	 * Gibt die Menge der Unterknoten zum TLS-Knoten zurÃ¼ck.
 	 * 
 	 * @return Menge der Unterknoten zum TLS-Knoten
 	 */
@@ -162,25 +168,25 @@ public class TlsNode {
 	}
 	
 	/**
-	 * Fügt dem TLS-Knoten eine Funktionsgruppe hinzu. Dies ist nur bei Geräten vom Typ Steuermodul sinnvoll. Hiermit werden alle möglichen Funktionsgruppen der
+	 * FÃ¼gt dem TLS-Knoten eine Funktionsgruppe hinzu. Dies ist nur bei GerÃ¤ten vom Typ Steuermodul sinnvoll. Hiermit werden alle mÃ¶glichen Funktionsgruppen der
 	 * DE in den zugeordneten EAK bestimmt.
 	 * 
 	 * @param fg
-	 *            Funktionsgruppe, die bei diesem Gerät möglich ist.
+	 *            Funktionsgruppe, die bei diesem GerÃ¤t mÃ¶glich ist.
 	 */
 	void addFg(int fg) {
 		_fgPresent.add(fg);
 	}
 	
 	/**
-	 * Gibt an, ob das Gerät (Steuermodul) mindestens ein DE der entsprechenden Funktionsgruppe enthält.
-	 * Wenn der Knoten nicht vom Typ Steuermodul ist, wird true zurückgegeben.
+	 * Gibt an, ob das GerÃ¤t (Steuermodul) mindestens ein DE der entsprechenden Funktionsgruppe enthÃ¤lt.
+	 * Wenn der Knoten nicht vom Typ Steuermodul ist, wird true zurÃ¼ckgegeben.
 	 * 
 	 * @param fg
 	 * @return
 	 */
 	public boolean hasFg(int fg) {
-		// Wenn der Knoten nicht vom Typ Steuermodul ist, wird true zurückgegeben.
+		// Wenn der Knoten nicht vom Typ Steuermodul ist, wird true zurÃ¼ckgegeben.
 		if(!this.getSystemObject().isOfType("typ.steuerModul")){
 			return true;
 		}

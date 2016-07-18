@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.tc57primary;
@@ -41,7 +47,7 @@ import java.util.*;
  * OSI-2 Modul, das das TC57-Protokoll nach TLS auf Seite der Primary implementiert.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10187 $
+ * @version $Revision$
  */
 public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 
@@ -80,7 +86,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 
 	/**
 	 * Nimmmt die Verbindung zum Datenverteiler entgegen. Diese Methode wird vom OSI-3 Modul nach dem Erzeugen des OSI-2 Moduls durch den jeweiligen Konstruktor
-	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die ¸bergebene Datenverteilerverbindung intern merken, um zu sp‰teren
+	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die √ºbergebene Datenverteilerverbindung intern merken, um zu sp√§teren
 	 * Zeitpunkten auf die Datenverteiler-Applikationsfunktionen zuzugreifen.
 	 *
 	 * @param connection Verbindung zum Datenverteiler
@@ -163,11 +169,11 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 						if(!_offlineTest) {
 							_serialPortControl.start(Primary.this, _name);
 
-							//‹berpr¸ft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary Adressen von 1-199 oder 255 erlaubt.
-							//Nun ist es anhand eines Parameter mˆglich, diese Bereichsgrenze zu umgehen und die Adressen 1-255 zu zulassen.
+							//√úberpr√ºft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary Adressen von 1-199 oder 255 erlaubt.
+							//Nun ist es anhand eines Parameter m√∂glich, diese Bereichsgrenze zu umgehen und die Adressen 1-255 zu zulassen.
 							if(!allowConnection(_links)) {
-								//Die Verbindung ist nicht zul‰ssig und wird deaktiviert.
-								//Danach wird so lange gewartet bis neue Properties vorhanden sind und anschlieﬂend wird die Prozedur des Verbindungsaufbau wiederholt
+								//Die Verbindung ist nicht zul√§ssig und wird deaktiviert.
+								//Danach wird so lange gewartet bis neue Properties vorhanden sind und anschlie√üend wird die Prozedur des Verbindungsaufbau wiederholt
 								_serialPortControl.shutdown();
 								try {
 									_protocolLock.wait();
@@ -180,7 +186,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 						break;
 					}
 					catch(Exception e) {
-						_debug.error(_name + ": Fehler beim ÷ffnen der seriellen Schnittstelle: " , e);
+						_debug.error(_name + ": Fehler beim √ñffnen der seriellen Schnittstelle: " , e);
 						e.printStackTrace();
 						try {
 							_protocolLock.wait();
@@ -223,7 +229,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 
 								if(!allowConnection(_links)) {
 									//Es wird auf neue Properties gewartet
-									//Mit dem Continue erfolg eine erneute ‹berpr¸fung
+									//Mit dem Continue erfolg eine erneute √úberpr√ºfung
 									_protocolLock.wait();
 									continue;
 								}
@@ -235,7 +241,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 								}
 							}
 							catch(Exception e) {
-								_debug.error(_name + ": Fehler beim ÷ffnen der seriellen Schnittstelle: " , e);
+								_debug.error(_name + ": Fehler beim √ñffnen der seriellen Schnittstelle: " , e);
 								//_stopped= true;
 								e.printStackTrace();
 							}
@@ -256,10 +262,10 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 							link = (Link)_linksPollingIterator.next();
 							//Aktionen, die notwendig sind, bevor der synchronisierte Bereich (_links) verlassen wird
 							if(link.synchronizedPollAction()) {
-								// Wenn die Verbindung aus der Liste der aktiven Verbindungen gelˆscht wurde,
-								// dann mit der n‰chsten weitermachen.
+								// Wenn die Verbindung aus der Liste der aktiven Verbindungen gel√∂scht wurde,
+								// dann mit der n√§chsten weitermachen.
 								if(link == lastTriedNotConnectedLink) {
-									// Wenn die gelˆschte Verbindung die gespeicherte tote war, dann wird die n‰chste
+									// Wenn die gel√∂schte Verbindung die gespeicherte tote war, dann wird die n√§chste
 									// tote Verbindung wieder gepollt
 									lastTriedNotConnectedLink = null;
 								}
@@ -267,11 +273,11 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 								continue;
 							}
 							if(lastTriedNotConnectedLink != null && link.getState() != LinkState.CONNECTED) {
-								// Wenn im aktuellen Durchlauf bereits eine Tote Verbindung ber¸cksichtigt wurde und
-								// die aktuelle tot ist, dann wird die Verbindung ¸bersprungen.
+								// Wenn im aktuellen Durchlauf bereits eine Tote Verbindung ber√ºcksichtigt wurde und
+								// die aktuelle tot ist, dann wird die Verbindung √ºbersprungen.
 								if(link == lastTriedNotConnectedLink) {
 									// Es wurden also einen ganzen Durchlauf Tote Stationen ignoriert, dann soll die
-									// n‰chste Tote Station wieder ber¸cksichtigt werden.
+									// n√§chste Tote Station wieder ber√ºcksichtigt werden.
 									lastTriedNotConnectedLink = null;
 								}
 								link = null;
@@ -305,7 +311,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 							link.shutdown();
 						}
 					}
-					// Normale Aktionen auﬂerhalb des synchronisierten Bereichs (_links), damit andere Threads nicht l‰nger
+					// Normale Aktionen au√üerhalb des synchronisierten Bereichs (_links), damit andere Threads nicht l√§nger
 					// als unbedingt notwendig blockiert werden.
 					++pollCount;
 					link.unsynchronizedPollAction();
@@ -315,7 +321,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 
 
 					if(link.getState() != LinkState.CONNECTED) {
-						// Es wurde ein nicht verbundener Link ber¸cksichtigt, also werden alle nicht verbundene Links
+						// Es wurde ein nicht verbundener Link ber√ºcksichtigt, also werden alle nicht verbundene Links
 						// im folgenden Polldurchlauf ignoriert
 						lastTriedNotConnectedLink = link;
 					}
@@ -510,7 +516,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 		}
 
 		public void send(byte[] bytes, int priority) throws InterruptedException {
-			_debug.fine("Telegramm wird zum Versand gepuffert, Priorit‰t: " + priority + ", Daten: " + HexDumper.toString(bytes));
+			_debug.fine("Telegramm wird zum Versand gepuffert, Priorit√§t: " + priority + ", Daten: " + HexDumper.toString(bytes));
 			synchronized(_linkLock) {
 				if(_linkState != LinkState.CONNECTED) {
 					throw new IllegalStateException("Telegramm kann in diesem Zustand nicht versendet werden: " + _linkState);
@@ -520,10 +526,10 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 		}
 
 		/**
-		 * F¸hrt Pollaktionen durch, die notwendig sind, bevor der synchronisierte Bereich zum Zugriff auf die Liste mit den zu bearbeitenden Verbindungen (_links)
+		 * F√ºhrt Pollaktionen durch, die notwendig sind, bevor der synchronisierte Bereich zum Zugriff auf die Liste mit den zu bearbeitenden Verbindungen (_links)
 		 * verlassen wird.
 		 *
-		 * @return <code>true</code>, wenn eine Aktion durchgef¸hrt wurde und das Polling mit der n‰chsten Verbindung fortgesetzt werden soll, sonst
+		 * @return <code>true</code>, wenn eine Aktion durchgef√ºhrt wurde und das Polling mit der n√§chsten Verbindung fortgesetzt werden soll, sonst
 		 *         <code>false</code>.
 		 */
 		private boolean synchronizedPollAction() {
@@ -567,7 +573,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 									_debug.fine("falsche Adresse in Antwort");
 								}
 								else if(answer.getData() != null) {
-									_debug.fine("Antwort enth‰lt f‰lschlicherweise Daten");
+									_debug.fine("Antwort enth√§lt f√§lschlicherweise Daten");
 								}
 								else {
 									_pollState = PollState.INIT_RES0;
@@ -591,7 +597,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 									_pollState = PollState.INIT_RQS;
 								}
 								else if(answer.getData() != null) {
-									_debug.fine("Antwort enth‰lt f‰lschlicherweise Daten");
+									_debug.fine("Antwort enth√§lt f√§lschlicherweise Daten");
 									_pollState = PollState.INIT_RQS;
 								}
 								else {
@@ -621,12 +627,12 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 							_pollState = PollState.TO_BE_REMOVED;
 						}
 						else if(_pollState == PollState.CONNECTED) {
-							// Wenn Daten gesendet werden kˆnnen, dann werden sie auch gesendet, ansonsten wird abgefragt
+							// Wenn Daten gesendet werden k√∂nnen, dann werden sie auch gesendet, ansonsten wird abgefragt
 							// Wenn ACD gesetzt, wird direkt nach dem Versenden bzw. nach Abfrage (nachmal) abgefragt.
 							if(_queryFrame == null) {
-								// Wenn nicht noch ein altes Telegramm wiederholt werden muﬂ, dann pr¸fen ob Daten zu Versenden sind
+								// Wenn nicht noch ein altes Telegramm wiederholt werden mu√ü, dann pr√ºfen ob Daten zu Versenden sind
 								if(!_dfc) {
-									// Wenn Daten gesendet werden d¸rfen
+									// Wenn Daten gesendet werden d√ºrfen
 									PriorizedByteArray priorizedByteArray = (PriorizedByteArray)_sendChannel.poll(0);
 									if(priorizedByteArray != null) {
 										// Wenn Daten zum Versand vorliegen
@@ -679,11 +685,11 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 									answer = null;
 								}
 								else if((answer.getFunction() != SecondaryFrame.D) && (answer.getData() != null)) {
-									_debug.fine("Antwort enth‰lt f‰lschlicherweise Daten");
+									_debug.fine("Antwort enth√§lt f√§lschlicherweise Daten");
 									answer = null;
 								}
 								else if((answer.getFunction() == SecondaryFrame.D) && (answer.getData() == null)) {
-									_debug.fine("Antwort enth‰lt f‰lschlicherweise keine Daten");
+									_debug.fine("Antwort enth√§lt f√§lschlicherweise keine Daten");
 									answer = null;
 								}
 								if(_remoteAddress == 0xff) {
@@ -712,7 +718,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 										else {
 											++_retryCount;
 											_debug.fine(
-													"Wiederholungsz‰hler: " + _retryCount + ", Zeit seit letztem korrektem Empfang: " + (
+													"Wiederholungsz√§hler: " + _retryCount + ", Zeit seit letztem korrektem Empfang: " + (
 															System.currentTimeMillis() - _lastGoodReply)
 											);
 										}
@@ -739,7 +745,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 						_debug.warning(this + ": Verbindungen im DISCONNECTED Zustand sollten nicht in der Poll-Liste enthalten sein ");
 					}
 					else {
-						_debug.error(this + ": Ung¸ltiger Verbindungszustand von Verbindung: " + _linkState);
+						_debug.error(this + ": Ung√ºltiger Verbindungszustand von Verbindung: " + _linkState);
 					}
 					_debug.finest("-----------------------ende poll link " + this + ", pollState: " + _pollState + "--------------------------");
 				}
@@ -792,7 +798,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 		}
 	}
 
-	/** Definiert die mˆglichen Unterzust‰nde einer Verbindung. */
+	/** Definiert die m√∂glichen Unterzust√§nde einer Verbindung. */
 	private static class PollState {
 
 		public static final PollState INIT_RQS = new PollState("RQS");
@@ -809,7 +815,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 		private final String _name;
 
 		/**
-		 * Liefert eine textuelle Beschreibung dieses Objekts zur¸ck. Das genaue Format ist nicht festgelegt und kann sich ‰ndern.
+		 * Liefert eine textuelle Beschreibung dieses Objekts zur√ºck. Das genaue Format ist nicht festgelegt und kann sich √§ndern.
 		 *
 		 * @return Beschreibung dieses Ereignistyps.
 		 */
@@ -818,7 +824,7 @@ public class Primary extends AbstractTc57 implements PropertyQueryInterface {
 		}
 
 		/**
-		 * Nicht ˆffentlicher Konstruktor der zum Erzeugen der vordefinierten Zust‰nde benutzt wird.
+		 * Nicht √∂ffentlicher Konstruktor der zum Erzeugen der vordefinierten Zust√§nde benutzt wird.
 		 *
 		 * @param name Name des Zustandes.
 		 */
