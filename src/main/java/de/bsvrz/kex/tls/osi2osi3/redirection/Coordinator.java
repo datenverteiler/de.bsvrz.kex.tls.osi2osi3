@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -42,12 +48,12 @@ import java.util.*;
 /**
  * Koordinator der OSI2/OSI3 Umleitung. 
  * Diese Klasse koordiniert den OSI2/OSI3 Umleitungsmechanismus.
- * Sie sorgt dafür, dass die Kommunikation zwischen den benötigten Klassen 
- * hergestellt wird und sorgt für die Auswertung der Umleitungsparameter.  
+ * Sie sorgt dafÃ¼r, dass die Kommunikation zwischen den benÃ¶tigten Klassen 
+ * hergestellt wird und sorgt fÃ¼r die Auswertung der Umleitungsparameter.  
  * 
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 10172 $
+ * @version $Revision$
  *
  */
 public class Coordinator {
@@ -63,12 +69,12 @@ public class Coordinator {
 	private DataModel _config;
 	
 	/**
-	 * Konstruktor für einen neuen Coordinator. 
-	 * Meldet sich auf den Parameterdatensatz für die OSI3 Weiterleitung an.
+	 * Konstruktor fÃ¼r einen neuen Coordinator. 
+	 * Meldet sich auf den Parameterdatensatz fÃ¼r die OSI3 Weiterleitung an.
 	 * 
 	 * @param daf  Datenverteilerverbindung.
-	 * @param localDevice Device, für das KExTls gestartet wurde (z.B. eine VRZ oder UZ).
-	 * @param networkLayer Networklayer, wird für den TelegramProcessor benötigt.
+	 * @param localDevice Device, fÃ¼r das KExTls gestartet wurde (z.B. eine VRZ oder UZ).
+	 * @param networkLayer Networklayer, wird fÃ¼r den TelegramProcessor benÃ¶tigt.
 	 */
 	public Coordinator(ClientDavInterface daf, ConfigurationObject localDevice, NetworkLayerSender networkLayer) {
 		_daf = daf;
@@ -85,16 +91,16 @@ public class Coordinator {
 		AttributeGroup atgOsi3RedirectionProperties = _config.getAttributeGroup("atg.osi3UmleitungsEigenschaften");
 		Aspect aspectProperties = _config.getAspect("asp.eigenschaften");
 		
-		_debug.info("Coordinator für OSI3 Redirection aufgerufen", _localDevice);
+		_debug.info("Coordinator fÃ¼r OSI3 Redirection aufgerufen", _localDevice);
 
-		// Achtung, falls die ATG nicht vorhanden sein sollte (SW läuft mit einem "alten" Datenmodell darf kein Fehler 
-		// auftauchen, sondern das bisherige Verhalten muss unterstützt werden
+		// Achtung, falls die ATG nicht vorhanden sein sollte (SW lÃ¤uft mit einem "alten" Datenmodell darf kein Fehler 
+		// auftauchen, sondern das bisherige Verhalten muss unterstÃ¼tzt werden
 		if(atgOsi3RedirectionParam==null){
-//			_debug.config("Die SW läuft nicht mit dem erforderlichen Datenmodell.");
-//			_debug.config("Bitte den Konfigurationsbereich x übernehmen.");
+//			_debug.config("Die SW lÃ¤uft nicht mit dem erforderlichen Datenmodell.");
+//			_debug.config("Bitte den Konfigurationsbereich x Ã¼bernehmen.");
 		}
 		else if(localDevice==null){
-//			_debug.config("Das Gerät localDevice darf nicht null sein!");
+//			_debug.config("Das GerÃ¤t localDevice darf nicht null sein!");
 		}
 		else{
 			// Testen, ob genau ein Objekt vom Typ typ.osi3Umleitung vorhanden ist, das localDevice referenziert
@@ -112,9 +118,9 @@ public class Coordinator {
 					_osi3RedirectionDevice=(ConfigurationObject)osi3RedirectionObject;
 				}
 			}
-			if(count>1) _debug.warning("Keine eindeutige Zuordnung für die Ermittlung des Redirectionobjektes möglich!");
+			if(count>1) _debug.warning("Keine eindeutige Zuordnung fÃ¼r die Ermittlung des Redirectionobjektes mÃ¶glich!");
 			if(count==1 && _osi3RedirectionDevice!=null){
-				_debug.info("melde Objekt für die Parametrierung den OSI3 Weiterleitungsparameter an" , _osi3RedirectionDevice);
+				_debug.info("melde Objekt fÃ¼r die Parametrierung den OSI3 Weiterleitungsparameter an" , _osi3RedirectionDevice);
 
 				DataDescription dataDescription = new DataDescription(atgOsi3RedirectionParam, aspectParamNormative);
 				_daf.subscribeReceiver(new Receiver(), _osi3RedirectionDevice, dataDescription, ReceiveOptions.normal(), ReceiverRole.receiver());
@@ -123,15 +129,15 @@ public class Coordinator {
 	}
 	
 	/**
-	 * Gibt das Device zurück, für das der Parameter OSI3 Weiterleitung ausgewertet wird.
-     * @return Konfigurationsobjekt, für das der OSI3 Weiterleitungsparameter ausgewertet wird.
+	 * Gibt das Device zurÃ¼ck, fÃ¼r das der Parameter OSI3 Weiterleitung ausgewertet wird.
+     * @return Konfigurationsobjekt, fÃ¼r das der OSI3 Weiterleitungsparameter ausgewertet wird.
      */
     public ConfigurationObject getOsi3RedirectionDevice() {
     	return _osi3RedirectionDevice;
     }
 
     /**
-     * Gibt den TelegramProcessor zurück.
+     * Gibt den TelegramProcessor zurÃ¼ck.
      * @return TelegramProcessor
      */
 	public TelegramProcessor getTelegramProcessor() {
@@ -140,12 +146,12 @@ public class Coordinator {
 	
 	
 	/**
-	 * Receiver für den Parameterdatensatz für die OSI3 Weiterleitung.
+	 * Receiver fÃ¼r den Parameterdatensatz fÃ¼r die OSI3 Weiterleitung.
 	 * Erzeugt bei jedem neuen Datensatz die Weiterleitungsinformationen und gibt diese 
 	 * an den TelegramProcessor weiter. 
 	 * 
 	 * @author Kappich Systemberatung
-	 * @version $Revision: 10172 $
+	 * @version $Revision$
 	 *
 	 */
 	private class Receiver implements ClientReceiverInterface {
@@ -160,7 +166,7 @@ public class Coordinator {
 				for(ResultData resultData : results) {
 					Data data = resultData.getData();
 
-					_debug.fine("Update für Objekt" + resultData.getObject().getNameOrPidOrId() + " für " +  resultData.getDataDescription());
+					_debug.fine("Update fÃ¼r Objekt" + resultData.getObject().getNameOrPidOrId() + " fÃ¼r " +  resultData.getDataDescription());
 					_debug.fine("Datensatz erhalten: " + data);
 
 					if(data!=null){
@@ -174,7 +180,7 @@ public class Coordinator {
 				}
 			}
 			catch(Exception e) {
-				_debug.warning("Parameterdatensatz für OSI3-Weiterleitung konnte nicht ausgewertet werden", e);
+				_debug.warning("Parameterdatensatz fÃ¼r OSI3-Weiterleitung konnte nicht ausgewertet werden", e);
 				
 			}
 		}

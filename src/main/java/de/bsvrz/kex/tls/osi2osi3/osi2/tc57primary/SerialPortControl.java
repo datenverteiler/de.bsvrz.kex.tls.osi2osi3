@@ -1,13 +1,13 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * Copyright 2006 by Kappich Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -16,8 +16,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.tc57primary;
@@ -44,7 +50,7 @@ import java.nio.ByteBuffer;
  * Klasse zum Senden und Empfangen von TC57-Telegrammen via serieller Schnittstelle.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10066 $
+ * @version $Revision$
  */
 public class SerialPortControl implements SerialPortEventListener {
 
@@ -125,7 +131,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(_portName);
 				_debug.info(applicationName, "Port gefunden: " + _portName);
 				_port = (SerialPort)portIdentifier.open(applicationName, openTimeout);
-				_debug.info(applicationName, "Port geˆffnet: " + _portName);
+				_debug.info(applicationName, "Port ge√∂ffnet: " + _portName);
 			}
 			_port.setDTR(false);
 			String rts = _propertyConsultant.getProperty("seriell.rts").trim().toLowerCase();
@@ -144,7 +150,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				_rtsPostSendDelay = _propertyConsultant.getIntProperty("seriell.rtsNachlauf");
 			}
 			else {
-				throw new IllegalArgumentException("Ung¸ltiger Wert des Parameters seriell.rts");
+				throw new IllegalArgumentException("Ung√ºltiger Wert des Parameters seriell.rts");
 			}
 			String cts = _propertyConsultant.getProperty("seriell.cts").trim().toLowerCase();
 			if(cts.equals("ja")) {
@@ -154,7 +160,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				_waitForCts = false;
 			}
 			else {
-				throw new IllegalArgumentException("Ung¸ltiger Wert des Parameters seriell.cts");
+				throw new IllegalArgumentException("Ung√ºltiger Wert des Parameters seriell.cts");
 			}
 			String dcd = _propertyConsultant.getProperty("seriell.dcd").trim().toLowerCase();
 			if(dcd.equals("ja")) {
@@ -164,7 +170,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				_waitForDcdDown = false;
 			}
 			else {
-				throw new IllegalArgumentException("Ung¸ltiger Wert des Parameters seriell.dcd");
+				throw new IllegalArgumentException("Ung√ºltiger Wert des Parameters seriell.dcd");
 			}
 			String dsr = _propertyConsultant.getProperty("seriell.dsr").trim().toLowerCase();
 			if(dsr.equals("ja")) {
@@ -174,7 +180,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				_checkDsr = false;
 			}
 			else {
-				throw new IllegalArgumentException("Ung¸ltiger Wert des Parameters seriell.dsr");
+				throw new IllegalArgumentException("Ung√ºltiger Wert des Parameters seriell.dsr");
 			}
 			int bps = _propertyConsultant.getIntProperty("seriell.bps");
 			int databitsMode;
@@ -193,7 +199,7 @@ public class SerialPortControl implements SerialPortEventListener {
 					databitsMode = SerialPort.DATABITS_5;
 					break;
 				default:
-					throw new IllegalArgumentException("Ung¸ltige Anzahl Bits pro Byte in Schnittstelleneinstellungen");
+					throw new IllegalArgumentException("Ung√ºltige Anzahl Bits pro Byte in Schnittstelleneinstellungen");
 			}
 			int stopbitsMode;
 			int stopbitsValue = (int)(10 * _propertyConsultant.getDoubleProperty("seriell.stopbits"));
@@ -208,9 +214,9 @@ public class SerialPortControl implements SerialPortEventListener {
 					stopbitsMode = SerialPort.STOPBITS_2;
 					break;
 				default:
-					throw new IllegalArgumentException("Ung¸ltige Anzahl Stop-Bits in Schnittstelleneinstellungen");
+					throw new IllegalArgumentException("Ung√ºltige Anzahl Stop-Bits in Schnittstelleneinstellungen");
 			}
-			String paritySpec = _propertyConsultant.getProperty("seriell.parit‰t").trim().toLowerCase();
+			String paritySpec = _propertyConsultant.getProperty("seriell.parit√§t").trim().toLowerCase();
 			int parity;
 			if(paritySpec.equals("gerade")) {
 				parity = SerialPort.PARITY_EVEN;
@@ -221,20 +227,20 @@ public class SerialPortControl implements SerialPortEventListener {
 			else if(paritySpec.equals("gesetzt")) {
 				parity = SerialPort.PARITY_MARK;
 			}
-			else if(paritySpec.equals("gelˆscht")) {
+			else if(paritySpec.equals("gel√∂scht")) {
 				parity = SerialPort.PARITY_SPACE;
 			}
 			else if(paritySpec.equals("keine")) {
 				parity = SerialPort.PARITY_NONE;
 			}
 			else {
-				throw new IllegalArgumentException("Ung¸ltige Parit‰t " + paritySpec + " g¸ltig sind (gerade|ungerade|gesetzt|gelˆscht|keine)");
+				throw new IllegalArgumentException("Ung√ºltige Parit√§t " + paritySpec + " g√ºltig sind (gerade|ungerade|gesetzt|gel√∂scht|keine)");
 			}
 
 			_byteTransmitDurationMicros = (10 + databitsValue * 10 + stopbitsValue + (parity != SerialPort.PARITY_NONE ? 10 : 0)) * 100000 / bps;
 			_debug.finer("_byteTransmitDurationMicros: " + _byteTransmitDurationMicros + " Mikrosekunden");
-			_flushAfterSend = _propertyConsultant.getBooleanProperty("seriell.empfangsPufferNachVersandLˆschen");
-			_waitWhilePendingOutput = _propertyConsultant.getBooleanProperty("seriell.aufVersandR¸ckmeldungWarten");
+			_flushAfterSend = _propertyConsultant.getBooleanProperty("seriell.empfangsPufferNachVersandL√∂schen");
+			_waitWhilePendingOutput = _propertyConsultant.getBooleanProperty("seriell.aufVersandR√ºckmeldungWarten");
 
 			_tap = _propertyConsultant.getIntProperty("primary.Tap");
 			_interCharacterTimeout = _propertyConsultant.getIntProperty("seriell.empfangsTimeout");
@@ -252,8 +258,8 @@ public class SerialPortControl implements SerialPortEventListener {
 			_port.notifyOnFramingError(true);
 			_port.notifyOnOutputEmpty(true);
 			_port.notifyOnOverrunError(true);
-			_port.notifyOnParityError(_propertyConsultant.getBooleanProperty("seriell.parit‰tPr¸fen"));
-			_port.notifyOnOverrunError(_propertyConsultant.getBooleanProperty("seriell.¸berlaufPr¸fen"));
+			_port.notifyOnParityError(_propertyConsultant.getBooleanProperty("seriell.parit√§tPr√ºfen"));
+			_port.notifyOnOverrunError(_propertyConsultant.getBooleanProperty("seriell.√ºberlaufPr√ºfen"));
 			_port.notifyOnRingIndicator(true);
 			_out = _port.getOutputStream();
 			_in = _port.getInputStream();
@@ -264,9 +270,9 @@ public class SerialPortControl implements SerialPortEventListener {
 			if(_checkDsr) {
 				_debug.finer("waiting for DSR");
 				if(!_port.isDSR()) {
-					_debug.warning("Kabel am Anschluﬂ " + _portName + " NICHT angeschlossen!");
+					_debug.warning("Kabel am Anschlu√ü " + _portName + " NICHT angeschlossen!");
 					while(!_port.isDSR()) wait(100);
-					_debug.info("Kabel am Anschluﬂ " + _portName + " ist jetzt angeschlossen.");
+					_debug.info("Kabel am Anschlu√ü " + _portName + " ist jetzt angeschlossen.");
 				}
 			}
 			_debug.finer("serial port started");
@@ -329,9 +335,9 @@ public class SerialPortControl implements SerialPortEventListener {
 				long timeout = System.currentTimeMillis() + 5000;
 				while(true) {
 					long waitTime = timeout - System.currentTimeMillis();
-					if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschluﬂ " + _portName + " wurde abgezogen!");
+					if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschlu√ü " + _portName + " wurde abgezogen!");
 					if(!_port.isCD()) break;
-					if(waitTime <= 0) throw new IllegalStateException("Timeout beim Warten auf R¸cksetzen des DCD-Signals vor Versand auf Anschluﬂ " + _portName);
+					if(waitTime <= 0) throw new IllegalStateException("Timeout beim Warten auf R√ºcksetzen des DCD-Signals vor Versand auf Anschlu√ü " + _portName);
 					wait(waitTime);
 				}
 			}
@@ -352,9 +358,9 @@ public class SerialPortControl implements SerialPortEventListener {
 				long timeout = System.currentTimeMillis() + 1000;
 				while(true) {
 					long waitTime = timeout - System.currentTimeMillis();
-					if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschluﬂ " + _portName + " wurde abgezogen!");
+					if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschlu√ü " + _portName + " wurde abgezogen!");
 					if(_port.isCTS()) break;
-					if(waitTime <= 0) throw new IllegalStateException("CTS-Signal-Timeout auf Anschluﬂ " + _portName);
+					if(waitTime <= 0) throw new IllegalStateException("CTS-Signal-Timeout auf Anschlu√ü " + _portName);
 					wait(waitTime);
 				}
 			}
@@ -375,7 +381,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				long timeout = System.currentTimeMillis() + ((packet.length * _byteTransmitDurationMicros) / 1000) + 500;
 				while(true) {
 					long waitTime = timeout - System.currentTimeMillis();
-					if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschluﬂ " + _portName + " wurde abgezogen!");
+					if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschlu√ü " + _portName + " wurde abgezogen!");
 					if(!_pendingOutput) break;
 					if(waitTime <= 0) throw new IllegalStateException("Timeout beim Warten auf abgeschlossenen Versand: " + _portName);
 					wait(waitTime);
@@ -391,7 +397,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				while(true) {
 					long waitTime = stopSend - System.currentTimeMillis();
 					if(waitTime > 0) {
-						if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschluﬂ " + _portName + " wurde abgezogen!");
+						if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschlu√ü " + _portName + " wurde abgezogen!");
 						wait(waitTime);
 					}
 					else {
@@ -536,7 +542,7 @@ public class SerialPortControl implements SerialPortEventListener {
 						}
 					}
 					if(serialPortEvent.getNewValue()) {
-						_debug.fine("DCD hat Eingangspuffer gelˆscht");
+						_debug.fine("DCD hat Eingangspuffer gel√∂scht");
 						//_receivedCount= 0;
 					}
 					else {
@@ -547,7 +553,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				}
 				else if(serialPortEvent.getEventType() == SerialPortEvent.DSR) {
 					if(serialPortEvent.getNewValue()) {
-						_debug.info("Kabel auf Anschluﬂ " + _portName + " wurde w‰hrend dem Datenempfang abgezogen!");
+						_debug.info("Kabel auf Anschlu√ü " + _portName + " wurde w√§hrend dem Datenempfang abgezogen!");
 						_receiving = false;
 						notifyAll();
 					}
@@ -574,7 +580,7 @@ public class SerialPortControl implements SerialPortEventListener {
 
 	public byte[] query(int waitTimeSinceLastReceive, byte[] sendBytes, int receiveTimeout) throws InterruptedException, IOException {
 		if(!_initialized) {
-			String message = "Anschluﬂ " + _portName + " ist nicht korrekt initialisiert.";
+			String message = "Anschlu√ü " + _portName + " ist nicht korrekt initialisiert.";
 			_debug.info(message);
 			throw new IllegalStateException(message);
 		}
@@ -591,7 +597,7 @@ public class SerialPortControl implements SerialPortEventListener {
 				if(_lastReadTime == 0) {
 					waitTime = firstCharacterTimeoutTime - now;
 					if(waitTime <= 0) {
-						if(timeout > 0) _debug.info("Antwort¸berwachungszeit abgelaufen");
+						if(timeout > 0) _debug.info("Antwort√ºberwachungszeit abgelaufen");
 						_receiving = false;
 						return null;
 					}
@@ -608,13 +614,13 @@ public class SerialPortControl implements SerialPortEventListener {
 				_debug.finer("waiting: " + waitTime);
 				wait(waitTime);
 			}
-			if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschluﬂ " + _portName + " wurde abgezogen!");
+			if(_checkDsr && !_port.isDSR()) throw new IllegalStateException("Kabel auf Anschlu√ü " + _portName + " wurde abgezogen!");
 			if(_parityError) {
-				_debug.info("Parit‰ts Fehler");
+				_debug.info("Parit√§ts Fehler");
 				return null;
 			}
 			if(_overrunError) {
-				_debug.info("‹berlauf Fehler");
+				_debug.info("√úberlauf Fehler");
 				return null;
 			}
 			byte[] result = new byte[_receivedCount];
@@ -656,15 +662,15 @@ public class SerialPortControl implements SerialPortEventListener {
 			wait(waitTime);
 		}
 		if(_checkDsr && !_port.isDSR()) {
-			_debug.warning("Kabel auf Anschluﬂ " + _portName + " wurde abgezogen!");
+			_debug.warning("Kabel auf Anschlu√ü " + _portName + " wurde abgezogen!");
 			return null;
 		}
 		if(_parityError) {
-			_debug.warning("Parit‰ts Fehler");
+			_debug.warning("Parit√§ts Fehler");
 			return null;
 		}
 		if(_overrunError) {
-			_debug.warning("‹berlauf Fehler");
+			_debug.warning("√úberlauf Fehler");
 			return null;
 		}
 		if(_receivedCount == 0) {

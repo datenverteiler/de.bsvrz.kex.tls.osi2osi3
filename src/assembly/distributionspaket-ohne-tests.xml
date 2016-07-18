@@ -15,5 +15,9 @@
             <directory>${project.basedir}/lib</directory>
             <outputDirectory>lib</outputDirectory>
         </fileSet>
+        <fileSet>
+            <directory>${project.basedir}/src/main/dist</directory>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>

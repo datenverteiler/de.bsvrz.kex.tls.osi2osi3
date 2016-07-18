@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -31,29 +37,29 @@ import java.util.Set;
  * Klasse zur Verwaltung der Weiterleitungsinformationen.
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 7046 $
+ * @version $Revision$
  * 
  */
 public class RedirectionInfo {
 	/**
-	 * Map, wobei der Schlüssel die Knotennummer des Absenders ist. Als Wert wird in einer Struktur festgehalten, ob für eine bestimmte FG das Telegramm an
-	 * weitere Zielknoten versendet werden muss und ob weiterhin die lokale Verarbeitung des Telegramms durchgeführt werden muss.
+	 * Map, wobei der SchlÃ¼ssel die Knotennummer des Absenders ist. Als Wert wird in einer Struktur festgehalten, ob fÃ¼r eine bestimmte FG das Telegramm an
+	 * weitere Zielknoten versendet werden muss und ob weiterhin die lokale Verarbeitung des Telegramms durchgefÃ¼hrt werden muss.
 	 */
 	Map<NodeFgPair, Map<Osi7SingleTelegramConverter, Set<Integer>>> _receiveEntries;
 	/**
-	 * Set, in der alle Knoten - Funktionsgruppen - Kombinationen aufgeführt sind,
+	 * Set, in der alle Knoten - Funktionsgruppen - Kombinationen aufgefÃ¼hrt sind,
 	 * die nicht "normal" behandelt werden sollen.
 	 */
 	Set<NodeFgPair> _receiveNoNormalProcessing;
 	
 	/**
-	 * Map, wobei der Schlüssel die Knotennummer des Empfängers ist. Als Wert wird in einer Struktur festgehalten, ob für eine bestimmte FG das Telegramm an
-	 * weitere Zielknoten versendet werden muss und ob weiterhin die lokale Verarbeitung des Telegramms durchgeführt werden muss.
+	 * Map, wobei der SchlÃ¼ssel die Knotennummer des EmpfÃ¤ngers ist. Als Wert wird in einer Struktur festgehalten, ob fÃ¼r eine bestimmte FG das Telegramm an
+	 * weitere Zielknoten versendet werden muss und ob weiterhin die lokale Verarbeitung des Telegramms durchgefÃ¼hrt werden muss.
 	 */
 	Map<NodeFgPair, Map<Osi7SingleTelegramConverter, Set<Integer>>> _sendEntries;
 	/**
-	 * Set, in der alle Knoten - Funktionsgruppen - Kombinationen aufgeführt sind,
-	 * die nicht an des ursprüngliche Ziel geschickt werden sollen.
+	 * Set, in der alle Knoten - Funktionsgruppen - Kombinationen aufgefÃ¼hrt sind,
+	 * die nicht an des ursprÃ¼ngliche Ziel geschickt werden sollen.
 	 */
 	Set<NodeFgPair> _sendNotToPrimalTarget;
 
@@ -71,14 +77,14 @@ public class RedirectionInfo {
 	}
 	
 	/**
-	 * Fügt einen Eintrag in die Map zur Behandlung der empfangenen Telegramme hinzu.
+	 * FÃ¼gt einen Eintrag in die Map zur Behandlung der empfangenen Telegramme hinzu.
 	 * 
 	 * @param knr
-	 *            Knotennummer, für den der Eintrag gilt
+	 *            Knotennummer, fÃ¼r den der Eintrag gilt
 	 * @param fg
 	 *            Funktionsgruppe, wenn Null, dann zu allen Funktionsgruppen
 	 * @param normalProcessing
-	 *            Ob auch zum Originalziel gesendet wird (true). Bei false wird dies unterdrückt.
+	 *            Ob auch zum Originalziel gesendet wird (true). Bei false wird dies unterdrÃ¼ckt.
 	 * @param destinations
 	 *            Ziele, an die gesendet werden soll
 	 * @param converter 
@@ -93,11 +99,11 @@ public class RedirectionInfo {
 	}
 
 	/**
- 	 * Gibt die Map zur Weiterleitung von empfangenden Telegrammen zurück.
- 	 * Wenn keine Map für die vorgegebene Kombination von Knotennummer und FG vorhanden ist, wird null zurückgegeben.
- 	 * Schlüssel der Map ist der zu verwendende OSI7-Telegramm-Konverter. Der Schlüssel null besagt,
+ 	 * Gibt die Map zur Weiterleitung von empfangenden Telegrammen zurÃ¼ck.
+ 	 * Wenn keine Map fÃ¼r die vorgegebene Kombination von Knotennummer und FG vorhanden ist, wird null zurÃ¼ckgegeben.
+ 	 * SchlÃ¼ssel der Map ist der zu verwendende OSI7-Telegramm-Konverter. Der SchlÃ¼ssel null besagt,
  	 * dass hier vor der Weiterleitung keine Konvertierung auf OSI7 Ebene erfolgt.
- 	 * Als Wert enthält die Map eine Set der Ziele, zu denen das Telegramm weitergeleitet werden soll.
+ 	 * Als Wert enthÃ¤lt die Map eine Set der Ziele, zu denen das Telegramm weitergeleitet werden soll.
  	 * 
  	 * @param knr
 	 *            Knotennummer
@@ -115,8 +121,8 @@ public class RedirectionInfo {
     }
 	
 	/**
- 	 * Gibt für ein Paar von Knotennummer des Senders und Funktionsgruppe an, ob Telegramme dieser Kombination
- 	 * auch lokal verarbeitet werden sollen (Rückgabe true)
+ 	 * Gibt fÃ¼r ein Paar von Knotennummer des Senders und Funktionsgruppe an, ob Telegramme dieser Kombination
+ 	 * auch lokal verarbeitet werden sollen (RÃ¼ckgabe true)
  	 * 
  	 * @param knr
 	 *            Knotennummer
@@ -129,13 +135,13 @@ public class RedirectionInfo {
     }
 
     /**
-     * Prüfung, ob für ein Set von Knoten-Funktionsgruppen Paaren bei einer bestimmten
-     * Kombination die "normale Behandlung" durchgeführt werden soll oder nicht.
+     * PrÃ¼fung, ob fÃ¼r ein Set von Knoten-Funktionsgruppen Paaren bei einer bestimmten
+     * Kombination die "normale Behandlung" durchgefÃ¼hrt werden soll oder nicht.
      * 
      * @param nonNormalProcessing Set der Ausnahmen (die nicht normal behandelt werden sollen)
      * @param knr Knotennummer
      * @param fg  Funktionsgruppe
-     * @return Ob die "normale Behandlung" durchgeführt werden soll oder nicht.
+     * @return Ob die "normale Behandlung" durchgefÃ¼hrt werden soll oder nicht.
      */
     boolean normalProcessing(Set<NodeFgPair> nonNormalProcessing, int knr, int fg){
     	NodeFgPair nodeFgPair = new NodeFgPair(knr,fg);
@@ -147,14 +153,14 @@ public class RedirectionInfo {
     
 	
 	/**
-	 * Fügt einen Eintrag in die Map zur Behandlung der zu sendenden Telegramme hinzu.
+	 * FÃ¼gt einen Eintrag in die Map zur Behandlung der zu sendenden Telegramme hinzu.
 	 * 
 	 * @param knr
-	 *            Knotennummer, für den der Eintrag gilt
+	 *            Knotennummer, fÃ¼r den der Eintrag gilt
 	 * @param fg
 	 *            Funktionsgruppe, wenn Null, dann zu allen Funktionsgruppen
 	 * @param normalProcessing
-	 *            Ob auch zum Originalziel gesendet wird (true). Bei false wird dies unterdrückt.
+	 *            Ob auch zum Originalziel gesendet wird (true). Bei false wird dies unterdrÃ¼ckt.
 	 * @param destinations
 	 *            Ziele, an die gesendet werden soll
 	 * @param converter 
@@ -170,11 +176,11 @@ public class RedirectionInfo {
 	}	
 
 	/**
- 	 * Gibt die Map zur Weiterleitung von zu sendenen Telegrammen zurück.
- 	 * Wenn keine Map für die vorgegebene Kombination von Knotennummer und FG vorhanden ist, wird null zurückgegeben.
- 	 * Schlüssel der Map ist der zu verwendende OSI7-Telegramm-Konverter. Der Schlüssel null besagt,
+ 	 * Gibt die Map zur Weiterleitung von zu sendenen Telegrammen zurÃ¼ck.
+ 	 * Wenn keine Map fÃ¼r die vorgegebene Kombination von Knotennummer und FG vorhanden ist, wird null zurÃ¼ckgegeben.
+ 	 * SchlÃ¼ssel der Map ist der zu verwendende OSI7-Telegramm-Konverter. Der SchlÃ¼ssel null besagt,
  	 * dass hier vor der Weiterleitung keine Konvertierung auf OSI7 Ebene erfolgt.
- 	 * Als Wert enthält die Map eine Set der Ziele, zu denen das Telegramm weitergeleitet werden soll.
+ 	 * Als Wert enthÃ¤lt die Map eine Set der Ziele, zu denen das Telegramm weitergeleitet werden soll.
  	 * 
  	 * @param knr
 	 *            Knotennummer
@@ -192,8 +198,8 @@ public class RedirectionInfo {
   }
 	
 	/**
- 	 * Gibt für ein Paar von Knotennummer des Senders und Funktionsgruppe an, ob Telegramme dieser Kombination
- 	 * auch lokal verarbeitet werden sollen (Rückgabe true)
+ 	 * Gibt fÃ¼r ein Paar von Knotennummer des Senders und Funktionsgruppe an, ob Telegramme dieser Kombination
+ 	 * auch lokal verarbeitet werden sollen (RÃ¼ckgabe true)
  	 * 
  	 * @param knr
 	 *            Knotennummer
@@ -207,8 +213,8 @@ public class RedirectionInfo {
 	
 	
 	/**
-	 * Ergänzt einen neuen Eintrag in der übergebenen Map.
-	 * @param entries Map, die ergänzt werden soll.
+	 * ErgÃ¤nzt einen neuen Eintrag in der Ã¼bergebenen Map.
+	 * @param entries Map, die ergÃ¤nzt werden soll.
 	 * @param nodeFgPair	Knoten-Funktionsgruppen Paar.
 	 * @param destinations  Zielknoten, an die weitergeleitet werden soll.
 	 * @param converter		OSI7-Konverter, der verwendet werden soll (bei null keiner).
@@ -238,25 +244,25 @@ public class RedirectionInfo {
 	
 	
 	/**
-	 * Gibt alle gespeicherten Einträge aus.
+	 * Gibt alle gespeicherten EintrÃ¤ge aus.
 	 * 
 	 */
 	public void printAllEntries() {
-		_debug.fine("Gespeicherte Empfangseinträge:");		
+		_debug.fine("Gespeicherte EmpfangseintrÃ¤ge:");		
 		printEntries(_receiveEntries,_receiveNoNormalProcessing);
-		_debug.fine("Gespeicherte Sendeeinträge:");		
+		_debug.fine("Gespeicherte SendeeintrÃ¤ge:");		
 		printEntries(_sendEntries,_sendNotToPrimalTarget);
 	}
 
 	/**
-	 * Ausgabe der Informationen zu den Empfangs oder Sendeinträgen.
+	 * Ausgabe der Informationen zu den Empfangs oder SendeintrÃ¤gen.
 	 * 
 	 * @param entries 
-	 * 				Map, in der für die Knotennummer/Funktionsgruppenpaare Maps für die
+	 * 				Map, in der fÃ¼r die Knotennummer/Funktionsgruppenpaare Maps fÃ¼r die
 	 * 				Maps von Telegrammkonvertern und Zielen, an die Telegramme weitergeleitet
-	 *              werden sollen, aufgeführt sind
+	 *              werden sollen, aufgefÃ¼hrt sind
 	 * @param noNormalProcessing
-	 * 				Set, in dem die Knotennummer/Funktionsgruppenpaare aufgeführt sind, für die
+	 * 				Set, in dem die Knotennummer/Funktionsgruppenpaare aufgefÃ¼hrt sind, fÃ¼r die
 	 *              keine normale Behandlung erfolgen soll.
 	 */
 	private void printEntries(Map<NodeFgPair, Map<Osi7SingleTelegramConverter, Set<Integer>>> entries, Set<NodeFgPair> noNormalProcessing) {
@@ -293,7 +299,7 @@ public class RedirectionInfo {
     }
 	
 	/**
-	 * Gibt ein Set von Knotennummern als String zurück.
+	 * Gibt ein Set von Knotennummern als String zurÃ¼ck.
 	 * @param destinations Knotennummern
 	 * @return String mit den Knotennummern 
 	 */

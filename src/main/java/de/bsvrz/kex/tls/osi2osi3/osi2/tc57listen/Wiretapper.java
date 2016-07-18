@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniﬂ Systemberatung, Aachen
+ * Copyright 2004 by Kappich+Kni√ü Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-Stra√üe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.tc57listen;
@@ -40,12 +46,12 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Dieses OSI-2 Modul kann anstelle eines TC57-Primary-Protokolls verwendet werden, um einen von anderer Stelle aktiv gepollten Inselbus passiv abzuhˆren und
- * die Daten von den Streckenstationen entgegenzunehmen. Der physische Anschluss kann z.B. ¸ber ein spezielles Mithˆrmodul realisiert werden, das die in beiden
- * Richtungen ¸bertragenen Daten ausgibt.
+ * Dieses OSI-2 Modul kann anstelle eines TC57-Primary-Protokolls verwendet werden, um einen von anderer Stelle aktiv gepollten Inselbus passiv abzuh√∂ren und
+ * die Daten von den Streckenstationen entgegenzunehmen. Der physische Anschluss kann z.B. √ºber ein spezielles Mith√∂rmodul realisiert werden, das die in beiden
+ * Richtungen √ºbertragenen Daten ausgibt.
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10187 $
+ * @version $Revision$
  */
 public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 
@@ -76,17 +82,17 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 		if(name.equals("seriell.rts")) return "nie";
 		if(name.equals("seriell.cts")) return "nein";
 		if(name.equals("seriell.dsr")) return "nein";
-		if(name.equals("seriell.¸berlaufPr¸fen")) return "ja";
+		if(name.equals("seriell.√ºberlaufPr√ºfen")) return "ja";
 		if(name.equals("seriell.empfangsPuffer")) return "10000";
 		if(name.equals("wiretapper.antwortTimeout")) return "5000";
 		if(name.equals("wiretapper.anfrageTimeout")) return "120000";
 		if(name.equals("seriell.dsr")) return "nein";
-		if(name.equals("seriell.parit‰tPr¸fen")) return "nein";
+		if(name.equals("seriell.parit√§tPr√ºfen")) return "nein";
 		return super.getDefaultProperty(name);
 	}
 
 	public String toString() {
-		return "MithˆrModul(" + getLocalAddress() + ")";
+		return "Mith√∂rModul(" + getLocalAddress() + ")";
 	}
 
 	public Wiretapper() {
@@ -96,7 +102,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 
 	/**
 	 * Nimmmt die Verbindung zum Datenverteiler entgegen. Diese Methode wird vom OSI-3 Modul nach dem Erzeugen des OSI-2 Moduls durch den jeweiligen Konstruktor
-	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die ¸bergebene Datenverteilerverbindung intern merken, um zu sp‰teren
+	 * aufgerufen. Eine Implementierung eines Protokollmoduls kann sich bei Bedarf die √ºbergebene Datenverteilerverbindung intern merken, um zu sp√§teren
 	 * Zeitpunkten auf die Datenverteiler-Applikationsfunktionen zuzugreifen.
 	 *
 	 * @param connection Verbindung zum Datenverteiler
@@ -145,7 +151,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 		_debug.fine("Neue Einstellungen: properties = " + properties);
 		checkConnection(_links, properties);
 		synchronized(_protocolLock) {
-			// Aktivieren der Properties wird verzˆgert
+			// Aktivieren der Properties wird verz√∂gert
 			_newProperties = properties;
 			_reloadProperties = true;
 			_protocolLock.notifyAll();
@@ -215,7 +221,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 					//Quittungszeichen
 					endIndex = startIndex + 1;
 					result = new SecondaryFrame(false, false, SecondaryFrame.E5, 0, null);
-					// Die Quittung kommt vom Secondary, es wird ein Byte-Array der Grˆﬂe 1 ¸bergeben (Inhalt: E5)
+					// Die Quittung kommt vom Secondary, es wird ein Byte-Array der Gr√∂√üe 1 √ºbergeben (Inhalt: E5)
 					notifyEvent(null, DataLinkLayerEvent.Type.BYTES_RECEIVED, new byte[]{_bytes[startIndex]});
 				}
 				else if(b == 0x10) {
@@ -257,9 +263,9 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 						byte[] data = new byte[length1 - 2];
 						System.arraycopy(_bytes, startIndex + 6, data, 0, length1 - 2);
 
-						// Der lauschende Prozess benˆtigt ein OSI 2 Telegramm mit allen Informationen, dieses
+						// Der lauschende Prozess ben√∂tigt ein OSI 2 Telegramm mit allen Informationen, dieses
 						// wird an dieser Stelle erzeugt.
-						// Die L‰nge besteht aus den ersten 4 Anfangsbytes, L‰nge des Datenfelds + Steuerbyte,Adressbyte und der Pr¸fsumme und Ende(0x16)
+						// Die L√§nge besteht aus den ersten 4 Anfangsbytes, L√§nge des Datenfelds + Steuerbyte,Adressbyte und der Pr√ºfsumme und Ende(0x16)
 						final byte[] osi2Telegram = new byte[4 + length1 + 2];
 						System.arraycopy(_bytes, startIndex, osi2Telegram, 0, osi2Telegram.length);
 
@@ -330,11 +336,11 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 					try {
 						_serialPortControl.start(Wiretapper.this, _name);
 
-						//‹berpr¸ft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary Adressen von 1-199 oder 255 erlaubt.
-						//Nun ist es anhand eines Parameter mˆglich, diese Bereichsgrenze zu umgehen und die Adressen 1-255 zu zulassen.
+						//√úberpr√ºft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary Adressen von 1-199 oder 255 erlaubt.
+						//Nun ist es anhand eines Parameter m√∂glich, diese Bereichsgrenze zu umgehen und die Adressen 1-255 zu zulassen.
 						if(!allowConnection(_links)) {
-							//Die Verbindung ist nicht zul‰ssig und wird deaktiviert.
-							//Danach wird so lange gewartet bis neue Properties vorhanden sind und anschlieﬂend wird die Prozedur des Verbindungsaufbau wiederholt
+							//Die Verbindung ist nicht zul√§ssig und wird deaktiviert.
+							//Danach wird so lange gewartet bis neue Properties vorhanden sind und anschlie√üend wird die Prozedur des Verbindungsaufbau wiederholt
 							_serialPortControl.shutdown();
 							try {
 								_protocolLock.wait();
@@ -347,7 +353,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 						break;
 					}
 					catch(Exception e) {
-						_debug.error(_name + ": Fehler beim ÷ffnen der seriellen Schnittstelle: " , e);
+						_debug.error(_name + ": Fehler beim √ñffnen der seriellen Schnittstelle: " , e);
 						e.printStackTrace();
 					}
 				}
@@ -381,7 +387,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 
 								if(!allowConnection(_links)) {
 									//Es wird auf neue Properties gewartet
-									//Mit dem Continue erfolg eine erneute ‹berpr¸fung
+									//Mit dem Continue erfolg eine erneute √úberpr√ºfung
 									_protocolLock.wait();
 									continue;
 								}
@@ -391,7 +397,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 								}
 							}
 							catch(Exception e) {
-								_debug.error(_name + ": Fehler beim ÷ffnen der seriellen Schnittstelle: " , e);
+								_debug.error(_name + ": Fehler beim √ñffnen der seriellen Schnittstelle: " , e);
 								//_stopped= true;
 								e.printStackTrace();
 							}
@@ -412,8 +418,8 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 							link = (Link)_linksPollingIterator.next();
 							//Aktionen, die notwendig sind, bevor der synchronisierte Bereich (_links) verlassen wird
 							if(link.synchronizedPollAction()) {
-								// Wenn die Verbindung aus der Liste der aktiven Verbindungen gelˆscht wurde,
-								// dann mit der n‰chsten weitermachen.
+								// Wenn die Verbindung aus der Liste der aktiven Verbindungen gel√∂scht wurde,
+								// dann mit der n√§chsten weitermachen.
 								link = null;
 								continue;
 							}
@@ -431,16 +437,16 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 							link.shutdown();
 						}
 					}
-					// Normale Aktionen auﬂerhalb des synchronisierten Bereichs (_links), damit andere Threads nicht l‰nger
+					// Normale Aktionen au√üerhalb des synchronisierten Bereichs (_links), damit andere Threads nicht l√§nger
 					// als unbedingt notwendig blockiert werden.
 
-					// Verbindungen nach der Zeit der letzten erfolgreichen ‹bertragung untersuchen und eventuell auf tot setzen
+					// Verbindungen nach der Zeit der letzten erfolgreichen √úbertragung untersuchen und eventuell auf tot setzen
 					link.unsynchronizedPollAction();
 
 					try {
 						Tc57Frame frame = interceptTelegram();
 
-						// An dieser Stelle steht ein Telegramm zur Verf¸gung (wenn es ungleich null ist)
+						// An dieser Stelle steht ein Telegramm zur Verf√ºgung (wenn es ungleich null ist)
 						if(frame == null) {
 							if(_primaryFrame != null && System.currentTimeMillis() > _primaryFrameTimeout) {
 								handleQuery(_primaryFrame, null);
@@ -607,14 +613,14 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 		}
 
 		public void send(byte[] bytes, int priority) throws InterruptedException {
-			throw new UnsupportedOperationException("Datenversand wird vom Mithˆrmodul nicht unterst¸tzt " + toString());
+			throw new UnsupportedOperationException("Datenversand wird vom Mith√∂rmodul nicht unterst√ºtzt " + toString());
 		}
 
 		/**
-		 * F¸hrt Pollaktionen durch, die notwendig sind, bevor der synchronisierte Bereich zum Zugriff auf die Liste mit den zu bearbeitenden Verbindungen (_links)
+		 * F√ºhrt Pollaktionen durch, die notwendig sind, bevor der synchronisierte Bereich zum Zugriff auf die Liste mit den zu bearbeitenden Verbindungen (_links)
 		 * verlassen wird.
 		 *
-		 * @return <code>true</code>, wenn eine Aktion durchgef¸hrt wurde und das Polling mit der n‰chsten Verbindung fortgesetzt werden soll, sonst
+		 * @return <code>true</code>, wenn eine Aktion durchgef√ºhrt wurde und das Polling mit der n√§chsten Verbindung fortgesetzt werden soll, sonst
 		 *         <code>false</code>.
 		 */
 		private boolean synchronizedPollAction() {
@@ -653,7 +659,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 
 		public void handleQuery(PrimaryFrame primaryFrame, SecondaryFrame secondaryFrame) {
 			_debug.fine(toString() + " handleQuery: Anfrage: " + primaryFrame + ", Antwort: " + secondaryFrame);
-			// Wenn keine Antwort empfangen wurde, dann soll im n‰chsten Zyklus eine Wiederholung akzeptiert werden
+			// Wenn keine Antwort empfangen wurde, dann soll im n√§chsten Zyklus eine Wiederholung akzeptiert werden
 			boolean tolerateNextRetry = secondaryFrame == null;
 			if(secondaryFrame != null) {
 				if(secondaryFrame.getFunction() != SecondaryFrame.E5 && secondaryFrame.getAddress() != primaryFrame.getAddress()) {
@@ -736,7 +742,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 							_debug.info(toString() + ": Verbindung nach Datenversand wieder hergestellt");
 							notifyEvent(DataLinkLayerEvent.Type.CONNECTED, null);
 						}
-						// Es wurde keine Antwort erwartet, deshalb sollen in diesem Ausnahmefall der Ausnahme doch keine Wiederholungen akzeptiert werden, auﬂer wenn erneut ein DNR empfangen wird.
+						// Es wurde keine Antwort erwartet, deshalb sollen in diesem Ausnahmefall der Ausnahme doch keine Wiederholungen akzeptiert werden, au√üer wenn erneut ein DNR empfangen wird.
 						tolerateNextRetry = false;
 						notifyEvent(DataLinkLayerEvent.Type.DATA_SENT, primaryFrame.getData());
 						break;
@@ -782,7 +788,7 @@ public class Wiretapper extends AbstractTc57 implements PropertyQueryInterface {
 				if(_linkState == LinkState.CONNECTED) {
 					_fcb = !primaryFrame.getFrameCountBit();
 				}
-				// Wenn keine Antwort der Secondary empfangen wurde, dann im n‰chsten Zyklus eine Wiederholung akzeptiert werden
+				// Wenn keine Antwort der Secondary empfangen wurde, dann im n√§chsten Zyklus eine Wiederholung akzeptiert werden
 				_tolerateRetry = tolerateNextRetry;
 			}
 		}

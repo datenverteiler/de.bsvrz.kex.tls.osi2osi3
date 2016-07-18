@@ -1,12 +1,12 @@
 /*
  * Copyright 2007 by Kappich Systemberatung, Aachen
- * Copyright 2004 by Kappich+Kniß Systemberatung, Aachen
+ * Copyright 2004 by Kappich+KniÃŸ Systemberatung, Aachen
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -15,8 +15,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.osi2.api;
@@ -27,10 +33,10 @@ import de.bsvrz.sys.funclib.debug.Debug;
 import java.util.*;
 
 /**
- * Klasse mit Default-Implementierungen einzelner Methoden der Schnittstelle für Protokolle der Sicherungsschicht (OSI 2).
+ * Klasse mit Default-Implementierungen einzelner Methoden der Schnittstelle fÃ¼r Protokolle der Sicherungsschicht (OSI 2).
  *
  * @author Kappich Systemberatung
- * @version $Revision: 10187 $
+ * @version $Revision$
  */
 public abstract class AbstractDataLinkLayer implements DataLinkLayer {
 
@@ -99,8 +105,8 @@ public abstract class AbstractDataLinkLayer implements DataLinkLayer {
 
 
 	/**
-	 * Überprüft, ob die Verbindung zulässig ist. Die Secondary Adresse 1-199 und 255 ist immer zulässig, die Adressen 200-254 sind nur zulässig wenn Parameter
-	 * "secondary.adressen200-254Akzeptieren" gesetzt ist. Sollte die Verbindung nicht zulässig sein, wird eine Debug Ausgabe erzeugt.
+	 * ÃœberprÃ¼ft, ob die Verbindung zulÃ¤ssig ist. Die Secondary Adresse 1-199 und 255 ist immer zulÃ¤ssig, die Adressen 200-254 sind nur zulÃ¤ssig wenn Parameter
+	 * "secondary.adressen200-254Akzeptieren" gesetzt ist. Sollte die Verbindung nicht zulÃ¤ssig sein, wird eine Debug Ausgabe erzeugt.
 	 *
 	 * @param links      Liste mit allen Links/Verbindungen
 	 * @param properties Neue Properties
@@ -108,16 +114,16 @@ public abstract class AbstractDataLinkLayer implements DataLinkLayer {
 	protected void checkConnection(final List<Link> links, final Properties properties) {
 		if(!allowConnection(links, properties)) {
 			_debug.warning(
-					"Secondary Adressen dürfen nur im Bereich von 1-199 liegen." + " \nLokaler Port des Anschlusspunkts: " + getLocalAddress()
-					+ "\nDeswegen wird kein Datenaustausch akzeptiert! Setzen bzw. ändern Sie den Parameter atg.protokollEinstellungenStandard, "
+					"Secondary Adressen dÃ¼rfen nur im Bereich von 1-199 liegen." + " \nLokaler Port des Anschlusspunkts: " + getLocalAddress()
+					+ "\nDeswegen wird kein Datenaustausch akzeptiert! Setzen bzw. Ã¤ndern Sie den Parameter atg.protokollEinstellungenStandard, "
 					+ TlsNetworkLayerSetting.acceptSecondaryAddress + " auf Ja, um den Datenaustausch zu zulassen."
 			);
 		}
 	}
 
 	/**
-	 * Überprüft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary-Adressen von 1-199 und 255 erlaubt. Mithilfe des Parameters
-	 * "secondary.adressen200-254Akzeptieren" können auch die Adressen 1-255 zugelassen werden.
+	 * ÃœberprÃ¼ft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary-Adressen von 1-199 und 255 erlaubt. Mithilfe des Parameters
+	 * "secondary.adressen200-254Akzeptieren" kÃ¶nnen auch die Adressen 1-255 zugelassen werden.
 	 *
 	 * @param links Liste mit allen Verbindungen
 	 *
@@ -130,8 +136,8 @@ public abstract class AbstractDataLinkLayer implements DataLinkLayer {
 	}
 
 	/**
-	 * Überprüft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary-Adressen von 1-199 und 255 erlaubt. Mithilfe des Parameters
-	 * "secondary.adressen200-254Akzeptieren" können auch die Adressen 1-255 zugelassen werden.
+	 * ÃœberprÃ¼ft ob eine Verbindung erlaubt ist. Normalerweise sind die Secondary-Adressen von 1-199 und 255 erlaubt. Mithilfe des Parameters
+	 * "secondary.adressen200-254Akzeptieren" kÃ¶nnen auch die Adressen 1-255 zugelassen werden.
 	 *
 	 * @param links      Liste mit allen Verbindungen
 	 * @param properties Neue Einstellungen

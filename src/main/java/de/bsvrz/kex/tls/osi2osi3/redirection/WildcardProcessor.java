@@ -3,9 +3,9 @@
  * 
  * This file is part of de.bsvrz.kex.tls.osi2osi3.
  * 
- * de.bsvrz.kex.tls.osi2osi3 is free software; you can redistribute it and/or modify
+ * de.bsvrz.kex.tls.osi2osi3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * de.bsvrz.kex.tls.osi2osi3 is distributed in the hope that it will be useful,
@@ -14,8 +14,14 @@
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with de.bsvrz.kex.tls.osi2osi3; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with de.bsvrz.kex.tls.osi2osi3.  If not, see <http://www.gnu.org/licenses/>.
+
+ * Contact Information:
+ * Kappich Systemberatung
+ * Martin-Luther-StraÃŸe 14
+ * 52062 Aachen, Germany
+ * phone: +49 241 4090 436 
+ * mail: <info@kappich.de>
  */
 
 package de.bsvrz.kex.tls.osi2osi3.redirection;
@@ -34,13 +40,13 @@ import java.util.*;
  * und Send Entries durch die entsprechenden Funktionen.
  * 
  * @author Kappich Systemberatung
- * @version $Revision: 10172 $
+ * @version $Revision$
  * 
  */
 public class WildcardProcessor {
 	
 	/**
-	 * TlsModell, aus dem die Konfigurationsinformationen (Informationen zu den Tls-Geräten) bezogen werden.
+	 * TlsModell, aus dem die Konfigurationsinformationen (Informationen zu den Tls-GerÃ¤ten) bezogen werden.
 	 */
 	private final TlsModel _tlsModel;
 
@@ -54,7 +60,7 @@ public class WildcardProcessor {
 	
 	
 	/**
-	 * Erzeugung einer neuen RedirectionInfo. Der übergebene Parameter wird ausgewertet und es werden die neuen Strukturen aufgebaubt, über die abgefragt werden
+	 * Erzeugung einer neuen RedirectionInfo. Der Ã¼bergebene Parameter wird ausgewertet und es werden die neuen Strukturen aufgebaubt, Ã¼ber die abgefragt werden
 	 * kann, ob bestimmte zu sendende oder empfangene Telegramme auch an andere Knoten weitergeleitet werden sollen.
 	 * 
 	 * 
@@ -70,9 +76,9 @@ public class WildcardProcessor {
 		Array incomingTelegrams = osi3RedirectionParameter.getArray("AnkommendeTelegramme");
 		Array sendingTelegrams = osi3RedirectionParameter.getArray("ZuVersendendeTelegramme");
 		
-		HashSet<TlsNode> nodes = new HashSet<TlsNode>(); // Knoten, die berücksichtigt werden
+		HashSet<TlsNode> nodes = new HashSet<TlsNode>(); // Knoten, die berÃ¼cksichtigt werden
 		
-		ReferenceArray devices; // Array des Absender oder Empfänger (Muss vom Typ GerätReferenz sein).
+		ReferenceArray devices; // Array des Absender oder EmpfÃ¤nger (Muss vom Typ GerÃ¤tReferenz sein).
 		
 		// Betrachte Ankommende Telegramme
 		for(int i = 0; i < incomingTelegrams.getLength(); i++) {
@@ -81,7 +87,7 @@ public class WildcardProcessor {
 			
 			Data sender = incomingTelegrams.getItem(i).getItem("Absender");
 			devices = sender.getReferenceArray("TlsKnoten");
-			// Alle explizit angegebenen Geräte aufnehmen
+			// Alle explizit angegebenen GerÃ¤te aufnehmen
 			for(int j = 0; j < devices.getLength(); j++) {
 				try {
 					SystemObject device = devices.getReferenceValue(j).getSystemObject();
@@ -89,7 +95,7 @@ public class WildcardProcessor {
 					nodes.add(tlsNode);
 				}
 				catch(Exception e) {
-					_debug.warning("Parameter für OSI3-Umleitung: Der Absender TlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
+					_debug.warning("Parameter fÃ¼r OSI3-Umleitung: Der Absender TlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
 				}
 			}
 			// Ist das Filter Suche spezifiziert?
@@ -109,7 +115,7 @@ public class WildcardProcessor {
 			
 			// Zielknoten auswerten
 			SystemObject[] targets = incomingTelegrams.getItem(i).getItem("Weiterleitung").getReferenceArray("ZielTlsKnoten").getSystemObjectArray();
-			// Map füllen
+			// Map fÃ¼llen
 
 			ArrayList<Integer> integers = new ArrayList<Integer>();
 			for(int j = 0; j < targets.length; j++) {
@@ -118,7 +124,7 @@ public class WildcardProcessor {
 					integers.add(new Integer(nodeNumber));
 				}
 				catch(Exception e) {
-					_debug.warning("Parameter für OSI3-Umleitung: Der ZielTlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
+					_debug.warning("Parameter fÃ¼r OSI3-Umleitung: Der ZielTlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
 				}
 			}
 			int[] destinations = new int[integers.size()];
@@ -130,18 +136,18 @@ public class WildcardProcessor {
 			String converterClassName = incomingTelegrams.getItem(i).getItem("Weiterleitung").getTextValue("Konverter").getText().trim();
 
 			
-			// Für alle ermittelten Knoten entsprechende Weiterleitungsinformationen schreiben
+			// FÃ¼r alle ermittelten Knoten entsprechende Weiterleitungsinformationen schreiben
 			for(TlsNode tlsNode : nodes) {
 				int knr = tlsNode.getNodeNumber();
 				// Funktionsgruppen betrachten
 				if(fgs.length == 0) {
-					// Jeder Eintrag erhält seinen eigenen Konverter
+					// Jeder Eintrag erhÃ¤lt seinen eigenen Konverter
 					Osi7SingleTelegramConverter converter = converterForName(converterClassName);
 					if (converter!=null){
 						converter.setTlsNode(tlsNode);
 					}
 					redirectionInfo.addReceiveEntry(knr, 255, normalProcessing, destinations, converter);
-					_debug.fine("Alle FGs sollen betrachtet werden. Ergänze ReceiveEntry: Knotennummer (" + knr + 
+					_debug.fine("Alle FGs sollen betrachtet werden. ErgÃ¤nze ReceiveEntry: Knotennummer (" + knr + 
 							    "),normalProcessing " + normalProcessing + " Ziele " + intArrayToLine(destinations) +
 							    " Konverter " + converter
 					        );
@@ -149,15 +155,15 @@ public class WildcardProcessor {
 				else {
 					for(int j = 0; j < fgs.length; j++) {
 						int fg = fgs[j];
-						// Check, ob der Knoten überhaupt die FG unterstützt.
-						// Falls nicht, muss kein Eintrag getätigt werden	            		
+						// Check, ob der Knoten Ã¼berhaupt die FG unterstÃ¼tzt.
+						// Falls nicht, muss kein Eintrag getÃ¤tigt werden	            		
 						if(tlsNode.hasFg(fg)) {
 							Osi7SingleTelegramConverter converter = converterForName(converterClassName);
 							if (converter!=null){
 								converter.setTlsNode(tlsNode);
 							}
 							redirectionInfo.addReceiveEntry(knr, fg, normalProcessing, destinations, converter);
-							_debug.fine("Ergänze ReceiveEntry: Knotennummer (" + knr + "), FG " + fgs[j] + " normalProcessing " + normalProcessing+ " Ziele " + intArrayToLine(destinations) +
+							_debug.fine("ErgÃ¤nze ReceiveEntry: Knotennummer (" + knr + "), FG " + fgs[j] + " normalProcessing " + normalProcessing+ " Ziele " + intArrayToLine(destinations) +
 								    " Konverter " + converter);
 						}
 					}
@@ -168,9 +174,9 @@ public class WildcardProcessor {
 		// Betrachte zu versendende Telegramme
 		for(int i = 0; i < sendingTelegrams.getLength(); i++) {
 			nodes.clear();
-			Data receiver = sendingTelegrams.getItem(i).getItem("Empfänger");
+			Data receiver = sendingTelegrams.getItem(i).getItem("EmpfÃ¤nger");
 			devices = receiver.getReferenceArray("TlsKnoten");
-			// Alle explizit angegebenen Geräte aufnehmen
+			// Alle explizit angegebenen GerÃ¤te aufnehmen
 			for(int j = 0; j < devices.getLength(); j++) {
 				try {
 					SystemObject device = devices.getReferenceValue(j).getSystemObject();
@@ -178,7 +184,7 @@ public class WildcardProcessor {
 					nodes.add(tlsNode);
 				}
 				catch(Exception e) {
-					_debug.warning("Parameter für OSI3-Umleitung: Der Empfänger TlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
+					_debug.warning("Parameter fÃ¼r OSI3-Umleitung: Der EmpfÃ¤nger TlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
 				}
 			}
 			// Ist das Filter Suche spezifiziert?
@@ -188,7 +194,7 @@ public class WildcardProcessor {
 			// Alle Knoten gesammelt des Feldes (Index i) gesammelt
 			// Weiterleitungsargumente auswerten
 			int[] fgs = sendingTelegrams.getItem(i).getItem("Weiterleitung").getArray("Funktionsgruppen").asScaledArray().getIntArray();
-			NumberValue localRoutine = sendingTelegrams.getItem(i).getItem("Weiterleitung").getScaledValue("TelegrammAnEmpfängerSenden");
+			NumberValue localRoutine = sendingTelegrams.getItem(i).getItem("Weiterleitung").getScaledValue("TelegrammAnEmpfÃ¤ngerSenden");
 			boolean normalProcessing = true;
 			if(localRoutine.isState() && localRoutine.getState().getName().equals("Nein")) {
 				normalProcessing = false;
@@ -203,15 +209,15 @@ public class WildcardProcessor {
 					destinationList.add(nodeNumber);
 				}
 				catch(Exception e) {
-					_debug.warning("Parameter für OSI3-Umleitung: Der ZielTlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
+					_debug.warning("Parameter fÃ¼r OSI3-Umleitung: Der ZielTlsKnoten mit dem Index " + j + " konnte nicht ermittelt werden und wird ignoriert", e);
 				}
 			}
 
-			// Eventuel später weitere Knoten aufnehmen, wenn eine Referenz auf den Typ eines übergeordneten Zielknotens angegeben wurde.
+			// Eventuel spÃ¤ter weitere Knoten aufnehmen, wenn eine Referenz auf den Typ eines Ã¼bergeordneten Zielknotens angegeben wurde.
 			SystemObject typeSuperiorTlsNode = sendingTelegrams
 			        .getItem(i)
 			        .getItem("Weiterleitung")
-			        .getReferenceValue("TypDesÜbergeordnetenTlsKnoten")
+			        .getReferenceValue("TypDesÃœbergeordnetenTlsKnoten")
 			        .getSystemObject();
 			
 			
@@ -235,7 +241,7 @@ public class WildcardProcessor {
                }
 			}
 			
-			// Für alle ermittelten Knoten entsprechende Weiterleitungsinformationen schreiben
+			// FÃ¼r alle ermittelten Knoten entsprechende Weiterleitungsinformationen schreiben
 			for(TlsNode tlsNode : nodes) {
 				int knr = tlsNode.getNodeNumber();
 				
@@ -267,34 +273,34 @@ public class WildcardProcessor {
 						converter.setTlsNode(tlsNode);
 					}
 					redirectionInfo.addSendEntry(knr, 255, normalProcessing, destinations,converter);
-					_debug.fine("Alle FGs sollen betrachtet werden. Ergänze SendEntry: Knotennummer (" + knr + "),normalProcessing "
+					_debug.fine("Alle FGs sollen betrachtet werden. ErgÃ¤nze SendEntry: Knotennummer (" + knr + "),normalProcessing "
 					        + normalProcessing);
 				}
 				else {
 					for(int j = 0; j < fgs.length; j++) {
 						int fg = fgs[j];
-						// Check, ob der Knoten überhaupt die FG unterstützt.
-						// Falls nicht, muss kein Eintrag getätigt werden	            		
+						// Check, ob der Knoten Ã¼berhaupt die FG unterstÃ¼tzt.
+						// Falls nicht, muss kein Eintrag getÃ¤tigt werden	            		
 						if(tlsNode.hasFg(fg)) {
 							if (converter!=null){
 								converter.setTlsNode(tlsNode);
 							}
 							redirectionInfo.addSendEntry(knr, fg, normalProcessing, destinations,converter);
-							_debug.fine("Ergänze addSendEntry: Knotennummer (" + knr + "), FG " + fgs[j] + " normalProcessing " + normalProcessing);
+							_debug.fine("ErgÃ¤nze addSendEntry: Knotennummer (" + knr + "), FG " + fgs[j] + " normalProcessing " + normalProcessing);
 						}
 					}
 				}
 			}
 			
 			
-//			// Eventuel weitere Knoten aufnehmen, wenn eine Referenz auf den Typ eines übergeordneten Zielknotens angegeben wurde.
+//			// Eventuel weitere Knoten aufnehmen, wenn eine Referenz auf den Typ eines Ã¼bergeordneten Zielknotens angegeben wurde.
 //			SystemObject typeSuperiorTlsNode = sendingTelegrams
 //			        .getItem(i)
 //			        .getItem("Weiterleitung")
-//			        .getReferenceValue("TypDesÜbergeordnetenTlsKnoten")
+//			        .getReferenceValue("TypDesÃœbergeordnetenTlsKnoten")
 //			        .getSystemObject();
 //			if(typeSuperiorTlsNode != null) {
-//				// Über alle gefundenen Knoten
+//				// Ãœber alle gefundenen Knoten
 //				for(TlsNode tlsNode : nodes) {
 //					TlsNode superiorNode = _tlsModel.getSuperiorNodeOfType(tlsNode, typeSuperiorTlsNode);
 //					if(superiorNode != null) {
@@ -328,23 +334,23 @@ public class WildcardProcessor {
 //			}
 //			
 //			
-//			// Für alle ermittelten Knoten entsprechende Weiterleitungsinformationen schreiben
+//			// FÃ¼r alle ermittelten Knoten entsprechende Weiterleitungsinformationen schreiben
 //			for(TlsNode tlsNode : nodes) {
 //				int knr = tlsNode.getNodeNumber();
 //				// Funktionsgruppen betrachten
 //				if(fgs.length == 0) {
 //					redirectionInfo.addSendEntry(knr, 255, normalProcessing, destinations,converter);
-//					_debug.fine("Alle FGs sollen betrachtet werden. Ergänze SendEntry: Knotennummer (" + knr + "),normalProcessing "
+//					_debug.fine("Alle FGs sollen betrachtet werden. ErgÃ¤nze SendEntry: Knotennummer (" + knr + "),normalProcessing "
 //					        + normalProcessing);
 //				}
 //				else {
 //					for(int j = 0; j < fgs.length; j++) {
 //						int fg = fgs[j];
-//						// Check, ob der Knoten überhaupt die FG unterstützt.
-//						// Falls nicht, muss kein Eintrag getätigt werden	            		
+//						// Check, ob der Knoten Ã¼berhaupt die FG unterstÃ¼tzt.
+//						// Falls nicht, muss kein Eintrag getÃ¤tigt werden	            		
 //						if(tlsNode.hasFg(fg)) {
 //							redirectionInfo.addSendEntry(knr, fg, normalProcessing, destinations,converter);
-//							_debug.fine("Ergänze addSendEntry: Knotennummer (" + knr + "), FG " + fgs[j] + " normalProcessing " + normalProcessing);
+//							_debug.fine("ErgÃ¤nze addSendEntry: Knotennummer (" + knr + "), FG " + fgs[j] + " normalProcessing " + normalProcessing);
 //						}
 //					}
 //				}
@@ -382,32 +388,32 @@ public class WildcardProcessor {
 	}
 	
 	/**
-	 * Methode zur Auswertung der Suchfilter. Hierbei erfolgt die Spezifikation des Filter über die Attributliste atl.spezifikationSucheGeräte. Diese Daten
-	 * werden als Array übergeben.
+	 * Methode zur Auswertung der Suchfilter. Hierbei erfolgt die Spezifikation des Filter Ã¼ber die Attributliste atl.spezifikationSucheGerÃ¤te. Diese Daten
+	 * werden als Array Ã¼bergeben.
 	 * 
 	 * @param nodes
 	 *            Hash, in dem die zu behandelnden Tls-Knoten gespeichert sind
 	 * @param searchItems
-	 *            Array mit Datensätzen zur Attributliste atl.spezifikationSucheGeräte
+	 *            Array mit DatensÃ¤tzen zur Attributliste atl.spezifikationSucheGerÃ¤te
 	 */
 	private void evaluateSearchFilter(HashSet<TlsNode> nodes, Array searchItems) {
 		HashSet<TlsNode> exclusiveNode = new HashSet<TlsNode>(); // Exklusive Knoten
 		exclusiveNode.clear();
-		// Zur Zeit ist im Datenkatalog die maximale Anzahl auf 1 beschränkt
+		// Zur Zeit ist im Datenkatalog die maximale Anzahl auf 1 beschrÃ¤nkt
 		for(int k = 0; k < searchItems.getLength(); k++) {
 			// Exclusive Knoten aufnehmen
-			ReferenceArray exclusiveSystemobjects = searchItems.getItem(k).getReferenceArray("AuszuschließendeTlsKnoten");
+			ReferenceArray exclusiveSystemobjects = searchItems.getItem(k).getReferenceArray("AuszuschlieÃŸendeTlsKnoten");
 			for(int l = 0; l < exclusiveSystemobjects.getLength(); l++) {
 				try {
 					SystemObject device = exclusiveSystemobjects.getReferenceValue(l).getSystemObject();
 					exclusiveNode.add(_tlsModel.getTlsNode(device));
 				}
 				catch(Exception e) {
-					_debug.warning("Parameter für OSI3-Umleitung: Der AuszuschließendeTlsKnoten mit dem Index " + l + " konnte nicht ermittelt werden und wird ignoriert", e);
+					_debug.warning("Parameter fÃ¼r OSI3-Umleitung: Der AuszuschlieÃŸendeTlsKnoten mit dem Index " + l + " konnte nicht ermittelt werden und wird ignoriert", e);
 				}
 			}
 			// Filter auswerten
-			SystemObject[] superiorSystemobjects = searchItems.getItem(k).getReferenceArray("ÜbergeordneteTlsKnoten").getSystemObjectArray();
+			SystemObject[] superiorSystemobjects = searchItems.getItem(k).getReferenceArray("ÃœbergeordneteTlsKnoten").getSystemObjectArray();
 			SystemObject typReference = searchItems.getItem(k).getReferenceValue("TypDerGesuchtenTlsKnoten").getSystemObject();
 			int forcedFg = searchItems.getItem(k).getScaledValue("ErforderlicheFG").intValue();
 			
@@ -421,7 +427,7 @@ public class WildcardProcessor {
 					}
 				}
 			}
-			// Alle untergeordneten Geräte betrachten
+			// Alle untergeordneten GerÃ¤te betrachten
 			else {
 				Collection<TlsNode> tlsNodes = _tlsModel.getTlsNodes(null, typReference, forcedFg);
 				for(TlsNode tlsNode : tlsNodes) {
