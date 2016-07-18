@@ -8,7 +8,7 @@ de.bsvrz.kex.tls.osi2osi3 v${project.version}
 Bauen und Veröffentlichen
 -------------------------
 
-    site install
+    mvn site install
 
 Im Ordner `target` wird damit das Distributionspaket
 `SWE_{Name}_{Status}_V{Version}_D{Standdatum}.zip` erstellt.
